@@ -1,0 +1,32 @@
+\contentsline {chapter}{\numberline {1}Introduction}{2}{}%
+\contentsline {chapter}{\numberline {2}Background}{3}{}%
+\contentsline {section}{\numberline {2.1}What does a VCS look like?}{3}{}%
+\contentsline {subsection}{\numberline {2.1.1}What does a VCS aim to do?}{3}{}%
+\contentsline {subsection}{\numberline {2.1.2}Types of VCS}{3}{}%
+\contentsline {subsubsection}{Centralized Version Control Systems}{3}{}%
+\contentsline {subsubsection}{Distributed Version Control Systems}{3}{}%
+\contentsline {section}{\numberline {2.2}Existing Version Control Systems}{3}{}%
+\contentsline {subsection}{\numberline {2.2.1}Concurrent Versions System (CVS)}{3}{}%
+\contentsline {subsubsection}{Advantages}{4}{}%
+\contentsline {subsubsection}{Disadvantages}{4}{}%
+\contentsline {subsection}{\numberline {2.2.2}Subversion (SVN)}{4}{}%
+\contentsline {subsubsection}{Advantages}{4}{}%
+\contentsline {subsubsection}{Disadvantages}{4}{}%
+\contentsline {subsection}{\numberline {2.2.3}Perforce}{4}{}%
+\contentsline {subsubsection}{Advantages}{4}{}%
+\contentsline {subsubsection}{Disadvantages}{4}{}%
+\contentsline {subsection}{\numberline {2.2.4}Git}{4}{}%
+\contentsline {subsubsection}{Advantages}{4}{}%
+\contentsline {subsubsection}{Disadvantages}{4}{}%
+\contentsline {subsection}{\numberline {2.2.5}Mercurial}{4}{}%
+\contentsline {subsubsection}{Advantages}{5}{}%
+\contentsline {subsubsection}{Disadvantages}{5}{}%
+\contentsline {section}{\numberline {2.3}Summary of Key Features}{5}{}%
+\contentsline {subsection}{\numberline {2.3.1}Repositories}{5}{}%
+\contentsline {subsection}{\numberline {2.3.2}Commits}{5}{}%
+\contentsline {subsection}{\numberline {2.3.3}Branching and Merging}{5}{}%
+\contentsline {subsection}{\numberline {2.3.4}Pulling and Pushing}{5}{}%
+\contentsline {chapter}{\numberline {3}Design}{6}{}%
+\contentsline {chapter}{\numberline {4}Implementation}{7}{}%
+\contentsline {chapter}{\numberline {5}Evaluation}{8}{}%
+\contentsline {chapter}{\numberline {6}Conclusion}{9}{}%
