@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/ReeceDonovan/nax-rc/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -11,20 +12,33 @@ var initCmd = &cobra.Command{
 	Use:   "init",
 	Short: "Initialize a new nax-rc project",
 	Long:  `Initialize a new nax-rc project. This will create the necessary files to get started with nax-rc.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("init called")
-	},
+	RunE:  initCommand,
 }
 
 func init() {
+	// TODO: Add flags to specify the project name and the project directory
+	// TODO: Add constants for nax-rc file directory
+}
 
-	// Here you will define your flags and configuration settings.
+func initCommand(cmd *cobra.Command, args []string) error {
+	// Check if the current directory is a nax-rc project
+	// If it is, return an error
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// initCmd.PersistentFlags().String("foo", "", "A help for foo")
+	projectExists, err := utils.CheckPathExists(".nax")
+	if err != nil {
+		return fmt.Errorf("error checking if current directory is a nax-rc project: %w", err)
+	}
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// initCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	if projectExists {
+		return fmt.Errorf("error creating new project: project already exists")
+	}
+
+	// Create the .nax-rc directories
+	err = utils.CreateDirectories([]string{".nax", ".nax/objects", ".nax/refs"})
+	if err != nil {
+		return fmt.Errorf("error creating directories: %w", err)
+	}
+
+	fmt.Println("Initialized empty nax-rc repository in .nax")
+	return nil
 }
