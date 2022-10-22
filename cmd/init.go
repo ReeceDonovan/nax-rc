@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/ReeceDonovan/nax-rc/utils"
+	"github.com/ReeceDonovan/nax-rc/pkg/ioutil"
 	"github.com/spf13/cobra"
 )
 
@@ -24,7 +24,7 @@ func initCommand(cmd *cobra.Command, args []string) error {
 	// Check if the current directory is a nax-rc project
 	// If it is, return an error
 
-	projectExists, err := utils.CheckPathExists(".nax")
+	projectExists, err := ioutil.CheckPathExists(".nax")
 	if err != nil {
 		return fmt.Errorf("error checking if current directory is a nax-rc project: %w", err)
 	}
@@ -34,7 +34,7 @@ func initCommand(cmd *cobra.Command, args []string) error {
 	}
 
 	// Create the .nax-rc directories
-	err = utils.CreateDirectories([]string{".nax", ".nax/objects", ".nax/refs"})
+	err = ioutil.CreateDirectories([]string{".nax", ".nax/objects", ".nax/refs"})
 	if err != nil {
 		return fmt.Errorf("error creating directories: %w", err)
 	}
