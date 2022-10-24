@@ -1,24 +1,37 @@
 \documentclass[a4paper,12pt]{article}
-
-% TODO: Add title
-\title{}
-\author{Reece Donovan}
+\usepackage[a4paper,total={6in, 12in}]{geometry}
+\usepackage{hyperref}
 
 \begin{document}
-\pagestyle{empty}
+\title{Project Outline}
+\date{November 2022}
+\author{\textbf{Reece Donovan}
+    \\
+    \small{119310841}
+}
+\maketitle
+\thispagestyle{empty}
 \section*{Outline}
 % TODO: Add outline
-This project aims to examine existing Version Control Systems (VCS), and to utilise that research to create a new VCS\@.
-\section*{Plan}
+Version Control Systems are a type of software that allows users to track changes to files over time\@. This is useful for a number of reasons, including the ability to revert to previous versions of files, and to collaborate with other users\cite{zolkifli_ngah_deraman_2018}.
+
+Such systems are widely used in the software industry, and are becoming more common in other fields\@. Modern VCSs facilitate parallel development, allowing multiple developers to collaborate and work simultaneously within the same project\@. Simplifying the process of combining/managing changes made by different developers is a key feature of modern VCSs\@.
+
+The project will be split into two parts\@. The first part will be to research existing VCSs, and to identify the strengths and weaknesses of each\@. The second part will be to create a new VCS, based on the research from the first part\@.
+
+
+\section*{Project Plan}
 \begin{itemize}
-    \item \textbf{October}: Research existing Version Control Systems, take note of their history, design, strengths and weaknesses.
-    \item \textbf{Novemeber}: Research common designs and implementations for Version Control Systems. Take note of the design aims, data structures, algorithms, and specific nuances of each.
-    \item \textbf{December}: Begin planning and designing my own Version Contriol System. Consider the target audience, the core features, and the potential pitfalls of specific designs.
-    \item \textbf{January}: Begin implementing my Version Control System. Voice any concerns or issues with the design.
-    \item \textbf{February}: Evaluate the progress of the implementation. Consider the strengths and weaknesses of the design, compare the viability of specific algorithms and features.
-    \item \textbf{March}: Analyse the results of the evaluation, create visualisations of the results, and voice thoughts on said results.
-    \item \textbf{April}: Create a conclusion, summarise the results, and voice any final thoughts. Comment on possible future work, consider differing opions on prior decisions, reflect on the project as a whole.
-    \item \textbf{May}: Finalise the report.
+    \item \textbf{October}: Research existing Version Control Systems, identify details of their design and implementation. Create a list of features that are desirable in a VCS\@.
+    \item \textbf{Novemeber}: Research traditional implementation strategies for a VCS\@. Examine potential data structures and algorithms, and assess their strengths and weaknesses.
+    \item \textbf{December}: Begin planning and designing a new VCS using the research gathered in the previous months. Create a prototype implementation of the VCS\@.
+    \item \textbf{January}: Evaluate the progress of the prototype implementation, and consider the next steps for the project. Explore more complex features of the VCS (e.g.\ merging algorithms, file diffing algorithms, etc.).
+    \item \textbf{February}: Gather data on the performance of the prototype implementation, analyse the data, and visualise the results. Discuss the results of the analysis, and consider the next steps for the project.
+    \item \textbf{March}: Identify any decisions, assumptions, or actions that were made during the project, and document if they could have been done differently.
+    \item \textbf{April...}: Review the project and conclude on the success of the project. Finalise the project report.
 \end{itemize}
+
+\bibliographystyle{ieeetr}
+\bibliography{../bibliography/vcs_info}
 
 \end{document}
