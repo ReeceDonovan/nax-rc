@@ -11,9 +11,9 @@
 \contentsline {paragraph}{Architecture}{6}{}%
 \contentsline {subsubsection}{Revision Control System (RCS)}{6}{}%
 \contentsline {paragraph}{Advantages}{6}{}%
-\contentsline {paragraph}{Disadvantages}{6}{}%
-\contentsline {subsection}{\numberline {2.3.2}Centralized Version Control Systems}{6}{}%
-\contentsline {subsubsection}{Concurrent Versions System (CVS)}{6}{}%
+\contentsline {paragraph}{Disadvantages}{7}{}%
+\contentsline {subsection}{\numberline {2.3.2}Centralized Version Control Systems}{7}{}%
+\contentsline {subsubsection}{Concurrent Versions System (CVS)}{7}{}%
 \contentsline {paragraph}{Advantages}{7}{}%
 \contentsline {paragraph}{Disadvantages}{7}{}%
 \contentsline {subsubsection}{Apache Subversion (SVN)}{7}{}%
@@ -21,9 +21,9 @@
 \contentsline {paragraph}{Disadvantages}{7}{}%
 \contentsline {subsubsection}{Perforce}{7}{}%
 \contentsline {paragraph}{Advantages}{7}{}%
-\contentsline {paragraph}{Disadvantages}{7}{}%
-\contentsline {subsection}{\numberline {2.3.3}Distributed Version Control Systems}{7}{}%
-\contentsline {subsubsection}{Git}{7}{}%
+\contentsline {paragraph}{Disadvantages}{8}{}%
+\contentsline {subsection}{\numberline {2.3.3}Distributed Version Control Systems}{8}{}%
+\contentsline {subsubsection}{Git}{8}{}%
 \contentsline {paragraph}{Advantages}{8}{}%
 \contentsline {paragraph}{Disadvantages}{8}{}%
 \contentsline {subsubsection}{Mercurial}{8}{}%
@@ -35,14 +35,14 @@
 \contentsline {subsubsection}{Darcs Advanced Revision Control System (Darcs)}{8}{}%
 \contentsline {paragraph}{Advantages}{8}{}%
 \contentsline {paragraph}{Disadvantages}{8}{}%
-\contentsline {subsubsection}{Monotone}{8}{}%
-\contentsline {paragraph}{Advantages}{8}{}%
-\contentsline {paragraph}{Disadvantages}{8}{}%
-\contentsline {subsubsection}{Bazaar}{8}{}%
-\contentsline {paragraph}{Advantages}{8}{}%
-\contentsline {paragraph}{Disadvantages}{8}{}%
-\contentsline {subsubsection}{Fossil}{8}{}%
-\contentsline {paragraph}{Advantages}{8}{}%
+\contentsline {subsubsection}{Monotone}{9}{}%
+\contentsline {paragraph}{Advantages}{9}{}%
+\contentsline {paragraph}{Disadvantages}{9}{}%
+\contentsline {subsubsection}{Bazaar}{9}{}%
+\contentsline {paragraph}{Advantages}{9}{}%
+\contentsline {paragraph}{Disadvantages}{9}{}%
+\contentsline {subsubsection}{Fossil}{9}{}%
+\contentsline {paragraph}{Advantages}{9}{}%
 \contentsline {paragraph}{Disadvantages}{9}{}%
 \contentsline {section}{\numberline {2.4}Summary of Key Features}{9}{}%
 \contentsline {subsection}{\numberline {2.4.1}Repositories}{9}{}%
