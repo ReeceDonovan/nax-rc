@@ -18,3 +18,8 @@
 *
 !/**/
 !*.*
+
+# Exlude general IDE files
+.idea/
+.vscode/
+*.iml
