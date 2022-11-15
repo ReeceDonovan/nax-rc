@@ -66,8 +66,6 @@ Early VCS were intended to track changes for individual files and checked-out fi
 \subsubsection{Source Code Control System (SCCS)}
 SCCS was released in 1972 and is one of the first successful VCS tools. It was written by Marc Rochkind at Bell Labs, who wanted to solve the problem of tracking file revisions. The tool made tracking down bugs introduced into a program significantly more manageable. SCCS is worth understanding at a basic level because it helped set up modern VCS tools that developers use today.
 \paragraph{Architecture}
-% TODO: Rewrite this section
-% ==============================================================================
 Much like modern VCS tools, SCCS has a set of commands that allow developers to work with versioning of files. The basic command functionality are:
 \begin{itemize}
     \item Check in files to track their history.
@@ -82,36 +80,29 @@ A special type of file called a \lstinline{s-file} or a \lstinline{history file}
 
 So a file called \lstinline{test.txt} would get a history file created in the \lstinline{./SCCS/} directory with a name of \lstinline{s.test.txt}. When created, the \lstinline{s-file} contains the original file contents, a header that contains the file's version number, and some other metadata. There are also checksums stored in the \lstinline{s-file} that are used to verify the integrity of the file (i.e. to make sure that the file has not been tampered with). The \lstinline{s-file} content is not encoded or compressed in any way, which is a clear difference from modern VCS tools.
 
-% TODO: Rewrite this section
-% ==============================================================================
-Since the content of the original file is now stored in the history file, it can be retrieved into the working directory for review, compilation, or editing. Further changes made to the file such as line additions, modifications, and removals can be checked back into the history file, which increments its revision number.
+Since the original file's content is now stored in the history file, it can be retrieved into the working directory for review, compilation, or editing. Further changes made to this new copy, such as line additions, modifications and removals, can be checked back into a revised version of the history file, which increments its revision number.
 
-Subsequent SCCS checkins only store only the deltas or changes to a file as opposed to the entire file content each time. This decreases the size of the history file. Each time a checkin is made, the delta is stored in a structure known as a delta table inside the history file. As previously mentioned, the actual file content is more or less copied verbatim, with special control sequences for marking the start and end of sections of added and removed content. Since SCCS history files don't use compression, they are typically larger in size that the actual file being tracked. SCCS uses a delta method known as interleaved deltas. This is beneficial since it allows constant-time checkouts regardless of how old the checked out revision is - i.e. older revisions don't take longer to checkout than newer revisions.
+Subsequent SCCS check-ins only store only deltas or changes to a file instead of storing entire contents each time; when a check-in is made, subsequent revisions are added onto existing delta tables inside an amended history file (history files do not use compression). This decreases the size of these large histories since they are not using compression on their files, so they take up more space than just having one complete copy that you are tracking with no differences like Word docs etc.
 
-One important thing to note is that all files are tracked and checked in separately in SCCS. There is no way to checkin changes to multiple files as a part of one atomic unit - like a commit in Git. Each tracked file has a corresponding history file which stores its revision history. In general, this means that the version numbers of different files in a project will not usually match each other. However, matching revision numbers can be achieved by editing every file in the project at once (even if not all of the files have real changes) and checking them all at one time. This will increment the revision number for all the files to keep them consistent, but note that this is NOT the same as including multiple files in a single commit like in Git. In SCCS, this makes an individual checkin in each history file, as opposed to one big commit including all the changes at once.
+As previously mentioned, SCCS uses the Delta method known as Interleaved Deltas, which allows constant-time checkout regardless of how old your checked-out revision is - i.e., older revisions do not take longer than newer ones.
 
-When a file is checked out for editing in SCCS, a lock is placed on the file so it cannot be edited by anyone else. This prevents changes from being overwritten by other users, but also limits development since only one user can work with a given file at a time.
+It is important to note that all files are tracked and checked in separately; there is no way to check in changes on multiple files as a part of one atomic unit - like a commit in Git. Each tracked file has its corresponding history file, which stores revisions. Generally, this means that the version numbers of different files cannot match each other. However, matching revision numbers can be achieved by editing every file at once (even if not all of the changed areas have fundamental changes) and checking them all together. This will increment revision numbers for any modified content, so they'll be consistent with their revisions—but it's not comparable to including lots of different pieces within a single commit like you would in Git. In SCCS, these make individual check-ins across separate history folders rather than one extensive report containing everything at once.
 
-SCCS has support for branches that can store sequences of changes within a specific file. Branches can be merged back in with the original versions or merged with other branched versions of the same parent.
+When a file is checked out for editing in SCCS, it is locked so that anyone else cannot edit it. This prevents changes from being overwritten by other users and limits development since only one user can edit the file simultaneously.
 
-% TODO: Restructure this section
+The software supports branches that store sequences of changes to specific files - these can then be merged back into the original versions or with copies of other branched versions of the same parent branch.
+
 \paragraph{Basic Commands}
 
-Below is a list of the most common SCCS commands.
+\begin{itemize}
+    \item \lstinline{sccs create <filename.ext>} - Check in a new file to SCCS and create a new history file for it (in the \lstinline{./SCCS/} directory by default).
+    \item \lstinline{sccs get <filename.ext>} - Check out a file from from its corresponding history file and place it in the working directory in readonly mode.
+    \item \lstinline{sccs edit <filename.ext>} - Check out a file from the corresponding history file for editing. Locks the history file so no other users can modify it.
+    \item \lstinline{sccs delta <filename.ext>} - Check in the modifications to the specified file. Will prompt for a comment, store the changes in the history file, and remove the lock.
+    \item \lstinline{sccs prt <filename.ext>} - Display the revision log for a tracked file.
+    \item \lstinline{sccs diffs <filename.ext>} - Display the differences between the current working copy of a file and the state of the file when it was checked out.
+\end{itemize}
 
-\lstinline{sccs create <filename.ext>} - Check in a new file to SCCS and create a new history file for it (in the \lstinline{./SCCS/} directory by default).
-
-\lstinline{sccs get <filename.ext>} - Check out a file from from its corresponding history file and place it in the working directory in readonly mode.
-
-\lstinline{sccs edit <filename.ext>} - Check out a file from the corresponding history file for editing. Locks the history file so no other users can modify it.
-
-\lstinline{sccs delta <filename.ext>} - Check in the modifications to the specified file. Will prompt for a comment, store the changes in the history file, and remove the lock.
-
-\lstinline{sccs prt <filename.ext>} - Display the revision log for a tracked file.
-
-\lstinline{sccs diffs <filename.ext>} - Display the differences between the current working copy of a file and the state of the file when it was checked out.
-
-% ==============================================================================
 \subsubsection{Revision Control System (RCS)}
 % TODO: Rewrite this section
 % ==============================================================================
