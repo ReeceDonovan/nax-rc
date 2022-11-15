@@ -1,20 +1,45 @@
 \chapter{Background}
 % ==============================================================================
 \section{What is a Version Control System}
-% Version Control Systems (VCS) are systems that store the history of a set of files. They track modifications made to files by individual users and allow users to revert files to previous versions. While VCSs can be used to track changes in any set of files, they are commonly used to track changes in source code. The use of VCSs in the software industry has become crucial for the development of large software projects which require developer collaboration. The use of VCSs in the software industry has become so common that many software development companies have adopted their own VCSs.
-% VCSs are also known as revision control systems, revision management systems, source control systems, and source code management systems. This document will use the term VCS to refer to any of these systems.
-% TODO: OR
-A version control system saves modifications done by individual software developers which makes the process easier for them since they can track their work over time. It helps share data between nodes where each node can be kept up to date with updated versions so there is no need for any merge conflicts. The advantages provided by VCS include: it aids in collaboration among programmers, improves efficiency when working on larger groups of mixed products; provides an audit trail; easy branching functionality; simplifies team-based development; understanding who has worked on specific pieces or sections during what period in time but also making sure that all changes are tracked properly providing transparency within teams while maintaining optimal performance levels through streamlined management processes, helping avoid errors arising from inconsistency between versions such as mismatched documents or programming problems resulting from conflicting edit operations
+A version Control System (VCS) saves modifications done by individual software developers, making the process more accessible since they can track their work over time. In addition, it helps share data between nodes where each node can be kept up to date with updated versions, so there is no need for any merge conflicts.
+
+The advantages provided by VCS include: aids in collaboration among programmers, improves efficiency when working on larger groups of mixed products; provides an audit trail; easy branching functionality; simplifies team-based development; understanding who has worked on specific pieces or sections during what period in time but also making sure that all changes are appropriately tracked providing transparency within teams while maintaining optimal performance levels through streamlined management processes, helping avoid errors arising from inconsistency between versions such as mismatched documents or programming problems resulting from conflicting edit operations.
 \subsection{What is the purpose of Version Control Systems}
 % TODO: Explain the purpose of VCSs
-The main purpose of VCSs is collaboration...
+% The main purpose of VCSs is collaboration...
+% TODO: Rewrite this
+% ==============================================================================
+For almost all software projects, the source code is like the crown jewels - a precious asset whose value must be protected. For most software teams, the source code is a repository of the invaluable knowledge and understanding about the problem domain that the developers have collected and refined through careful effort. Version control protects source code from both catastrophe and the casual degradation of human error and unintended consequences.
+
+Software developers working in teams are continually writing new source code and changing existing source code. The code for a project, app or software component is typically organized in a folder structure or "file tree". One developer on the team may be working on a new feature while another developer fixes an unrelated bug by changing code, each developer may make their changes in several parts of the file tree.
+
+Version control helps teams solve these kinds of problems, tracking every individual change by each contributor and helping prevent concurrent work from conflicting. Changes made in one part of the software can be incompatible with those made by another developer working at the same time. This problem should be discovered and solved in an orderly manner without blocking the work of the rest of the team. Further, in all software development, any change can introduce new bugs on its own and new software can't be trusted until it's tested. So testing and development proceed together until a new version is ready.
+% ==============================================================================
 \section{Types of VCS}
 Over the years, two approaches to VCSs have emerged - Centralized and Distributed. Both approaches are in widespread use today. The centralized approach is based on the client-server model where there is a single central repository that stores the history of all files, while the distributed approach provides each user with a full copy of the repository.
+
 The core difference between the two approaches is that the centralized approach requires a single point of failure, while the distributed approach does not. The centralized approach is also more difficult to scale than the distributed approach.
 \subsection{Centralized Version Control Systems (CVCS)}
 % TODO: Explain centralized VCS
-A centralized Version Control System is a system that enables developers to work together on the same project by storing the main copy of files in a central repository. This system keeps track of all files and saves information in the local repository. CVCS are called centralized because there is only one central server or repository. The server maintains a complete record of issues, while clients only maintain a local copy of the shared documents. All developers make their modifications on the repository through checkout but only the last version of the files is retrieved from the server, which means that any modifications made will be automatically shared with other developers. Users can modify in parallel with their local copy of shared documents and sync with the central server to release their contributions and make them visible to other collaborators. Because centralized version control systems rely on one repository that includes the correct version of the project, it must restrict write accesses so that only trusted contributors are allowed to commit modifications. CVCS has some challenges, such as if the central server is inaccessible, then users will not be able to merge their work at all or save the released modifications. It is also if the central repository is corrupted, everything will be lost. Contributors must be the ones who have writing permissions to perform basic tasks, such as reverting modifications to a previous state, creating or merging branches, or releasing modifications with full revision history. This limitation affects participation and authorship for new contributors. So, the main drawbacks of using CVCS are that it requires a network connection to work on the source code, developers must order to contribute to a project, and a single point of failure is an issue when using one server.
+% TODO: Rewrite this
+% ==============================================================================
+A centralized Version Control System is a system that enables developers to work together on the same project by storing the main copy of files in a central repository. This system keeps track of all files and saves information in the local repository. CVCS are called centralized because there is only one central server or repository.
 
+The server maintains a complete record of issues, while clients only maintain a local copy of the shared documents. All developers make their modifications on the repository through checkout but only the last version of the files is retrieved from the server, which means that any modifications made will be automatically shared with other developers.
+
+Users can modify in parallel with their local copy of shared documents and sync with the central server to release their contributions and make them visible to other collaborators. Because centralized version control systems rely on one repository that includes the correct version of the project, it must restrict write accesses so that only trusted contributors are allowed to commit modifications.
+
+CVCS has some challenges, such as if the central server is inaccessible, then users will not be able to merge their work at all or save the released modifications. Also if the central repository is corrupted, everything will be lost. Contributors must be the ones who have writing permissions to perform basic tasks, such as reverting modifications to a previous state, creating or merging branches, or releasing modifications with full revision history. This limitation affects participation and authorship for new contributors.
+
+So, the main drawbacks of using CVCS are that it requires a network connection to work on the source code, developers must order to contribute to a project, and a single point of failure is an issue when using one server.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{centralized-version-control-system-structure}
+    \caption{Centralized Version Control System}
+    \label{fig:cvcs-structure}
+\end{figure}
+% ==============================================================================
 \subsection{Distributed Version Control Systems (DVCS)}
 % TODO: Explain distributed VCS
 % There are many advantages to using a distributed version control system (DVCS) over a centralized version control system (CVCS). DVCS is designed to work in two ways: it keeps the entire file history on each device locally and can also sync local modifications the user made with the server again when necessary so that the modifications can be shared with the whole team. In DVCS, the developers can work with different groups of people in different ways working on the same project. As well as any repository can be cloned, and, from a conceptual point of view, no repository is more significant than any other.
@@ -23,10 +48,24 @@ A centralized Version Control System is a system that enables developers to work
 % There are many advantages to using DVCS: flexibility, hosting services like Github, availability, it is very fast due to its local nature to the majority of operations, it doesn’t require access to remote servers, and branching and merging can be done very easily in DVCS. Collaboration between team members and allow individual developers to be servers or clients are the most important features offer by version control systems, so developers can work on source code without being connected to a central or remote repository.
 % There are some challenges introduced by DVCS: it lacks an understandable version numbering system, where there is no centralized versioning server, and uses hash modifications or a unique GUID. So, the lack of a central server makes system backup so difficult. The two most popular complaints about the disadvantages of DVCS are that: pessimistic locks are not available, and they have weak tools for binary.
 % The reasons for the transition from centralized to decentralized version Control Systems are the ability to work offline and the ability to work incrementally. The ability of developers to made several roles, such as developing a new task or fixing errors, and the ability to do exploratory coding efficiently.
+% TODO: OR
+% ==============================================================================
+Distributed Version Control Systems (DVCS) were created to overcome the limitations of Centralized Version Control Systems (CVCS), which enable branching and merging, avoid local VCS operations and allow developers collaboration. Due to the limitations associated with using a centralized version control system, Open Source Software (OSS) projects today largely adopt DVCS.
 
-Distributed Version Control Systems (DVCS) were created to overcome the limitations of Centralized Version Control Systems, which enable branching and merging, avoid local VCS operations and allow developers collaboration.
-Because of the limitations in using a centralized version control system, Open Source Software (OSS) projects today largely adopt DVCS. DVCS is designed to work in two ways: it keeps entire file histories locally on each device and can also sync local modifications made by users with servers again when necessary so that these modifications can be shared with everyone else. In DVCS developers are able to work separately or together but working on the same project as they have access to all repositories needed for their task; any repository can be cloned from another one so there's no more important repository than others.
-To provide a new way for versioning software artifacts several Distributed Version Control Systems emerged in the software field such as Mercurial Git Bazaar etc., these tools have been adopted by many Open Source Software (OSS). The operations in DVCS are much faster than those found in CVSS because they're done locally while CVSS operations require remote connection; some consider that distributed systems will soon replace centralized ones because they suit bigger projects with more independent developers who want full functionality even without network connection available, offer advantages like earlier drafts of your work being saved without requiring you releasing them publicly or sharing them with other people etc.; three major advantages offered by use of DVSs include flexibility availability which is related solely to its ability not needing access remotely servers for most operation types plus it's very fast due to its locality-based nature--most actions only need occur at one location unlike CVSCS versions where changes must travel through an often slower internet link before reaching their destination; branching merging is easy when working within DVSs due both high level abstraction language features provided but also lack requirement that user has knowledge about how specific models like Subversion operates making this process easier then would otherwise be possible under traditional model; collaboration between members/individual developer vs server/client differences make up most important feature offered by VSCs since team member may work on source code regardless whether connected centrally or remotely--this allows individual developer do exploratory coding efficiently too. There are challenges introduced by use if DVSs including system backup being difficult cause lack central server makes creating backup virtually impossible meanwhile Pessimistic Locks aren't available either nor does present day software offer good support for binary files. Reasons why transition was made from centralized systems towards decentralized ones: offline capability enabling development portion done independently while maintaining integration into main branch + incremental capabilities providing greater efficiency during exploratory coding efforts.
+DVCS is designed to work in two ways as it keeps entire file histories locally on each device but can also sync local modifications made by users with servers again when necessary so that these modifications can be shared with everyone else. In DVCS developers are able to work separately or together but working on the same project as they have access to all repositories needed for their task; any repository can be cloned from another one so there's no more important repository than others.
+
+To provide a new way for versioning software artifacts several Distributed Version Control Systems emerged in the software field such as \lstinline{Mercurial}, \lstinline{Git}, \lstinline{Bazaar}, etc. These tools have been adopted by many Open Source Software (OSS). The operations in DVCS are much faster than those found in CVSS because they're done locally while CVSS operations require remote connection; some consider that distributed systems will soon replace centralized ones because they suit bigger projects with more independent developers who want full functionality even without network connection available, offer advantages like earlier drafts of your work being saved without requiring you releasing them publicly or sharing them with other people etc.
+
+Three major advantages offered by use of DVSs include flexibility availability which is related solely to its ability not needing access remotely servers for most operation types plus it's very fast due to its locality-based nature--most actions only need occur at one location unlike CVSCS versions where changes must travel through an often slower internet link before reaching their destination; branching merging is easy when working within DVSs due both high level abstraction language features provided but also lack requirement that user has knowledge about how specific models like Subversion operates making this process easier then would otherwise be possible under traditional model; collaboration between members/individual developer vs server/client differences make up most important feature offered by VSCs since team member may work on source code regardless whether connected centrally or remotely--this allows individual developer do exploratory coding efficiently too.
+
+There are challenges introduced by use if DVSs including system backup being difficult cause lack central server makes creating backup virtually impossible meanwhile Pessimistic Locks aren't available either nor does present day software offer good support for binary files. Reasons why transition was made from centralized systems towards decentralized ones: offline capability enabling development portion done independently while maintaining integration into main branch + incremental capabilities providing greater efficiency during exploratory coding efforts.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{distributed-version-control-system-structure}
+    \caption{Distributed Version Control System}
+    \label{fig:dvcs-structure}
+\end{figure}
 % ==============================================================================
 \section{Existing Version Control Systems}
 \subsection{Local Version Control Systems}
@@ -36,7 +75,7 @@ Early VCS were intended to track changes for individual files and checked-out fi
 SCCS was released in 1972, and it is one of the first successful VCS tools. It was written by Marc Rochkind at Bell Labs, who wanted to solve the problem of tracking file revisions. The tool made it significantly easier to track down bugs introduced into a program. SCCS is worth understanding at a basic level because it helped set up modern VCS tools that developers use today.
 \paragraph{Architecture}
 % TODO: Rewrite this section
-Like most modern VCS tools, SCCS has a set of commands that allow developers to work with versioning of files. The basic command functionality are:
+Much like modern VCS tools, SCCS has a set of commands that allow developers to work with versioning of files. The basic command functionality are:
 \begin{itemize}
     \item Check in files to track their history.
     \item Check out specific file versions for review.
@@ -46,47 +85,249 @@ Like most modern VCS tools, SCCS has a set of commands that allow developers to 
     \item Basic branching and merging of changes.
     \item Print a log of a file's version history.
 \end{itemize}
-A special type of file called a \lstinline{s-file} or a \lstinline{history file} is created when a file is tracked by SCCS. This file is named with the original filename prefixed with a \lstinline{s.}, and is stored in a subdirectory called \lstinline{SCCS}. So a file called \lstinline{test.txt} would get a history file created in the \lstinline{./SCCS/} directory with a name of \lstinline{s.test.txt}. When created, the \lstinline{s-file} contains the original file contents, a header that contains the file's version number, and some other metadata. There are also checksums stored in the \lstinline{s-file} that are used to verify the integrity of the file (i.e. to make sure that the file has not been tampered with). The \lstinline{s-file} content is not encoded or compressed in any way, which is a clear difference from modern VCS tools.
+A special type of file called a \lstinline{s-file} or a \lstinline{history file} is created when a file is tracked by SCCS. This file is named with the original filename prefixed with a \lstinline{s.}, and is stored in a subdirectory called \lstinline{SCCS}.
+
+So a file called \lstinline{test.txt} would get a history file created in the \lstinline{./SCCS/} directory with a name of \lstinline{s.test.txt}. When created, the \lstinline{s-file} contains the original file contents, a header that contains the file's version number, and some other metadata. There are also checksums stored in the \lstinline{s-file} that are used to verify the integrity of the file (i.e. to make sure that the file has not been tampered with). The \lstinline{s-file} content is not encoded or compressed in any way, which is a clear difference from modern VCS tools.
+
+% TODO: Rewrite this section
+% ==============================================================================
+Since the content of the original file is now stored in the history file, it can be retrieved into the working directory for review, compilation, or editing. Further changes made to the file such as line additions, modifications, and removals can be checked back into the history file, which increments its revision number.
+
+Subsequent SCCS checkins only store only the deltas or changes to a file as opposed to the entire file content each time. This decreases the size of the history file. Each time a checkin is made, the delta is stored in a structure known as a delta table inside the history file. As previously mentioned, the actual file content is more or less copied verbatim, with special control sequences for marking the start and end of sections of added and removed content. Since SCCS history files don't use compression, they are typically larger in size that the actual file being tracked. SCCS uses a delta method known as interleaved deltas. This is beneficial since it allows constant-time checkouts regardless of how old the checked out revision is - i.e. older revisions don't take longer to checkout than newer revisions.
+
+One important thing to note is that all files are tracked and checked in separately in SCCS. There is no way to checkin changes to multiple files as a part of one atomic unit - like a commit in Git. Each tracked file has a corresponding history file which stores its revision history. In general, this means that the version numbers of different files in a project will not usually match each other. However, matching revision numbers can be achieved by editing every file in the project at once (even if not all of the files have real changes) and checking them all at one time. This will increment the revision number for all the files to keep them consistent, but note that this is NOT the same as including multiple files in a single commit like in Git. In SCCS, this makes an individual checkin in each history file, as opposed to one big commit including all the changes at once.
+
+When a file is checked out for editing in SCCS, a lock is placed on the file so it cannot be edited by anyone else. This prevents changes from being overwritten by other users, but also limits development since only one user can work with a given file at a time.
+
+SCCS has support for branches that can store sequences of changes within a specific file. Branches can be merged back in with the original versions or merged with other branched versions of the same parent.
+
+% TODO: Restructure this section
+\paragraph{Basic Commands}
+
+Below is a list of the most common SCCS commands.
+
+\lstinline{sccs create <filename.ext>} - Check in a new file to SCCS and create a new history file for it (in the \lstinline{./SCCS/} directory by default).
+
+\lstinline{sccs get <filename.ext>} - Check out a file from from its corresponding history file and place it in the working directory in readonly mode.
+
+\lstinline{sccs edit <filename.ext>} - Check out a file from the corresponding history file for editing. Locks the history file so no other users can modify it.
+
+\lstinline{sccs delta <filename.ext>} - Check in the modifications to the specified file. Will prompt for a comment, store the changes in the history file, and remove the lock.
+
+\lstinline{sccs prt <filename.ext>} - Display the revision log for a tracked file.
+
+\lstinline{sccs diffs <filename.ext>} - Display the differences between the current working copy of a file and the state of the file when it was checked out.
+
+% ==============================================================================
 \subsubsection{Revision Control System (RCS)}
+% TODO: Rewrite this section
+% ==============================================================================
 % TODO: Explain RCS
-\paragraph{Advantages}
-% TODO: Add advantages
-\paragraph{Disadvantages}
-% TODO: Add disadvantages
+RCS was released in 1982, and it is another early VCS tool. It was written in C by Walter Tichy as an alternative to SCCS, which was still closed source at the time. RCS was released under the GNU General Public License, which allowed it to be used in open source projects.
+
+"RCS manages revisions of text documents, in particular source programs, documentation, and test data. It automates the storing, retrieval, logging, and identification of revisions." - Walter Tichy
+\paragraph{Architecture}
+RCS shares many traits with its predecessor, including:
+\begin{itemize}
+    \item Handling revisions on a file-by-file basis.
+    \item Changes across multiple files can't be grouped together into an atomic commit.
+    \item Tracked files are intended to be modified by one user at a time.
+    \item No network functionality.
+    \item Revisions for each tracked file are stored in a corresponding history file.
+    \item Basic branching and merging of revisions within individual files.
+\end{itemize}
+When a file is set checked into RCS for the first time, a corresponding history file is created for it in the local \lstinline{./RCS/} directory. This file is postfixed with a \lstinline{,v} so a file named \lstinline{test.txt} would be tracked by a file called \lstinline{test.txt,v}.
+
+RCS uses a \lstinline{reverse-delta} scheme for storing file changes. When a file is checked in, a full snapshot of the file's content is stored in the history file. When the file is modified and checked in again, a delta is calculated based off of the existing history file content. The old snapshot is discarded and the new one is saved, along with the delta to get back to the older state.
+
+This is called \lstinline{reverse-delta} since to check out an older revision, RCS starts with the newest version of the file and applies consecutive deltas until the older revision is reached. This method allows for very quick checkouts of current revisions since the full snapshot of the current revision is always available. However, the older the checkout revision, the longer the checkout takes since an increasing number of deltas need to be calculated against the current snapshot.
+
+This is not the case with SCCS which takes the same amount of time to fetch any revision. In addition, no checksum is stored in RCS history files so file integrity cannot be ensured.
+
+% TODO: List RCS commands
+\paragraph{Basic Commands}
+
+Below is a list of the most common RCS commands.
+
+% ==============================================================================
 \subsection{Centralized Version Control Systems}
 Version control technology continued to evolve, leading to centralized repositories that contained the 'official' versions of their projects. This was good progress, since it allowed multiple users to checkout and work with the code at the same time as well as making commits back into this central repository. Furthermore, network access was required for people who wanted to commit changes they had made locally.
 \subsubsection{Concurrent Versions System (CVS)}
-Concurrent Versions System (CVS) was developed in the 1980s by Larry Wall and was the first VCS to become widely used for collaborative software development. Concurrent Versions System is a centralized VCS, meaning that there is a single server that stores the entire history of the project. The server is the only place where files can be added, removed or modified.
-\paragraph{Advantages}
-% TODO: Add advantages
-\paragraph{Disadvantages}
-% TODO: Add disadvantages
+Concurrent Versions System (CVS) was developed in by Dick Grune in 1986, it is also written in C. It was created with the goal of adding a networking element to version control. CVS became the first widely used VCS tool that allowed multiple users to work on the same project at the same time from different locations. This kicked off the second generation of VCS tools, allowing geographically dispersed development teams to work together on the same project.
+\paragraph{Architecture}
+CVS operates as a frontend for RCS - it provides a set of commands to interact with files in a project, but uses the RCS history file format and commands behind the scenes.
+
+This meant that for the first time in history, multiple developers could check out and work on the same files simultaneously. It did this by utalising a centralized repository model.
+
+% TODO: Rewrite this section
+% ==============================================================================
+The first step is to set up a centralized repository on a remote server using CVS. Projects can then be imported into the repository. When a project is imported into CVS, each file is converted into a \lstinline{,v} history file and stored in a central directory known as a \lstinline{module}. The repository generally lives on a remote server which is accessible over a local network or the Internet.
+
+A developer checks out a copy the module which is copied to a working directory on their local machine. No files are locked in this process so there is no limit to the number of developers that can check out the module at one time. Developers can modify their checked out files and commit their changes as needed. If a developer commits a change, other developers will need to update their working copies via a (usually) automated merge process before committing their changes. Occasionally merge conflicts will need to be manually resolved before the commit can be made. CVS also provides the ability to create and merge branches.
+% ==============================================================================
+
+% TODO: List CVS commands
+\paragraph{Basic Commands}
+
+Below is a list of the most common CVS commands.
+
+% ==============================================================================
 \subsubsection{Apache Subversion (SVN)}
-Subversion (SVN) is a centralized VCS that was developed by CollabNet in the year 2000. Subversion was developed to replace CVS, which was becoming increasingly difficult to maintain.
-\paragraph{Advantages}
-% TODO: Add advantages
-\paragraph{Disadvantages}
-% TODO: Add disadvantages
-\subsubsection{Perforce}
-Perforce is a centralized VCS that was developed by Perforce Software in 1995. Perforce is a commercial VCS that is used by many large companies, such as Google, Adobe and IBM. It is still one of the largest version control systems in use today.
-\paragraph{Advantages}
-% TODO: Add advantages
-\paragraph{Disadvantages}
-% TODO: Add disadvantages
+Subversion (SVN) was developed by CollabNet in 2000 and is now maintained by the Apache Software Foundation. It is written in C and was designed to be a more robust centralized solution than CVS.
+\paragraph{Architecture}
+% TODO: Rewrite this section
+% ==============================================================================
+Similar to CVS, SVN uses a centralized repository model. Remote users must have a working network connection to commit their changes to the central repository.
+
+Subversion introduced the functionality of atomic commits which ensured that a commit would either fully succeed, or be completely abandoned if an issue occurred.
+
+In CVS, if a commit operation failed midway, for example due to a network outage, the repository could be left in a corrupted and inconsistent state. Furthermore, a commit or revision in Subversion can include multiple files and directories. This is important since it allows users to track sets of related changes together as a grouped unit, instead of the past storage models that track changes separately for each file.
+
+The current storage model that Subversion uses for tracked files is called \lstinline{FSFS} or \lstinline{File System atop the File System}. This name was chosen since it creates its database structure using a file and directory structure that match the operating system filesystem it is running on. The unique feature of the Subversion filesystem is that it is designed to track not only the files and the directories it contains, but the different versions of these files and directories and they change over time. It is a filesystem with an added time dimension. In addition, folders are first class citizens in Subversion. Empty folders can be committed in Subversion, whereas in the rest (even Git) empty folders are unnoticed.
+
+When a Subversion repository is created, a (nearly) empty database of files and folders is created as a part of it. A directory called \lstinline{db/revs} is created in which all revision tracking information for the checked-in (committed) files is stored. Each commit (which can include changes to multiple files) is stored in a new file in the \lstinline{revs} directory and is named with a sequential numeric identifier starting with 1. When a file is committed for the first time, its full content is stored. Future commits of the same file will store only the changes - also called the \lstinline{diffs} or \lstinline{deltas} - in order to conserve space. In addition, the deltas are compressed using \lstinline{lz4} or \lstinline{zlib} compression algorithms to further reduce their size.
+
+By default, this is actually only true to a point. Although storing file deltas instead of the whole file each time does save on storage space, it adds time to checkout and commit operations since all the deltas need to be strung together in order to recreate the current state of the file. For this reason, by default Subversion stores up to 1023 deltas per file before storing a new full copy of the file. This achieves a nice balance of both storage and speed.
+
+SVN does not use a conventional branching and tagging system. A normal Subversion repository layout is to have three folders in the root:
+\begin{itemize}
+    \item \lstinline{trunk/}
+    \item \lstinline{branches/}
+    \item \lstinline{tags/}
+\end{itemize}
+The \lstinline{trunk/} folder is used for the production version of the application.
+The \lstinline{branches/} folder is used to store subfolders that correspond to individual branches.
+The \lstinline{tags/} folder is used to store tags which represent specific (usually significant) project revisions.
+% ==============================================================================
+
+% TODO: List SVN commands
+\paragraph{Basic Commands}
+
+Below is a list of the most common SVN commands.
+
+% ==============================================================================
+\subsubsection{Perforce Helix Core}
+% Perforce is a centralized VCS that was developed by Perforce Software in 1995. Perforce is a commercial VCS that is used by many large companies, such as Google, Adobe and IBM. It is still one of the largest version control systems in use today.
+% TODO: Rewrite this section
+% ==============================================================================
+Perforce Helix Core is a proprietary VCS created, owned, and maintained by Perforce Software, Inc. It is typically set up using a centralized model although it does offer a distributed model option. It is written in C and C++, and was initially released in 1995. It is primarily used by large companies that track and store a lot of content using large binary files, as is the case in the video game development industry. Although Helix Core is typically cost prohibitive for smaller projects, Perforce offers a free version for teams of up to 5 developers.
+\paragraph{Architecture}
+Perforce Helix Core is set up as a server/client model. The server is a process called \lstinline{p4d} which waits and listens for incoming client connections on a designated port, typically port 1666. The client is a process called \lstinline{p4} which comes in both command-line and GUI flavors. Users run the \lstinline{p4} client to connect to the server and issue commands to it. Support is available for various programming language APIs, including Python and Java. This allows automated issuance and processing of Helix Core commands via scripts. Integrations are also available for IDEs like Eclipse and Visual Studio, allowing users to work with version control from within those tools.
+
+The Helix Core Server manages repositories referred to as depots, which store files in directory trees, not unlike Subversion (SVN). Clients can checkout sets of files and directories from the depots into local copies called \textbf{workspaces}. The atomic unit used to group and track changes in Helix Core depots is called the \textbf{changelist}. Changelists are similar to Git commits. Helix Core implements two similar forms of branching - \textbf{branches} and \textbf{streams}. Branches are conceptually similar to what we are used to - separate lines of development history. A stream is a branch with added functionality that Helix Core uses to provide recommendations on best merging practices throughout the development process.
+
+When a file is added for tracking, Helix Core classifies it using a \textbf{file type} label. The two most commonly used file types are text and binary. For binary files, the entire file content is stored each time the file is stored. This is a common VCS tactic for dealing with binary files which are not amenable to the normal merge process, since manual conflict resolution is usually not possible.
+
+For text files, only the deltas (changes between revisions) are stored. Text file history and deltas are stored using the RCS (Revision Control System) format, which tracks each file in a corresponding \lstinline{,v} file in the server depot. This is similar to CVS, which also leverages RCS file formats for preserving revision history. Files are often compressed using gzip when added to the depot and decompressed when synced back to the workspace.
+
+% TODO: Add annotated comment
+% It is suprising that such a longstanding proprietary software like Perforce would base itself on a seemingly antiquated and open-source root like RCS, especially for such an essential component (its delta and history file backend)...
+
+% TODO: List Perforce commands
+\paragraph{Basic Commands}
+
+Below is a list of the most common Perforce commands.
+
+% ==============================================================================
 \subsection{Distributed Version Control Systems}
 In a distributed version control system, all copies of the repository are created equal - there is no central copy of the repository. This design principle encourages commits, branches and merges to be created locally without network access and pushed to other repositories as needed.
 \subsubsection{Git}
-Git is a distributed VCS that was developed by Linus Torvalds in 2005. Git is a free and open source VCS that is used by many large companies, such as Google, Facebook and Twitter. It is one of the most popular version control systems in use today.
-\paragraph{Advantages}
-% TODO: Add advantages
-\paragraph{Disadvantages}
-% TODO: Add disadvantages
+% Git is a distributed VCS that was developed by Linus Torvalds in 2005. Git is a free and open source VCS that is used by many large companies, such as Google, Facebook and Twitter. It is one of the most popular version control systems in use today.
+% TODO: Rewrite this section
+% ==============================================================================
+Git was created in 2005 by Linus Torvalds (also the creator of Linux) and is written primarily in C combined with some shell scripts. It is widely considered the best VCS tool due to its features, flexibility, and speed. Linus Torvalds originally wrote it for the Linux codebase and it has grown to become the most popular VCS in use today.
+
+"You can do a lot of things with Git, and many of the rules of what you should do are not so much technical limitations but are about what works well when working together with other people. So Git is a very powerful set of tools, and that can not only be overwhelming at first, it also means that you can often do the same (or similar) things different ways, and they all 'work.'" - Linus Torvalds
+
+Git repositories are commonly hosted on local servers as well as cloud services. Git forms the backbone of a broad set of DevOps tools available from popular service providers including GitHub, BitBucket, GitLab, and many others.
+\paragraph{Architecture}
+Git is a distributed VCS. This means that no copy of the repository needs to be designated as the centralized copy - all copies are created equal. This is in stark contrast to the second generation VCS which rely on a centralized copy for users to checkin and checkout from.
+
+What this means is that developers and coding partners can share changes with each other directly before merging their changes into an official branch. This allows team collaboration to take on a flexible distributed workflow, if desired.
+
+Furthermore, developers can commit their changes to their local copy of the repository without any other repositories knowing about it. This means that commits can be made without any network or Internet connection. Developers can work locally offline until they are ready to share their work with others. At that point, the changes can be pushed to other repositories for review, testing, or deployment.
+
+When a file is added for tracking with Git, it is compressed using the \lstinline{zlib} compression algorithm. The result is hashed using a SHA-1 hash function. This yields a unique hash value that corresponds specifically to the content in that file. Git stores this in an \lstinline{object database} which is located in the hidden \lstinline{.git/objects} folder.
+
+The name of the file is the generated hash value, and the file contains the compressed content. These files are called Git blobs and are created each time a new file (or changed version of an existing file) are added to the repository.
+
+"The object database is literally just a content-addressable collection of objects. All objects are named by their content, which is approximated by the SHA1 hash of the object itself. Objects may refer to other objects (by referencing their SHA1 hash), and so you can build up a hierarchy of objects." - Linus Torvalds
+
+Git implements a \lstinline{staging index} which acts as an intermediate area for changes that are getting ready to be committed. As new changes are staged for commit, their compressed contents are referenced in a special index file - which takes the form of a \lstinline{tree} object. A \lstinline{tree} is a Git object that connects blob objects to their real file names, file permissions and links to other trees, and in this way represents the state of a particular set of files and directories. Once all related changes are staged for commit, the index tree can be committed to the repository, which creates a \lstinline{commit} object in the Git object database.
+
+A commit references the head tree for a particular revision as well as the commit author, email address, date, and a descriptive commit message. Each commit also stores a reference to its parent commit(s) and so over time a history of project development is established.
+
+As mentioned, all Git objects - blobs, trees, and commits - are compressed, hashed, and stored in the object database based on their hash value. These are called \lstinline{loose objects}. At this point no diffs have been utilized to save space which makes Git very fast since the full content of each file revision is accessible as a loose object.
+
+However, certain operations such as pushing commits to a remote repository, storing too many objects, or manually running Git's garbage collection command can cause Git to repackage the objects into \lstinline{pack files}. In the packing process, reverse diffs are taken and compressed to eliminate redundant content and reduce size. This process results in \lstinline{.pack} files containing the object content, each with a corresponding \lstinline{.idx} (or index) file containing a reference of the packed objects and their locations in the pack file.
+
+These pack files are transferred over the network when branches are pushed to or pulled from remote repositories. When pulling or fetching branches, the pack files are unpacked to create the loose objects in the object repository.
+
+\paragraph{Basic Commands}
+
+\begin{itemize}
+    \item \lstinline{git init} - Initialize a Git repository in the current directory (creates the hidden \lstinline{.git} folder and its contents).
+    \item \lstinline{git clone <git-url>} - Download a copy of the Git repository at the specified URL.
+    \item \lstinline{git add <filename.ext>} - Add an untracked file or changed file to the staging area (creates corresponding entries in the object database).
+    \item \lstinline{git commit -m 'Commit message'} - Commit a set of changed files and folders along with a descriptive commit message.
+    \item \lstinline{git status} - Show information related to the state of the working directory, current branch, untracked files, modified files, etc.
+    \item \lstinline{git branch <new-branch>} - Create a new branch based on the current checked-out branch.
+    \item \lstinline{git checkout <branch>} - Checkout the specified branch into the working directory.
+    \item \lstinline{git merge <branch>} - Merge the specified branch into the current branch checked-out in the working directory.
+    \item \lstinline{git pull} - Update the working copy by merging in committed changes that exist in the remote repository but not the working copy.
+    \item \lstinline{git push} - Pack loose objects for local active branch commits into pack files and transfer to remote repository.
+    \item \lstinline{git log} - Show the commit history and associated descriptive messages for the active branch.
+    \item \lstinline{git stash} - Save all uncommitted changes in the working directory to a cache so that they can be retrieved later.
+\end{itemize}
+
+% ==============================================================================
 \subsubsection{Mercurial}
-Mercurial is a distributed VCS that was developed by Matt Mackall in 2005. Mercurial was developed with the same goal as Git, to maintain the Linux kernal project.
-\paragraph{Advantages}
-% TODO: Add advantages
-\paragraph{Disadvantages}
-% TODO: Add disadvantages
+% Mercurial is a distributed VCS that was developed by Matt Mackall in 2005. Mercurial was developed with the same goal as Git, to maintain the Linux kernal project.
+% TODO: Rewrite this section
+% ==============================================================================
+Mercurial was created in 2005 by Matt Mackall and it is written in Python. It was also started with the goal of hosting the codebase for Linux, but Git was chosen instead. It is the second most popular distributed VCS after Git, but is used far less often.
+\paragraph{Architecture}
+Like Git, Mercurial is a distributed version control system that allows any number of developers to work with their own copy of a project independently from others.
+
+Mercurial leverages many of the same technologies as Git, such as compression and SHA-1 hashing, but does so in different ways.
+
+When a new file is committed for tracking in Mercurial, a corresponding \lstinline{revlog} file is created for it in the hidden directory \lstinline{.hg/store/data/}. You can think of a \lstinline{revlog} (or revision log) file as a modernized version of the \lstinline{history files} used by the older VCS like CVS, RCS, and SCCS.
+
+Unlike Git, which creates a new blob for every version of every staged file, Mercurial simply creates a new entry in the revlog for that file. To conserve space, each new entry only contains the delta (changes) from the previous version. Once a threshold number of deltas is reached, a full snapshot of the file is stored again.
+
+This reduces the lookup time when applying many deltas to reconstruct a particular file revision.
+
+These file revlogs are named to match the files that they track, but are postfixed with \lstinline{.i} and \lstinline{.d} extensions. The \lstinline{.d} files contained the compressed delta content. The \lstinline{.i} files are used as indexes to quickly track down different revisions inside the \lstinline{.d} files. For small files with low numbers of revisions, both the indexes and content are stored in \lstinline{.i} files. Revlog file entries are compressed for performance and hashed for identification. The hash values are referred to as \lstinline{nodeids}.
+
+Whenever a new commit is made, Mercurial tracks the all file revisions in that commit in something called the \lstinline{manifest}. The manifest is also a revlog file - it stores entries that correspond to particular states of the repository.
+
+However, instead of storing individual file content like the file revlogs, the manifest stores a list of filenames and nodeids that specify which file revision entries exist in each revision of the project. These manifest entries are also compressed and hashed. The hash values are again referred to as \lstinline{nodeids}.
+
+Lastly, Mercurial uses one more type of revlog called a \lstinline{changelog}. The changelog contains a list of entries that associate each commit with the following information:
+\begin{itemize}
+    \item Manifest nodeid - Identifies the full set of file revisions that exist at a particular time.
+    \item Parent commit nodeid(s) - This allows Mercurial to establish a timeline or branch of project history. One or two parent ID's are stored depending on the type of commit (normal vs merge).
+    \item Commit author
+    \item Commit date
+\end{itemize}
+Each changelog entry also generates a hash known as its \lstinline{nodeid}.
+
+\paragraph{Basic Commands}
+\begin{itemize}
+    \item \lstinline{hg init} - Initialize the current directory as a Mercurial repository (creates the hidden \lstinline{.hg} folder and its contents).
+    \item \lstinline{hg clone <hg-url>} - Download a copy of the Mercurial repository at the specified URL.
+    \item \lstinline{hg add <filename.ext>} - Add a new file for revision tracking.
+    \item \lstinline{hg commit -m 'Commit message'} - Commit a set of changed files and folders along with a descriptive commit message.
+    \item \lstinline{hg status} - Show information related to the state of the working directory, untracked files, modified files, etc.
+    \item \lstinline{hg update <revision>} - Checkout the specified branch into the working directory.
+    \item \lstinline{hg merge <branch>} - Merge the specified branch into the current branch checked out in the working directory.
+    \item \lstinline{hg pull} - Download new revisions from remote repository but don't merge them into the working directory.
+    \item \lstinline{hg push} - Transfer new revisions to remote repository.
+    \item \lstinline{hg log} - Show the commit history and associated descriptive messages for the active branch.
+\end{itemize}
+
+
+% ==============================================================================
 \subsubsection{BitKeeper}
 % TODO: Explain BitKeeper
 \paragraph{Advantages}

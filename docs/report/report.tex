@@ -3,6 +3,9 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{hyperref}
+\usepackage{graphicx}
+
+\graphicspath{{../images/}}
 
 \definecolor{dkgreen}{rgb}{0,0.6,0}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
@@ -37,26 +40,15 @@
 \begin{document}
 \pagenumbering{roman}
 \maketitle
-
 \input{0.1_abstract/abstract.tex}
-
 \input{0.2_declaration/declaration.tex}
-
 \input{0.3_acknowledge/acknowledgements.tex}
-
 \tableofcontents
 \pagenumbering{arabic}
-
 \input{1_introduction/introduction.tex}
-
 \input{2_background/background.tex}
-
 \input{3_design/design.tex}
-
 \input{4_implementation/implementation.tex}
-
 \input{5_evaluation/evaluation.tex}
-
 \input{6_conclusion/conclusion.tex}
-
 \end{document}
