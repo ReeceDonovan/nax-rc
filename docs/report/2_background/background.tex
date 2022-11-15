@@ -16,6 +16,8 @@ Further still, testing for new versions cannot occur until some development work
 The two approaches to VCSs are Centralized and Distributed. Both approaches are in widespread use today. The centralized approach is based on the client-server model, where a single central repository stores the history of all files. In contrast, the distributed approach provides each user with a full repository copy.
 
 While there is no clear answer for which approach is best, it's important to note that the centralized approach features a single point of failure but also more challenging scaling than its counterpart (Distributed).
+
+% \newpage
 \subsection{Centralized Version Control Systems (CVCS)}
 A centralized Version Control System is a system that enables developers to work together on the same project by storing the primary copy of files in a central repository. This system keeps track of all files and saves information in the local repository. CVCS are called centralized because there is only one central server or repository.
 
@@ -27,12 +29,14 @@ CVCS has some challenges, such as if the central server is inaccessible, users w
 
 So, the main drawbacks of using CVCS are that it requires a network connection to work on the source code, developers must order to contribute to a project, and a single point of failure is an issue when using one server.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{centralized-version-control-system-structure}
+    \includegraphics[width=0.75\textwidth]{centralized-vcs-structure}
     \caption{Centralized Version Control System}
     \label{fig:cvcs-structure}
 \end{figure}
+
+% \newpage
 \subsection{Distributed Version Control Systems (DVCS)}
 Distributed Version Control Systems (DVCS) were created to overcome the limitations of Centralized Version Control Systems (CVCS), which enable branching and merging, avoid local VCS operations and allow developer collaboration. Due to the limitations associated with using a centralized version control system, Open Source Software (OSS) projects today broadly adopt DVCS.
 
@@ -44,14 +48,18 @@ Collaboration between team members and allowing individual developers to be serv
 
 DVCS introduces some challenges: it lacks a coherent version numbering system, where there is no centralized versioning server, and uses hash modifications or a unique GUID. So, the lack of a central server makes system backup difficult.
 
+% \newpage
 The two most prevalent complaints about the disadvantages of DVCS are that: pessimistic locks are not available and they have weak tools for binary. However, the reasons for the transition from centralized to decentralized version Control Systems are that developers can work offline and work incrementally efficiently because they can make several roles, such as developing new tasks or fixing errors; this also leads to exploratory coding, which gives them more freedom in their workflow while still retaining control over their code's release schedule.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{distributed-version-control-system-structure}
+    \includegraphics[width=0.8\textwidth]{distributed-vcs-structure}
     \caption{Distributed Version Control System}
     \label{fig:dvcs-structure}
 \end{figure}
+
+% \newpage
+
 \section{Existing Version Control Systems}
 \subsection{Local Version Control Systems}
 Early VCS were intended to track changes for individual files and checked-out files could only be edited locally by one user at a time. They were built on the assumption that all users would log into the same shared Unix host with their own accounts, but it was not always possible. As you can imagine, these early systems made it easier for small teams to revisit code states from various points in history.
