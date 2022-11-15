@@ -38,15 +38,15 @@ SCCS was released in 1972, and it is one of the first successful VCS tools. It w
 % TODO: Rewrite this section
 Like most modern VCS tools, SCCS has a set of commands that allow developers to work with versioning of files. The basic command functionality are:
 \begin{itemize}
-\item Check in files to track their history.
-\item Check out specific file versions for review.
-\item Check out specific file versions for editing.
-\item Check in new file versions with comments explaining the changes.
-\item Revert changes made to a checked out file.
-\item Basic branching and merging of changes.
-\item Print a log of a file's version history.
+    \item Check in files to track their history.
+    \item Check out specific file versions for review.
+    \item Check out specific file versions for editing.
+    \item Check in new file versions with comments explaining the changes.
+    \item Revert changes made to a checked out file.
+    \item Basic branching and merging of changes.
+    \item Print a log of a file's version history.
 \end{itemize}
-A special type of file called a \lstinline{s-file} or a \lstinline{history file} is created when a file is tracked by SCCS. This file is named with the original filename prefixed with a \lstinline{s.}, and is stored in a subdirectory called \lstinline{SCCS}. So a file called
+A special type of file called a \lstinline{s-file} or a \lstinline{history file} is created when a file is tracked by SCCS. This file is named with the original filename prefixed with a \lstinline{s.}, and is stored in a subdirectory called \lstinline{SCCS}. So a file called \lstinline{test.txt} would get a history file created in the \lstinline{./SCCS/} directory with a name of \lstinline{s.test.txt}.
 \subsubsection{Revision Control System (RCS)}
 % TODO: Explain RCS
 \paragraph{Advantages}
