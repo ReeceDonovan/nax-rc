@@ -1,3 +1,5 @@
+\lstset{language=bash}
+\newpage
 \chapter{Background}
 % ==============================================================================
 \section{What is a Version Control System}
@@ -104,12 +106,13 @@ The software supports branches that store sequences of changes to specific files
 \end{itemize}
 
 \subsubsection{Revision Control System (RCS)}
-% TODO: Rewrite this section
-% ==============================================================================
 % TODO: Explain RCS
-RCS was released in 1982, and it is another early VCS tool. It was written in C by Walter Tichy as an alternative to SCCS, which was still closed source at the time. RCS was released under the GNU General Public License, which allowed it to be used in open source projects.
+The Revision Control System (RCS) was released in 1982; it was written in C by Walter Tichy as an alternative to SCCS, which was still closed-source at the time. RCS was released under the GNU General Public License, which allowed it to be used in open-source projects.
 
-"RCS manages revisions of text documents, in particular source programs, documentation, and test data. It automates the storing, retrieval, logging, and identification of revisions." - Walter Tichy
+\begin{quote}
+    "RCS manages revisions of text documents, in particular source programs, documentation, and test data. It automates the storing, retrieval, logging and identification of revisions." -- Walter Tichy \cite{tichy_1985}
+\end{quote}
+
 \paragraph{Architecture}
 RCS shares many traits with its predecessor, including:
 \begin{itemize}
@@ -122,39 +125,59 @@ RCS shares many traits with its predecessor, including:
 \end{itemize}
 When a file is set checked into RCS for the first time, a corresponding history file is created for it in the local \lstinline{./RCS/} directory. This file is postfixed with a \lstinline{,v} so a file named \lstinline{test.txt} would be tracked by a file called \lstinline{test.txt,v}.
 
-RCS uses a \lstinline{reverse-delta} scheme for storing file changes. When a file is checked in, a full snapshot of the file's content is stored in the history file. When the file is modified and checked in again, a delta is calculated based off of the existing history file content. The old snapshot is discarded and the new one is saved, along with the delta to get back to the older state.
+RCS uses a \lstinline{reverse-delta} scheme for storing file changes. When a file is checked in, the history file contains the complete snapshot of its contents. When that same file is modified and checked in again, RCS calculates only one delta--the difference between the new version of that particular revision and the old version as recorded previously by RCS--and saves it along with an older snapshot if necessary.
 
-This is called \lstinline{reverse-delta} since to check out an older revision, RCS starts with the newest version of the file and applies consecutive deltas until the older revision is reached. This method allows for very quick checkouts of current revisions since the full snapshot of the current revision is always available. However, the older the checkout revision, the longer the checkout takes since an increasing number of deltas need to be calculated against the current snapshot.
+This is called \lstinline{reverse-delta} because to check out an earlier revision, RCS starts from what is newest and applies consecutive deltas until getting back to our desired revision; starting at what is newest allows for quick checkout times since we always have access to current revisions (since their snapshots are saved).
 
-This is not the case with SCCS which takes the same amount of time to fetch any revision. In addition, no checksum is stored in RCS history files so file integrity cannot be ensured.
+However, suppose you wanted to go back further than just one recent update on your project (1 or 2 old versions). In that case, things get considerably more complicated because those versions' snapshots would need to be calculated against each other before they can be applied to what is new.
+
+This is not the case with SCCS since it takes the same amount of time to fetch any revision. In addition, no checksum is stored in RCS history files; therefore, file integrity cannot be ensured.
 
 % TODO: List RCS commands
 \paragraph{Basic Commands}
 
-Below is a list of the most common RCS commands.
+\begin{itemize}
+    \item \lstinline{ci <filename.ext>} - Check in a new file to RCS and create a new history file for it (in the \lstinline{./RCS/} directory by default).
+    \item \lstinline{co <filename.ext>} - Check out a file from from its corresponding history file and place it in the working directory in readonly mode.
+    \item \lstinline{co -l <filename.ext>} - Check out a file from the corresponding history file for editing. Locks the history file so no other users can modify it.
+    \item \lstinline{ci <filename.ext>} - Check in file changes and create a new revision for it in its corresponding history file.
+    \item \lstinline{merge <file-to-merge-into.ext> <parent.ext> <file-to-merge-from.ext>} - Merge changes from two modified children of the same parent file.
+    \item \lstinline{rcsdiff <filename.ext>} - Display the differences between the current working copy of a file and the state of the file when it was checked out.
+    \item \lstinline{rcsclean} - Removes working files that don't have locks on them.
+\end{itemize}
 
-% ==============================================================================
 \subsection{Centralized Version Control Systems}
-Version control technology continued to evolve, leading to centralized repositories that contained the 'official' versions of their projects. This was good progress, since it allowed multiple users to checkout and work with the code at the same time as well as making commits back into this central repository. Furthermore, network access was required for people who wanted to commit changes they had made locally.
+Version control technology continued to evolve, leading to centralized repositories that contained the 'official' versions of their projects. This was good progress since it allowed multiple users to checkout, work with the code simultaneously, and commit to this central repository. Furthermore, network access was required for people who wanted to commit changes they had made locally.
 \subsubsection{Concurrent Versions System (CVS)}
-Concurrent Versions System (CVS) was developed in by Dick Grune in 1986, it is also written in C. It was created with the goal of adding a networking element to version control. CVS became the first widely used VCS tool that allowed multiple users to work on the same project at the same time from different locations. This kicked off the second generation of VCS tools, allowing geographically dispersed development teams to work together on the same project.
+Dick Grune developed the Concurrent Versions System in 1986. It was written in C, and its goal was to add a networking element to version control. As a result, the Concurrent Versions System became the first widely used VCS tool that allowed multiple users to work on the same project simultaneously from different locations. This kicked off the second generation of VCS tools, allowing geographically dispersed development teams to work together on a project.
+
 \paragraph{Architecture}
-CVS operates as a frontend for RCS - it provides a set of commands to interact with files in a project, but uses the RCS history file format and commands behind the scenes.
+CVS operates as a frontend for RCS - it provides a set of commands to interact with files in a project but uses the RCS history file format and commands behind the scenes.
 
-This meant that for the first time in history, multiple developers could check out and work on the same files simultaneously. It did this by utalising a centralized repository model.
+This meant multiple developers could check out and work on the duplicate files for the first time in history. It did this by utilizing a centralized repository model.
 
-% TODO: Rewrite this section
-% ==============================================================================
 The first step is to set up a centralized repository on a remote server using CVS. Projects can then be imported into the repository. When a project is imported into CVS, each file is converted into a \lstinline{,v} history file and stored in a central directory known as a \lstinline{module}. The repository generally lives on a remote server which is accessible over a local network or the Internet.
 
-A developer checks out a copy the module which is copied to a working directory on their local machine. No files are locked in this process so there is no limit to the number of developers that can check out the module at one time. Developers can modify their checked out files and commit their changes as needed. If a developer commits a change, other developers will need to update their working copies via a (usually) automated merge process before committing their changes. Occasionally merge conflicts will need to be manually resolved before the commit can be made. CVS also provides the ability to create and merge branches.
-% ==============================================================================
+A developer checks out a copy of the module, which is copied to a working directory on their local machine. No files are locked in this process, so there is no limit to the number of developers that can check out the module at one time. Developers can modify their checked-out files and commit their changes as needed. If a developer commits a change, other developers need to update their working copies via a (usually) automated merge process before committing their changes. Occasionally merge conflicts will need to be manually resolved before the commit can be made. CVS also provides the ability to create and merge branches.
 
 % TODO: List CVS commands
 \paragraph{Basic Commands}
 
-Below is a list of the most common CVS commands.
+\begin{itemize}
+    \item \lstinline{export CVSROOT=<path/to/repository>} - Sets the CVS repository root directory so it doesn't need to be specified in each command.
+    \item \lstinline{cvs import -m 'Import module' <module-name> <vendor-tag> <release-tag>} - Import a directory of files into a CVS module. Before running this browse into the root directory of the project you want to import.
+    \item \lstinline{cvs checkout <module-name>} - Copy a module to the working directory.
+    \item \lstinline{cvs commit <filename.ext>} - Commit a changed file back to the module in the central repository.
+    \item \lstinline{cvs add <filename.txt>} - Add a new file to track revisions for.
+    \item \lstinline{cvs update} - Update the working copy by merging in committed changes that exist in the central repository but not the working copy.
+    \item \lstinline{cvs status} - Show general information about the checked out working copy of a module.
+    \item \lstinline{cvs tag <tag-name> <files>} - Add an identifying tag to a single file or set of files.
+    \item \lstinline{cvs tag -b <new-branch-name>} - Create a new branch in the repository (must be checked out before working on it locally).
+    \item \lstinline{cvs checkout -r <branch-name>} - Checkout an existing branch to the working directory.
+    \item \lstinline{cvs update -j <branch-to-merge>} - Merge an existing branch into the local working copy.
+\end{itemize}
 
+% TODO: Rewrite this section
 % ==============================================================================
 \subsubsection{Apache Subversion (SVN)}
 Subversion (SVN) was developed by CollabNet in 2000 and is now maintained by the Apache Software Foundation. It is written in C and was designed to be a more robust centralized solution than CVS.
@@ -318,12 +341,12 @@ Each changelog entry also generates a hash known as its \lstinline{nodeid}.
 % TODO: Add advantages
 \paragraph{Disadvantages}
 % TODO: Add disadvantages
-\subsubsection{Darcs Advanced Revision Control System (Darcs)}
-% TODO: Explain Darcs
-\paragraph{Advantages}
-% TODO: Add advantages
-\paragraph{Disadvantages}
-% TODO: Add disadvantages
+% \subsubsection{Darcs Advanced Revision Control System (Darcs)}
+% % TODO: Explain Darcs
+% \paragraph{Advantages}
+% % TODO: Add advantages
+% \paragraph{Disadvantages}
+% % TODO: Add disadvantages
 \subsubsection{Monotone}
 % TODO: Explain Monotone
 \paragraph{Advantages}

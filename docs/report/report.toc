@@ -1,22 +1,22 @@
-\contentsline {chapter}{\numberline {1}Introduction}{2}{chapter.1}%
-\contentsline {chapter}{\numberline {2}Background}{3}{chapter.2}%
-\contentsline {section}{\numberline {2.1}What is a Version Control System}{3}{section.2.1}%
-\contentsline {subsection}{\numberline {2.1.1}What is the purpose of Version Control Systems}{3}{subsection.2.1.1}%
-\contentsline {section}{\numberline {2.2}Types of VCS}{4}{section.2.2}%
-\contentsline {subsection}{\numberline {2.2.1}Centralized Version Control Systems (CVCS)}{4}{subsection.2.2.1}%
-\contentsline {subsection}{\numberline {2.2.2}Distributed Version Control Systems (DVCS)}{5}{subsection.2.2.2}%
-\contentsline {section}{\numberline {2.3}Existing Version Control Systems}{7}{section.2.3}%
-\contentsline {subsection}{\numberline {2.3.1}Local Version Control Systems}{7}{subsection.2.3.1}%
-\contentsline {subsubsection}{Source Code Control System (SCCS)}{7}{section*.5}%
-\contentsline {paragraph}{Architecture}{7}{section*.6}%
-\contentsline {paragraph}{Basic Commands}{8}{section*.7}%
-\contentsline {subsubsection}{Revision Control System (RCS)}{9}{section*.8}%
-\contentsline {paragraph}{Architecture}{9}{section*.9}%
-\contentsline {paragraph}{Basic Commands}{10}{section*.10}%
-\contentsline {subsection}{\numberline {2.3.2}Centralized Version Control Systems}{10}{subsection.2.3.2}%
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Background}{2}{chapter.2}%
+\contentsline {section}{\numberline {2.1}What is a Version Control System}{2}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}What is the purpose of Version Control Systems}{2}{subsection.2.1.1}%
+\contentsline {section}{\numberline {2.2}Types of VCS}{3}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Centralized Version Control Systems (CVCS)}{3}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Distributed Version Control Systems (DVCS)}{4}{subsection.2.2.2}%
+\contentsline {section}{\numberline {2.3}Existing Version Control Systems}{6}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Local Version Control Systems}{6}{subsection.2.3.1}%
+\contentsline {subsubsection}{Source Code Control System (SCCS)}{6}{section*.5}%
+\contentsline {paragraph}{Architecture}{6}{section*.6}%
+\contentsline {paragraph}{Basic Commands}{7}{section*.7}%
+\contentsline {subsubsection}{Revision Control System (RCS)}{8}{section*.8}%
+\contentsline {paragraph}{Architecture}{8}{section*.9}%
+\contentsline {paragraph}{Basic Commands}{9}{section*.10}%
+\contentsline {subsection}{\numberline {2.3.2}Centralized Version Control Systems}{9}{subsection.2.3.2}%
 \contentsline {subsubsection}{Concurrent Versions System (CVS)}{10}{section*.11}%
 \contentsline {paragraph}{Architecture}{10}{section*.12}%
-\contentsline {paragraph}{Basic Commands}{11}{section*.13}%
+\contentsline {paragraph}{Basic Commands}{10}{section*.13}%
 \contentsline {subsubsection}{Apache Subversion (SVN)}{11}{section*.14}%
 \contentsline {paragraph}{Architecture}{11}{section*.15}%
 \contentsline {paragraph}{Basic Commands}{12}{section*.16}%
@@ -33,18 +33,15 @@
 \contentsline {subsubsection}{BitKeeper}{18}{section*.26}%
 \contentsline {paragraph}{Advantages}{18}{section*.27}%
 \contentsline {paragraph}{Disadvantages}{18}{section*.28}%
-\contentsline {subsubsection}{Darcs Advanced Revision Control System (Darcs)}{18}{section*.29}%
+\contentsline {subsubsection}{Monotone}{18}{section*.29}%
 \contentsline {paragraph}{Advantages}{18}{section*.30}%
 \contentsline {paragraph}{Disadvantages}{18}{section*.31}%
-\contentsline {subsubsection}{Monotone}{18}{section*.32}%
+\contentsline {subsubsection}{Bazaar}{18}{section*.32}%
 \contentsline {paragraph}{Advantages}{18}{section*.33}%
 \contentsline {paragraph}{Disadvantages}{18}{section*.34}%
-\contentsline {subsubsection}{Bazaar}{18}{section*.35}%
+\contentsline {subsubsection}{Fossil}{18}{section*.35}%
 \contentsline {paragraph}{Advantages}{18}{section*.36}%
-\contentsline {paragraph}{Disadvantages}{18}{section*.37}%
-\contentsline {subsubsection}{Fossil}{19}{section*.38}%
-\contentsline {paragraph}{Advantages}{19}{section*.39}%
-\contentsline {paragraph}{Disadvantages}{19}{section*.40}%
+\contentsline {paragraph}{Disadvantages}{19}{section*.37}%
 \contentsline {section}{\numberline {2.4}Summary of Key Features}{19}{section.2.4}%
 \contentsline {subsection}{\numberline {2.4.1}Repositories}{19}{subsection.2.4.1}%
 \contentsline {subsection}{\numberline {2.4.2}Commits}{19}{subsection.2.4.2}%
