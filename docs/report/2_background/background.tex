@@ -63,6 +63,12 @@ The two most prevalent complaints about the disadvantages of DVCS are that: pess
 % \newpage
 
 \section{Existing Version Control Systems}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{vcs-timeline.png}
+    \caption{Timeline of the Creation of Version Control Systems \cite{stopak_2019}}
+    \label{fig:vcs-timeline}
+\end{figure}
 \subsection{Local Version Control Systems}
 Early VCS were intended to track changes for individual files and checked-out files could only be edited locally by one user at a time. They were built on the assumption that all users would log into the same shared Unix host with their own accounts, but it was not always possible. As you can imagine, these early systems made it easier for small teams to revisit code states from various points in history.
 \subsubsection{Source Code Control System (SCCS)}
@@ -177,19 +183,23 @@ A developer checks out a copy of the module, which is copied to a working direct
     \item \lstinline{cvs update -j <branch-to-merge>} - Merge an existing branch into the local working copy.
 \end{itemize}
 
-% TODO: Rewrite this section
-% ==============================================================================
 \subsubsection{Apache Subversion (SVN)}
 Subversion (SVN) was developed by CollabNet in 2000 and is now maintained by the Apache Software Foundation. It is written in C and was designed to be a more robust centralized solution than CVS.
 \paragraph{Architecture}
+% Similar to CVS, SVN uses a centralized repository model. Remote users must have a working network connection to commit their changes to the central repository.
+
+% Subversion introduced the functionality of atomic commits which ensured that a commit would either fully succeed, or be completely abandoned if an issue occurred.
+
+SVN, like CVS, uses a centralized repository model. Therefore, remote users must have a working network connection to commit their changes to the central repository.
+
+Subversion introduced atomic commits, which ensure that a commit will either fully succeed or be completely abandoned if an issue occurs.
+
+% In CVS, if a commit operation failed midway, for example due to a network outage, the repository could be left in a corrupted and inconsistent state. Furthermore, a commit or revision in Subversion can include multiple files and directories. This is important since it allows users to track sets of related changes together as a grouped unit, instead of the past storage models that track changes separately for each file.
+
+If a commit operation in CVS fails, for example, due to a network outage, the repository can be corrupted and inconsistent. In Subversion, a commit or revision can include multiple files and directories. This allows users to track sets of related changes together as a grouped unit instead of separately for each file, like in past storage models.
+
 % TODO: Rewrite this section
 % ==============================================================================
-Similar to CVS, SVN uses a centralized repository model. Remote users must have a working network connection to commit their changes to the central repository.
-
-Subversion introduced the functionality of atomic commits which ensured that a commit would either fully succeed, or be completely abandoned if an issue occurred.
-
-In CVS, if a commit operation failed midway, for example due to a network outage, the repository could be left in a corrupted and inconsistent state. Furthermore, a commit or revision in Subversion can include multiple files and directories. This is important since it allows users to track sets of related changes together as a grouped unit, instead of the past storage models that track changes separately for each file.
-
 The current storage model that Subversion uses for tracked files is called \lstinline{FSFS} or \lstinline{File System atop the File System}. This name was chosen since it creates its database structure using a file and directory structure that match the operating system filesystem it is running on. The unique feature of the Subversion filesystem is that it is designed to track not only the files and the directories it contains, but the different versions of these files and directories and they change over time. It is a filesystem with an added time dimension. In addition, folders are first class citizens in Subversion. Empty folders can be committed in Subversion, whereas in the rest (even Git) empty folders are unnoticed.
 
 When a Subversion repository is created, a (nearly) empty database of files and folders is created as a part of it. A directory called \lstinline{db/revs} is created in which all revision tracking information for the checked-in (committed) files is stored. Each commit (which can include changes to multiple files) is stored in a new file in the \lstinline{revs} directory and is named with a sequential numeric identifier starting with 1. When a file is committed for the first time, its full content is stored. Future commits of the same file will store only the changes - also called the \lstinline{diffs} or \lstinline{deltas} - in order to conserve space. In addition, the deltas are compressed using \lstinline{lz4} or \lstinline{zlib} compression algorithms to further reduce their size.
@@ -209,8 +219,20 @@ The \lstinline{tags/} folder is used to store tags which represent specific (usu
 
 % TODO: List SVN commands
 \paragraph{Basic Commands}
-
-Below is a list of the most common SVN commands.
+\begin{itemize}
+    \item \lstinline{svn create <path-to-repository>} - Create a new, empty repository shell in the specified directory.
+    \item \lstinline{svn import <path-to-project> <svn-url>} - Import a directory of files into the specified Subversion repository path.
+    \item \lstinline{svn checkout <svn-path> <path-to-checkout>} - Copy a stored repository path to the desired working directory.
+    \item \lstinline{svn commit -m 'Commit message'} - Commit a set of changed files and folders along with a descriptive commit message. These can be used as notes for future developers to understand what changes were made. The message of the initial commit is typically set to 'Initial commit'.
+    \item \lstinline{svn add <filename.txt>} - Add a new file to track revisions for.
+    \item \lstinline{svn update} - Update the working copy by merging in committed changes that exist in the central repository but not the working copy.
+    \item \lstinline{svn status} - Show a list of tracked files that have been changed in the working directory (if any).
+    \item \lstinline{svn info} - Show a list of general details about the checked-out copy.
+    \item \lstinline{svn copy <branch-to-copy> <new-branch-path-and-name>} - Create a new branch by copying an existing one.
+    \item \lstinline{svn switch <existing-branch>} - Switch the working directory to an existing branch. This will checkout the specified branch.
+    \item \lstinline{svn merge <existing-branch>} - Merge the specified branch into the current branch checked out in the working directory. Note this needs to be committed afterwards.
+    \item \lstinline{svn log} - Show the commit history and associated descriptive messages for the active branch (useful for devs to find details of previous changes).
+\end{itemize}
 
 % ==============================================================================
 \subsubsection{Perforce Helix Core}
@@ -333,45 +355,35 @@ Each changelog entry also generates a hash known as its \lstinline{nodeid}.
     \item \lstinline{hg log} - Show the commit history and associated descriptive messages for the active branch.
 \end{itemize}
 
-
 % ==============================================================================
 \subsubsection{BitKeeper}
 % TODO: Explain BitKeeper
-\paragraph{Advantages}
-% TODO: Add advantages
-\paragraph{Disadvantages}
-% TODO: Add disadvantages
+\newpage
+\newpage
 % \subsubsection{Darcs Advanced Revision Control System (Darcs)}
 % % TODO: Explain Darcs
-% \paragraph{Advantages}
-% % TODO: Add advantages
-% \paragraph{Disadvantages}
-% % TODO: Add disadvantages
 \subsubsection{Monotone}
 % TODO: Explain Monotone
-\paragraph{Advantages}
-% TODO: Add advantages
-\paragraph{Disadvantages}
-% TODO: Add disadvantages
+\newpage
+\newpage
 \subsubsection{Bazaar}
 % TODO: Explain Bazaar
-\paragraph{Advantages}
-% TODO: Add advantages
-\paragraph{Disadvantages}
-% TODO: Add disadvantages
+\newpage
+\newpage
 \subsubsection{Fossil}
 % TODO: Explain Fossil
-\paragraph{Advantages}
-% TODO: Add advantages
-\paragraph{Disadvantages}
-% TODO: Add disadvantages
+\newpage
+\newpage
 % ==============================================================================
 \section{Summary of Key Features}
 \subsection{Repositories}
 % TODO: Explain repositories
 \subsection{Commits}
+\newpage
 % TODO: Explain commits
 \subsection{Branching and Merging}
 % TODO: Explain branching and merging
+\newpage
 \subsection{Pulling and Pushing}
 % TODO: Explain pulling and pushing
+\newpage
