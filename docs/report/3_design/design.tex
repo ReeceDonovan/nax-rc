@@ -1,16 +1,114 @@
+\lstset{language=bash}
+\newpage
 \chapter{Design} % (30-40 pages)
+
+% TODO: Add intro paragraph
 
 % Decide if should focus on specific design patterns or not (e.g. blob storage, change log, etc.) - (0.5 page)
 
 % What is needed to support the core functionality? (e.g file interactions, etc.)
 
+Amet mollit dolor reprehenderit nulla. Esse velit qui est magna laboris excepteur anim duis voluptate magna deserunt irure dolor elit. In sit do consequat nostrud sit sunt mollit. Anim Lorem laborum anim commodo elit in et. Eiusmod consequat id eiusmod cillum esse ullamco excepteur. Lorem est minim adipisicing esse dolore occaecat.
+
+Sit do aute occaecat eiusmod reprehenderit ad. Cillum Lorem adipisicing minim pariatur cupidatat nostrud consequat dolore sit pariatur exercitation nisi do. Irure voluptate nulla mollit consectetur Lorem irure eu consequat pariatur ex aliqua. Ut aliquip nulla enim commodo amet excepteur dolor irure labore consequat qui minim. Anim aliqua ullamco laborum voluptate ullamco incididunt. Ex commodo adipisicing officia ipsum anim do. Consequat exercitation deserunt sunt nostrud magna reprehenderit ex.
+
+Mollit qui commodo commodo exercitation nulla pariatur do nostrud amet. Dolor sunt anim minim sunt ea dolore voluptate enim cupidatat Lorem consequat pariatur aute. Fugiat ullamco duis excepteur nulla eu veniam minim qui occaecat. Sit fugiat ea dolore sit. Non duis nostrud adipisicing qui ex cillum voluptate in.
+
+% ------------------------------------------------------------------------------
+
+% TODO: Change title
+\section{Data Structures}
 % Data Structures
 % ---------------
+% TODO:
 % What features are important in deciding which data structures to use? - (0.5 page)
+
+Incididunt sunt commodo minim deserunt ullamco nulla sint nostrud non labore eiusmod sit deserunt. Velit mollit dolor amet ad consequat minim. Minim commodo incididunt cupidatat elit incididunt tempor mollit laboris consectetur. Laborum ullamco adipisicing velit labore excepteur. Anim sunt nisi mollit do incididunt magna.
+
 % What are the potential data structures that could be used?
 %  - Explain the data structures in detail - (4 x 2 page)
 %  - Explain the pros and cons of each data structure - (4 x 0.5 page)
 %  - Explain how each data structure will be implemented - (4 x 1 page)
+
+% TODO: Add references
+\subsection{Linked List}
+% ------------------------------------------------------------------------------
+A \lstinline{Linked List} is a linear collection of data elements, called nodes, each pointing to the next node by means of a pointer. It is the most sought-after data structure when it comes to handling dynamic data elements.
+% TODO: Cite (simplilearn)
+Each node in a \lstinline{Linked List} typically contains a reference to some data as well as a reference to the next node in the sequence.
+
+% TODO: Fix spacing between these two paragraphs
+There are two types of \lstinline{Linked Lists}:
+\begin{itemize}
+    \item \lstinline{Singly-linked lists}: Each node contains a reference to the next node in the list only.
+    \item \lstinline{Doubly-linked lists}: Each node contains a reference to the next node in the list as well as the previous node in the list.
+\end{itemize}
+% TODO: Pros and Cons of single vs double linked list
+% 
+% TODO: Add image of Single Linked List data structure
+% 
+% TODO: Add image of Double Linked List data structure
+%  
+% TODO: Add Single Linked List detailed efficiency analysis of each operation (e.g. insertion, deletion, lookup, etc.)
+
+% \paragraph{Double Linked List Efficiency Analysis}
+\begin{table}[h]
+    \centering
+    \caption{Efficiency Analysis of Double Linked List Operations}
+    \label{tab:double-linked-list-efficiency-analysis}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Operation                & Worst Case & Average Case \\ \hline
+        Insert (at Head or Tail) & O(1)       & O(1)         \\ \hline
+        Delete (at Head or Tail) & O(1)       & O(1)         \\ \hline
+        Insert (within)          & O(n)       & O(n)         \\ \hline
+        Delete (within)          & O(n)       & O(n)         \\ \hline
+        Search                   & O(n)       & O(n)         \\ \hline
+        Access                   & O(n)       & O(n)         \\ \hline
+    \end{tabular}
+\end{table}
+
+% TODO: Add references
+% Advantages and Disadvantages in the context of a Version Control System
+\paragraph{Advantages}
+\begin{itemize}
+    \item Dynamic size: As new versions of a file are created, the \lstinline{Linked List} can grow in size to accommodate the new data, without the need to pre-allocate memory.
+    \item Efficient storage of file changes: Each node in the \lstinline{Linked List} can store the entire contents of a file version, along with metadata such as the date and time the change was made. This allows for efficient storage of file changes over time.
+    \item Easy traversal of file history: The \lstinline{Linked List} structure allows for easy traversal of the file history, as each node contains a reference to the previous version of the file. This makes it easy to track changes and revert to previous versions of a file.
+    \item Memory efficient: The \lstinline{Linked List} structure is memory efficient, as each node only contains the current version of the file and changes made to it, along with simple references to the next and previous nodes in the list. This means that the \lstinline{Linked List} structure does not need to store the entire file history in memory, which can be a significant amount of data.
+\end{itemize}
+\paragraph{Disadvantages}
+\begin{itemize}
+    \item Inefficient retrieval of specific file versions: Retrieving a specific version of a file can be slow, as the \lstinline{Linked List} structure does not allow for random access to the file history. This means that the entire file history must be traversed from the most recent version of the file to the desired version.
+    \item Limited scalability: For large file histories, the \lstinline{Linked List} structure can be less efficient and will not scale as well as other data structures.
+    \item Extra memory overhead: Each node in the \lstinline{Linked List} structure contains a reference to the next and previous nodes in the list, which can add up when dealing with large file histories.
+    \item Not suitable for concurrent access: The \lstinline{Linked List} structure is not suitable for concurrent access, as it is not thread-safe and can lead to data corruption and race conditions.
+\end{itemize}
+
+% TODO: Add implementation details
+\paragraph{Implementation Details}
+Exercitation ullamco culpa velit excepteur aute esse amet. Quis adipisicing consequat quis sunt elit cupidatat sunt ipsum nostrud laborum aliqua veniam veniam commodo. Minim ullamco aute aliquip eiusmod officia cillum fugiat magna consectetur aute sunt aliqua labore. Reprehenderit dolore commodo deserunt laborum culpa laborum elit. Labore Lorem quis culpa amet adipisicing pariatur consequat eu proident in officia aute voluptate. Excepteur irure deserunt et ullamco deserunt labore anim dolor amet est est culpa. Magna eiusmod nulla ipsum esse anim nostrud mollit fugiat proident magna laboris.
+
+Ut non aliquip aliquip Lorem reprehenderit nisi qui aliqua cupidatat enim adipisicing deserunt. Eiusmod est dolore ut ipsum Lorem et sunt est minim in Lorem. Reprehenderit ea proident officia anim dolore incididunt sunt labore sunt. Ea sunt incididunt anim tempor. Esse amet ut magna id irure ex.
+
+Id do cillum ad ad officia dolor sunt deserunt amet ex. Pariatur aute sint anim aute id irure reprehenderit laboris non tempor id. Labore in ad sunt nulla dolore velit ut aliquip amet dolore quis voluptate nisi. Magna non magna nulla officia magna voluptate officia dolore Lorem ea sunt duis. Non dolore proident voluptate consequat consequat laborum aliqua veniam et occaecat amet ea dolore.
+
+\subsection{Binary Tree}
+% ------------------------------------------------------------------------------
+
+
+\subsection{Hash Table}
+% ------------------------------------------------------------------------------
+
+
+
+
+\subsection{Directed Acyclic Graph (DAG)}
+% ------------------------------------------------------------------------------
+
+
+
+% ------------------------------------------------------------------------------
 
 % Algorithms
 % ---------------
@@ -23,4 +121,3 @@
 % What data structures pair well with each algorithm? - (2 page)
 
 % What metrics are important regarding each data structure and algorithm?
-
