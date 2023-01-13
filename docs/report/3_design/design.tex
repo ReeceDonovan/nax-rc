@@ -128,7 +128,7 @@ There are several different types of \lstinline{Binary Tree} structures, includi
 \begin{itemize}
     \item Efficient storage of file changes: Each node in the \lstinline{Binary Tree} structure can store the entire contents of a file version, along with metadata such as the date and time the version was created. This allows for efficient storage of file changes, as the entire file history can be stored in a single \lstinline{Binary Tree} structure.
     \item Easy traversal of file history: The \lstinline{Binary Tree} structure allows for easy traversal of the file history, with the root node representing the most recent version of the file and the leaf nodes representing the oldest versions of the file. This makes it easy to track changes and revert to previous versions of the file.
-    \item flexibility: \lstinline{Binary Tree} structures can be used to implement a variety of other data structures, such as \lstinline{Binary Search Trees}, \lstinline{AVL Trees}, \lstinline{Heaps}, and others, which can be useful for other operations in a \lstinline{Version Control System}.
+    \item Flexibility: \lstinline{Binary Tree} structures can be used to implement a variety of other data structures, such as \lstinline{Binary Search Trees}, \lstinline{AVL Trees}, \lstinline{Heaps}, and others, which can be useful for other operations in a \lstinline{Version Control System}.
 \end{itemize}
 % TODO: Confirm this is correct
 \paragraph{Disadvantages}
@@ -154,9 +154,55 @@ Magna fugiat consectetur magna adipisicing minim id elit Lorem culpa. Ut cillum 
 
 \subsection{Hash Table}
 % ------------------------------------------------------------------------------
+% TODO: Add explanation of why a hash table is suitable for a Version Control System
+% ------------------------------------------------------------------------------
+A \lstinline{Hash Table} is a data structure that uses a hash function to map keys to their corresponding values. It is an efficient way to implement an associative array, where keys are used to look up values.
 
+The basic idea behind a \lstinline{Hash Table} is to use a hash function to map a key to an index in an array, called a bucket, where the corresponding value can be found or stored. The process of mapping a key to an index is called \lstinline{hashing}.
 
+Each element in a \lstinline{Hash Table} consists of:
+\begin{enumerate}
+    \item Key: This is the value used to look up a corresponding element in the \lstinline{Hash Table}.
+    \item Value: This is the value associated with the key that is stored in the \lstinline{Hash Table}.
+\end{enumerate}
 
+% TODO: Add references
+When a new element is added to a \lstinline{Hash Table}, the key is passed through a \lstinline{hash} function which produces an \lstinline{index} (also called a hash value or bucket) where the element is stored.
+When a value is to be retrieved, the key is passed through the same hash function, and the resulting \lstinline{index} is used to look up the corresponding value in the \lstinline{Hash Table}.
+
+% TODO: Add an image of a hash table data structure
+
+% TODO: Add hash table detailed efficiency analysis of each operation
+
+% TODO: Add references
+% Advantages and Disadvantages in the context of a Version Control System
+\paragraph{Advantages}
+\begin{itemize}
+    \item Efficient searching, insertion, and deletion: A well-implemented \lstinline{Hash Table} allows for these operations to be performed in \lstinline{O(1)} time, which is useful for a Version Control System as it needs to be able to quickly retrieve, insert, and delete file versions.
+    \item Dynamic resizing: \lstinline{Hash Tables} can grow or shrink in size as needed, which is useful for a Version Control System as the number of file versions can vary greatly.
+          % TODO: Confirm that this is true
+    \item Low overhead: A \lstinline{Hash Table} only requires a small amount of overhead for pointers and the hash function, and thus uses less memory than an array or a \lstinline{Linked List} with the same number of elements.
+\end{itemize}
+\paragraph{Disadvantages}
+\begin{itemize}
+    \item{Hash collisions: \lstinline{Hash} functions can produce collisions, where two different keys produce the same \lstinline{index}, leading to the same location in the \lstinline{Hash Table}.}
+    \begin{itemize}
+        \item{\lstinline{Collision resolution techniques}, such as \lstinline{open addressing} and \lstinline{separate chaining}, can be used to handle collisions but it still increases the time complexity of the \lstinline{Hash Table} operations.}
+    \end{itemize}
+    \item Clustering: When all the elements in a \lstinline{Hash Table} are stored in the same bucket, it is called \lstinline{clustering}. This can lead to a performance degradation leading the \lstinline{Hash Table} operations to have the worst-case time complexity of \lstinline{O(n)} for insertion, deletion, and retrieval.
+\end{itemize}
+
+% TODO: Add implementation details
+\paragraph{Implementation Details}
+Non veniam nostrud occaecat magna minim officia fugiat ad tempor nulla sunt laboris deserunt minim. Officia commodo ut anim culpa dolore eiusmod ex do tempor tempor Lorem dolore aute culpa. Fugiat aliqua tempor minim esse consequat cupidatat sint dolor mollit irure consectetur fugiat. Ipsum excepteur eu cillum ea sit cillum sunt excepteur exercitation fugiat Lorem ut fugiat ut. Nulla aliquip cillum pariatur dolore aute pariatur do. Excepteur labore veniam eiusmod dolore dolor mollit eu.
+
+Ea aliqua incididunt consectetur id officia. Dolor enim commodo pariatur enim veniam anim. Culpa laboris eu aute anim aliquip. Voluptate laboris et minim labore exercitation aliqua.
+
+Quis voluptate duis dolore ea proident duis et ad. Proident sunt irure sint minim veniam ut laboris culpa laboris eiusmod id. Duis proident id nulla dolor est dolore. Mollit exercitation ad eiusmod ad eiusmod duis occaecat fugiat elit occaecat eu. Incididunt nisi velit quis mollit dolore cupidatat qui fugiat labore in. Est do qui enim in adipisicing eiusmod pariatur enim sit exercitation dolore officia.
+
+% TODO: Summary of the suitability of the data structure in the context of a Version Control System
+\paragraph{Summary}
+Minim non consequat culpa eu officia aliquip officia officia veniam in. Velit ut Lorem ea do adipisicing velit aliquip laborum. Proident dolore pariatur aliquip excepteur consectetur culpa adipisicing enim irure tempor eiusmod. Deserunt minim aliquip occaecat cillum mollit. In nulla fugiat consectetur nisi aliquip incididunt proident excepteur ex excepteur voluptate laboris. Reprehenderit amet anim incididunt aliqua est minim labore ipsum duis consectetur amet. Do mollit quis eiusmod ad consectetur ea nulla dolore voluptate nisi ea laborum est.
 
 \subsection{Directed Acyclic Graph (DAG)}
 % ------------------------------------------------------------------------------
