@@ -33,6 +33,8 @@ Incididunt sunt commodo minim deserunt ullamco nulla sint nostrud non labore eiu
 % TODO: Add references
 \subsection{Linked List}
 % ------------------------------------------------------------------------------
+% TODO: Add explanation of why a linked list is suitable for a Version Control System
+% ------------------------------------------------------------------------------
 A \lstinline{Linked List} is a linear collection of data elements, called nodes, each pointing to the next node by means of a pointer. It is the most sought-after data structure when it comes to handling dynamic data elements.
 % TODO: Cite (simplilearn)
 Each node in a \lstinline{Linked List} typically contains a reference to some data as well as a reference to the next node in the sequence.
@@ -98,6 +100,8 @@ Id do cillum ad ad officia dolor sunt deserunt amet ex. Pariatur aute sint anim 
 Adipisicing Lorem sunt enim in elit ut aliqua anim adipisicing ipsum aliqua. Irure magna duis pariatur est excepteur enim esse elit nostrud officia ad ex. Labore occaecat velit id irure est cupidatat sint excepteur exercitation. Dolore aliqua pariatur ipsum pariatur elit aliqua elit consectetur velit exercitation amet. Fugiat occaecat qui proident ut dolor. Ipsum ad laborum cupidatat adipisicing ipsum esse tempor sunt ipsum deserunt enim.
 
 \subsection{Binary Tree}
+% ------------------------------------------------------------------------------
+% TODO: Add explanation of why a binary tree is suitable for a Version Control System
 % ------------------------------------------------------------------------------
 A \lstinline{Binary Tree} is a hierarchical data structure that consists of a set of nodes, where each node can have at most two children. The topmost node in the tree is called the root node, and the nodes that do not have any children are called leaf nodes. The nodes that have children are called internal nodes. The \lstinline{Binary Tree} structure is a special case of the \lstinline{Tree} data structure, where each node can have at most two children.
 
@@ -206,14 +210,55 @@ Minim non consequat culpa eu officia aliquip officia officia veniam in. Velit ut
 
 \subsection{Directed Acyclic Graph (DAG)}
 % ------------------------------------------------------------------------------
+% TODO: Add explanation of why a DAG is suitable for a Version Control System
+% ------------------------------------------------------------------------------
+A \lstinline{Directed Acyclic Graph (DAG)} is a type of graph that consists of a set of nodes and directed edges between pairs of nodes. The edges have direction and they connect one node to another.
+Unlike in a \lstinline{Tree} structure, in a \lstinline{DAG}, a node can have multiple parents and multiple children, but there cannot be any cycles in the graph.
 
+A node in a \lstinline{DAG} can represent any type of data, and the edges can represent any type of relationship between the nodes. Each node in a \lstinline{DAG} contains the following elements:
+\begin{enumerate}
+    \item Data: The data that the node represents.
+    \item Adjacency list: A list of the nodes that are connected to the current node by an edge.
+\end{enumerate}
 
+% TODO: Add an image of a DAG data structure
+
+% TODO: Add DAG detailed efficiency analysis of each operation
+
+% TODO: Add references
+% Advantages and Disadvantages in the context of a Version Control System
+\paragraph{Advantages}
+\begin{itemize}
+    \item Representing complex relationships: \lstinline{DAGs} can be useful for representing complex relationships between different versions of a file, such as \lstinline{branching} and \lstinline{merging} of changes.
+          % TODO: Reconsider this point
+    \item Representing multiple paths: \lstinline{DAGs} can be used to represent multiple paths or multiple possibilities of how a file can change over time.
+          % TODO: Reconsider this point
+    \item Flexibility: \lstinline{DAGs} are very flexible and can be used to represent any type of data and any type of relationship between the data.
+\end{itemize}
+\paragraph{Disadvantages}
+\begin{itemize}
+    \item Complex traversal: Traversing a \lstinline{DAG} can be more complex than traversing a \lstinline{Tree} because there can be multiple paths to traverse, which makes it more difficult to retrieve specific versions of a file.
+    \item Limited scalability: \lstinline{DAGs} may not scale well for large file histories and a large number of versions because they can become very complex and difficult to traverse.
+    \item Not good for searching, insertion, and deletion: \lstinline{DAGs} are not good for searching, insertion, and deletion because they are not ordered and they do not have a root node. This means that the time complexity of these operations is \lstinline{O(n)} due to the need to traverse the entire graph.
+\end{itemize}
+
+% TODO: Add implementation details
+\paragraph{Implementation Details}
+Qui ea velit dolor cupidatat esse anim est labore. Reprehenderit veniam quis magna Lorem ad id exercitation mollit pariatur culpa officia. Dolor commodo aute eu quis Lorem ea nulla eu reprehenderit elit proident. Aliquip nostrud consequat laboris velit anim id dolor fugiat. Aute ea cupidatat velit sunt mollit id proident nostrud incididunt dolore incididunt aliquip adipisicing. Cillum et labore anim est incididunt laborum dolore commodo ullamco mollit ut ut ullamco.
+
+Est veniam aliquip non mollit. Duis aliqua pariatur in officia cillum labore excepteur aliqua nisi. Tempor adipisicing commodo consequat occaecat ad mollit ad fugiat aliquip consectetur aliquip fugiat et. Sunt voluptate exercitation sunt esse.
+
+Ex pariatur labore mollit labore amet. Occaecat culpa commodo ad cillum occaecat voluptate Lorem officia. Deserunt ea velit consequat sunt ex velit cillum do. Dolor nostrud in veniam laboris pariatur fugiat Lorem. Est quis sint anim deserunt elit fugiat culpa occaecat est in anim sunt ipsum.
+
+% TODO: Summary of the suitability of the data structure in the context of a Version Control System
+\paragraph{Summary}
+Minim ullamco duis officia fugiat anim ad in ipsum adipisicing nostrud mollit exercitation duis cupidatat. Esse occaecat enim anim aliqua qui fugiat mollit deserunt. Lorem culpa laborum ut veniam culpa in nulla et irure. Tempor nostrud magna qui sunt magna aliquip nisi qui. Magna excepteur pariatur mollit sint. Minim non officia aliquip qui laboris sunt. Exercitation aute adipisicing occaecat duis laboris.
 
 % ------------------------------------------------------------------------------
 
 % Algorithms
 % ---------------
-% What is the essential core functionality of the VCS? (Hashing, Diffing, etc.) - (0.5 page)
+% What is the essential core functionality of the VCS? (Traversal/Searching, Hashing, Diffing, etc.) - (0.5 page)
 % For each functionality, what are the different algorithms that could be used?
 % - Explain the algorithms in detail - ((3 x 2) x 1.5 = 9 page)
 % - Explain the pros and cons of each algorithm - ((3 x 2) x 0.5 = 3 page)
