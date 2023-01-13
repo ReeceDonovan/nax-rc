@@ -35,52 +35,85 @@ Incididunt sunt commodo minim deserunt ullamco nulla sint nostrud non labore eiu
 % ------------------------------------------------------------------------------
 % TODO: Add explanation of why a linked list is suitable for a Version Control System
 % ------------------------------------------------------------------------------
-A \lstinline{Linked List} is a linear collection of data elements, called nodes, each pointing to the next node by means of a pointer. It is the most sought-after data structure when it comes to handling dynamic data elements.
-% TODO: Cite (simplilearn)
+A \lstinline{Linked List} is a linear collection of data elements, called nodes, each pointing to the next node by means of a pointer. The \lstinline{Linked List} is the most sought-after data structure when it comes to handling dynamic data elements \cite{ravikiran_2022}.
 Each node in a \lstinline{Linked List} typically contains a reference to some data as well as a reference to the next node in the sequence.
 
 % TODO: Fix spacing between these two paragraphs
 There are two types of \lstinline{Linked Lists}:
+\paragraph{Singly-linked lists (SLL)}
+% Singly-Linked List Definition
 \begin{itemize}
-    \item \lstinline{Singly-linked lists}: Each node contains a reference to the next node in the list only.
-          % TODO: Add image of Single Linked List data structure
-          \begin{figure}[htbp]
-              \centering
-              \includegraphics[width=0.9\textwidth]{singly-linked-list.png}
-              \caption{Singly Linked List (SLL) \cite{vaghani_2023}}
-              \label{fig:singly-linked-list}
-          \end{figure}
-    \item \lstinline{Doubly-linked lists}: Each node contains a reference to the next node in the list as well as the previous node in the list.
-          % TODO: Add image of Double Linked List data structure
-          \begin{figure}[htbp]
-              \centering
-              \includegraphics[width=1.1\textwidth]{doubly-linked-list.png}
-              \caption{Doubly Linked List (DLL) \cite{vaghani_2023}}
-              \label{fig:doubly-linked-list}
-          \end{figure}
+    \item \lstinline{SLL} nodes contain two fields: \lstinline{data} field and \lstinline{next} pointer field.
+    \item Traversal of a \lstinline{SLL} can be done using the \lstinline{next} pointer field only. Meaning, the \lstinline{SLL} can be traversed in only one direction, from the first node to the last node.
+    \item The \lstinline{SLL} occupies less memory than a \lstinline{DLL} because it does not contain a \lstinline{prev} pointer field.
+    \item \lstinline{SLL} is preferred over \lstinline{DLL} when it comes to the execution of stack and queue operations.
+    \item \lstinline{SLL} is also preferred over \lstinline{DLL} to save memory when a searching operation is not required.
 \end{itemize}
-% 
-% TODO: Pros and Cons of single vs double linked list
-%  
-% TODO: Add Single Linked List detailed efficiency analysis of each operation (e.g. insertion, deletion, lookup, etc.)
-
-% \paragraph{Double Linked List Efficiency Analysis}
+% Singly-Linked List Efficiency Analysis
 \begin{table}[h]
     \centering
-    \caption{Efficiency Analysis of Double Linked List Operations}
-    \label{tab:double-linked-list-efficiency-analysis}
+    \caption{Efficiency Analysis of Singly-Linked List Operations}
+    \label{tab:singly-linked-list-efficiency-analysis}
     \begin{tabular}{|c|c|c|}
         \hline
-        Operation                & Worst Case & Average Case \\ \hline
-        Insert (at Head or Tail) & O(1)       & O(1)         \\ \hline
-        Delete (at Head or Tail) & O(1)       & O(1)         \\ \hline
-        Insert (within)          & O(n)       & O(n)         \\ \hline
-        Delete (within)          & O(n)       & O(n)         \\ \hline
-        Search                   & O(n)       & O(n)         \\ \hline
-        Access                   & O(n)       & O(n)         \\ \hline
+        Operation           & Worst Case & Average Case \\ \hline
+        Access              & O(n)       & O(n)         \\ \hline
+        Search              & O(n)       & O(n)         \\ \hline
+        Insert              & O(n)       & O(n)         \\ \hline
+        Insert (at Head)    & O(1)       & O(1)         \\ \hline
+        Insert (at Current) & O(1)       & O(1)         \\ \hline
+        Insert (at Tail)    & O(1)       & O(1)         \\ \hline
+        Delete              & O(n)       & O(n)         \\ \hline
+        Delete (at Head)    & O(1)       & O(1)         \\ \hline
+        Delete (at Current) & O(n)       & O(n)         \\ \hline
+        Delete (at Tail)    & O(n)       & O(n)         \\ \hline
     \end{tabular}
 \end{table}
+% Singly-Linked List Diagram
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.9\textwidth]{singly-linked-list.png}
+    \caption{Singly Linked List (SLL) \cite{vaghani_2023}}
+    \label{fig:singly-linked-list}
+\end{figure}
 
+\paragraph{Doubly-linked lists (DLL)}
+% Doubly-Linked List Definition
+\begin{itemize}
+    \item \lstinline{DLL} nodes contain three fields: \lstinline{data} field, \lstinline{prev} pointer field and \lstinline{next} pointer field.
+    \item Traversal of a \lstinline{DLL} can be done using the \lstinline{next} pointer field or the \lstinline{prev} pointer field. Meaning, the \lstinline{DLL} can be traversed in both directions, from the first node to the last node and vice versa.
+    \item The \lstinline{DLL} occupies more memory than a \lstinline{SLL} because it contains a \lstinline{prev} pointer field.
+\end{itemize}
+% Doubly-Linked List Efficiency Analysis
+\begin{table}[h]
+    \centering
+    \caption{Efficiency Analysis of Doubly-Linked List Operations}
+    \label{tab:doubly-linked-list-efficiency-analysis}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Operation           & Worst Case & Average Case \\ \hline
+        Access              & O(n)       & O(n)         \\ \hline
+        Search              & O(n)       & O(n)         \\ \hline
+        Insert              & O(n)       & O(n)         \\ \hline
+        Insert (at Head)    & O(1)       & O(1)         \\ \hline
+        Insert (at Current) & O(1)       & O(1)         \\ \hline
+        Insert (at Tail)    & O(1)       & O(1)         \\ \hline
+        Delete              & O(n)       & O(n)         \\ \hline
+        Delete (at Head)    & O(1)       & O(1)         \\ \hline
+        Delete (at Current) & O(1)       & O(1)         \\ \hline
+        Delete (at Tail)    & O(1)       & O(1)         \\ \hline
+    \end{tabular}
+\end{table}
+% Doubly-Linked List Diagram
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=1.1\textwidth]{doubly-linked-list.png}
+    \caption{Doubly Linked List (DLL) \cite{vaghani_2023}}
+    \label{fig:doubly-linked-list}
+\end{figure}
+% TODO: Check positioning of the figure
+\newpage
+% 
 % TODO: Add references
 % Advantages and Disadvantages in the context of a Version Control System
 \paragraph{Advantages}
