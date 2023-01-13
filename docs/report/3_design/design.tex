@@ -93,9 +93,64 @@ Ut non aliquip aliquip Lorem reprehenderit nisi qui aliqua cupidatat enim adipis
 
 Id do cillum ad ad officia dolor sunt deserunt amet ex. Pariatur aute sint anim aute id irure reprehenderit laboris non tempor id. Labore in ad sunt nulla dolore velit ut aliquip amet dolore quis voluptate nisi. Magna non magna nulla officia magna voluptate officia dolore Lorem ea sunt duis. Non dolore proident voluptate consequat consequat laborum aliqua veniam et occaecat amet ea dolore.
 
+% TODO: Summary of the suitability of the data structure in the context of a Version Control System
+\paragraph{Summary}
+Adipisicing Lorem sunt enim in elit ut aliqua anim adipisicing ipsum aliqua. Irure magna duis pariatur est excepteur enim esse elit nostrud officia ad ex. Labore occaecat velit id irure est cupidatat sint excepteur exercitation. Dolore aliqua pariatur ipsum pariatur elit aliqua elit consectetur velit exercitation amet. Fugiat occaecat qui proident ut dolor. Ipsum ad laborum cupidatat adipisicing ipsum esse tempor sunt ipsum deserunt enim.
+
 \subsection{Binary Tree}
 % ------------------------------------------------------------------------------
+A \lstinline{Binary Tree} is a hierarchical data structure that consists of a set of nodes, where each node can have at most two children. The topmost node in the tree is called the root node, and the nodes that do not have any children are called leaf nodes. The nodes that have children are called internal nodes. The \lstinline{Binary Tree} structure is a special case of the \lstinline{Tree} data structure, where each node can have at most two children.
 
+Each node in a \lstinline{Binary Tree} contains the following elements:
+\begin{enumerate}
+    \item Data: The data stored in the node.
+    \item Left child: A pointer to the left child node.
+    \item Right child: A pointer to the right child node.
+\end{enumerate}
+
+% TODO: Add references/Confirm this is correct
+There are several different types of \lstinline{Binary Tree} structures, including:
+\begin{enumerate}
+    \item Full Binary Tree: A \lstinline{Binary Tree} where each node has either zero or two children.
+    \item Complete Binary Tree: A \lstinline{Binary Tree} where all levels of the tree are completely filled, except for the last level. The last level of the tree is filled from left to right.
+    \item Balanced Binary Tree: A \lstinline{Binary Tree} where the difference between the height of the left and right subtrees of any node is not greater than one.
+    \item Degenerate (or Pathological) Binary Tree: A \lstinline{Binary Tree} that is not balanced, where the height of the tree is equal to the number of nodes in the tree.
+\end{enumerate}
+
+% TODO: Add image of binary tree data structure
+
+
+% TODO: Add binary tree detailed efficiency analysis of each operation
+
+% TODO: Add references
+% Advantages and Disadvantages in the context of a Version Control System
+\paragraph{Advantages}
+\begin{itemize}
+    \item Efficient storage of file changes: Each node in the \lstinline{Binary Tree} structure can store the entire contents of a file version, along with metadata such as the date and time the version was created. This allows for efficient storage of file changes, as the entire file history can be stored in a single \lstinline{Binary Tree} structure.
+    \item Easy traversal of file history: The \lstinline{Binary Tree} structure allows for easy traversal of the file history, with the root node representing the most recent version of the file and the leaf nodes representing the oldest versions of the file. This makes it easy to track changes and revert to previous versions of the file.
+    \item flexibility: \lstinline{Binary Tree} structures can be used to implement a variety of other data structures, such as \lstinline{Binary Search Trees}, \lstinline{AVL Trees}, \lstinline{Heaps}, and others, which can be useful for other operations in a \lstinline{Version Control System}.
+\end{itemize}
+% TODO: Confirm this is correct
+\paragraph{Disadvantages}
+\begin{itemize}
+    \item Inefficient retrieval of specific file versions: The \lstinline{Binary Tree} structure can be slow when retrieving specific file versions, as it requires traversing the \lstinline{Binary Tree} to find the desired node. This can be inefficient when dealing with large file histories.
+    \item Limited scalability: For large file histories, the \lstinline{Binary Tree} structure can be less efficient and may not scale as well as other data structures.
+    \item Extra memory overhead: Each node in the \lstinline{Binary Tree} structure requires extra memory to store the pointers to the left and right child nodes. This can become significant when dealing with large file histories.
+    \item Unbalanced trees can lead to poor performance: If the \lstinline{Binary Tree} structure becomes skewed, the time complexity of searching, insertion, and deletion operations can become \lstinline{O(n)}, where \lstinline{n} is the number of nodes in the tree.
+    \item Not suitable for concurrent access: The \lstinline{Binary Tree} structure is not suitable for concurrent access, as it is not thread-safe. This can lead to data corruption and race conditions.
+\end{itemize}
+
+% TODO: Add implementation details
+\paragraph{Implementation Details}
+Nulla cillum laborum quis et cillum eu. Id exercitation ad aliquip ipsum elit excepteur tempor occaecat enim excepteur culpa aliqua ullamco pariatur. Et do elit nisi duis et aliquip consequat dolor labore.
+
+Laborum consequat elit fugiat excepteur esse exercitation anim anim est eiusmod aliquip ad. Labore veniam cillum officia aute elit minim minim in laboris. Incididunt velit amet consequat officia nulla exercitation ex voluptate in duis ullamco Lorem.
+
+Nostrud officia consectetur proident aliquip elit commodo do pariatur eu aliqua. Commodo irure deserunt tempor nisi cillum elit nulla dolore amet pariatur aliquip irure reprehenderit aute. Cillum minim cillum irure commodo cillum eu consequat et dolore sint sunt aliquip fugiat consequat. In laboris exercitation fugiat aute laboris mollit cupidatat laboris nostrud ut. Non enim aliquip anim ullamco non incididunt proident eu. Et officia tempor exercitation magna incididunt incididunt veniam reprehenderit.
+
+% TODO: Summary of the suitability of the data structure in the context of a Version Control System
+\paragraph{Summary}
+Magna fugiat consectetur magna adipisicing minim id elit Lorem culpa. Ut cillum adipisicing fugiat pariatur consectetur irure. Sit voluptate mollit nulla culpa incididunt minim velit non ex nostrud ad. Amet eiusmod magna voluptate nulla exercitation sit id. Nostrud in do id exercitation excepteur minim reprehenderit anim excepteur veniam eiusmod duis proident. Eiusmod aliquip laborum deserunt officia cillum Lorem excepteur Lorem ad.
 
 \subsection{Hash Table}
 % ------------------------------------------------------------------------------
