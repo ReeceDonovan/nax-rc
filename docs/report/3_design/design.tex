@@ -1,29 +1,29 @@
 \lstset{language=bash}
 \newpage
 \chapter{Design} % (30-40 pages)
-
-% TODO: Add intro paragraph
-
-% Decide if should focus on specific design patterns or not (e.g. blob storage, change log, etc.) - (0.5 page)
-
-% What is needed to support the core functionality? (e.g file interactions, etc.)
-
-Amet mollit dolor reprehenderit nulla. Esse velit qui est magna laboris excepteur anim duis voluptate magna deserunt irure dolor elit. In sit do consequat nostrud sit sunt mollit. Anim Lorem laborum anim commodo elit in et. Eiusmod consequat id eiusmod cillum esse ullamco excepteur. Lorem est minim adipisicing esse dolore occaecat.
-
-Sit do aute occaecat eiusmod reprehenderit ad. Cillum Lorem adipisicing minim pariatur cupidatat nostrud consequat dolore sit pariatur exercitation nisi do. Irure voluptate nulla mollit consectetur Lorem irure eu consequat pariatur ex aliqua. Ut aliquip nulla enim commodo amet excepteur dolor irure labore consequat qui minim. Anim aliqua ullamco laborum voluptate ullamco incididunt. Ex commodo adipisicing officia ipsum anim do. Consequat exercitation deserunt sunt nostrud magna reprehenderit ex.
-
-Mollit qui commodo commodo exercitation nulla pariatur do nostrud amet. Dolor sunt anim minim sunt ea dolore voluptate enim cupidatat Lorem consequat pariatur aute. Fugiat ullamco duis excepteur nulla eu veniam minim qui occaecat. Sit fugiat ea dolore sit. Non duis nostrud adipisicing qui ex cillum voluptate in.
-
+% 
+% TODO: Reconsider the formatting of this introduction
+In this chapter, we examine various data structures and algorithms with key aspects that may make them suitable for incorporation into a \lstinline{Version Control System}.\\
+% TODO: Decide whether to include this paragraph or not due to the top paragraph of the "Data Structures" section (see below)
+% \\This examination evaluates several alternative data structures, including \lstinline{Linked Lists}, \lstinline{Binary Trees}, \lstinline{Hash Tables}, and \lstinline{Directed Acyclic Graphs (DAGs)}, focusing on their operational efficiency, structural properties, and implementation considerations.
+% Furthermore, algorithms for functionality such as \lstinline{Traversal} and \lstinline{Difference (Diffing)} are analyzed in terms of their computational complexity, conceptual simplicity, and implementation considerations.\\\\
+% Finally, the chapter also assesses what metrics are relevant to facilitate the comparison of these data structures and algorithms.
+We also assess what metrics are relevant to facilitate the comparison of these data structures and algorithms.
+% 
 % ------------------------------------------------------------------------------
-
+% 
 % TODO: Change title
 \section{Data Structures}
 % Data Structures
 % ---------------
-% TODO:
-% What features are important in deciding which data structures to use? - (0.5 page)
+% TODO: Add references
+Data structures are objects that can be used to store, organize, and manipulate large amounts of data. They play a crucial role in computer science and are fundamental building blocks of many software systems, including \lstinline{Version Control Systems}. The choice of data structure is critical to the overall performance and scalability of a \lstinline{Version Control System}.
 
-Incididunt sunt commodo minim deserunt ullamco nulla sint nostrud non labore eiusmod sit deserunt. Velit mollit dolor amet ad consequat minim. Minim commodo incididunt cupidatat elit incididunt tempor mollit laboris consectetur. Laborum ullamco adipisicing velit labore excepteur. Anim sunt nisi mollit do incididunt magna.
+In order to evaluate the suitability of a data structure for implementation in a \lstinline{Version Control System}, it is necessary to consider several core aspects. Firstly, \lstinline{operational efficiency}, which refers to the time and space complexity of the basic operations performed by the data structure, is a crucial consideration. The efficiency of these operations can have a significant impact on the overall performance of the \lstinline{Version Control System}.
+
+Another important aspect is the data structure's \lstinline{structural specificity}, which encompasses how data is stored and organized within the structure. This is critical because the structural specifics can affect the ease of implementation and the ability to efficiently perform operations such as \lstinline{insertions}, \lstinline{deletions}, and \lstinline{updates}.
+
+Lastly, the \lstinline{implementation details} must be considered, including the ease of implementation and compatibility with the programming language. A data structure that is straightforward to implement and easy to maintain/iterate upon will result in a more streamlined and efficient \lstinline{Version Control System}.
 
 % What are the potential data structures that could be used?
 %  - Explain the data structures in detail - (4 x 2 page)
