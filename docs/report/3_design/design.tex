@@ -57,16 +57,16 @@ There are two main types of \lstinline{Linked Lists}: \lstinline{Singly-Linked L
     \begin{tabular}{|c|c|c|}
         \hline
         Operation           & Worst Case & Average Case \\ \hline
-        Access              & O(n)       & O(n)         \\ \hline
-        Search              & O(n)       & O(n)         \\ \hline
-        Insert              & O(n)       & O(n)         \\ \hline
-        Insert (at Head)    & O(1)       & O(1)         \\ \hline
-        Insert (at Current) & O(1)       & O(1)         \\ \hline
-        Insert (at Tail)    & O(1)       & O(1)         \\ \hline
-        Delete              & O(n)       & O(n)         \\ \hline
-        Delete (at Head)    & O(1)       & O(1)         \\ \hline
-        Delete (at Current) & O(n)       & O(n)         \\ \hline
-        Delete (at Tail)    & O(n)       & O(n)         \\ \hline
+        Access              & $O(n)$     & $O(n)$       \\ \hline
+        Search              & $O(n)$     & $O(n)$       \\ \hline
+        Insert              & $O(n)$     & $O(n)$       \\ \hline
+        Insert (at Head)    & $O(1)$     & $O(1)$       \\ \hline
+        Insert (at Current) & $O(1)$     & $O(1)$       \\ \hline
+        Insert (at Tail)    & $O(1)$     & $O(1)$       \\ \hline
+        Delete              & $O(n)$     & $O(n)$       \\ \hline
+        Delete (at Head)    & $O(1)$     & $O(1)$       \\ \hline
+        Delete (at Current) & $O(n)$     & $O(n)$       \\ \hline
+        Delete (at Tail)    & $O(n)$     & $O(n)$       \\ \hline
     \end{tabular}
 \end{table}
 % Singly-Linked List Diagram
@@ -92,16 +92,16 @@ There are two main types of \lstinline{Linked Lists}: \lstinline{Singly-Linked L
     \begin{tabular}{|c|c|c|}
         \hline
         Operation           & Worst Case & Average Case \\ \hline
-        Access              & O(n)       & O(n)         \\ \hline
-        Search              & O(n)       & O(n)         \\ \hline
-        Insert              & O(n)       & O(n)         \\ \hline
-        Insert (at Head)    & O(1)       & O(1)         \\ \hline
-        Insert (at Current) & O(1)       & O(1)         \\ \hline
-        Insert (at Tail)    & O(1)       & O(1)         \\ \hline
-        Delete              & O(n)       & O(n)         \\ \hline
-        Delete (at Head)    & O(1)       & O(1)         \\ \hline
-        Delete (at Current) & O(1)       & O(1)         \\ \hline
-        Delete (at Tail)    & O(1)       & O(1)         \\ \hline
+        Access              & $O(n)$     & $O(n)$       \\ \hline
+        Search              & $O(n)$     & $O(n)$       \\ \hline
+        Insert              & $O(n)$     & $O(n)$       \\ \hline
+        Insert (at Head)    & $O(1)$     & $O(1)$       \\ \hline
+        Insert (at Current) & $O(1)$     & $O(1)$       \\ \hline
+        Insert (at Tail)    & $O(1)$     & $O(1)$       \\ \hline
+        Delete              & $O(n)$     & $O(n)$       \\ \hline
+        Delete (at Head)    & $O(1)$     & $O(1)$       \\ \hline
+        Delete (at Current) & $O(1)$     & $O(1)$       \\ \hline
+        Delete (at Tail)    & $O(1)$     & $O(1)$       \\ \hline
     \end{tabular}
 \end{table}
 % Doubly-Linked List Diagram
@@ -169,9 +169,27 @@ There are several different types of \lstinline{Binary Tree} structures, includi
     \item Degenerate (or Pathological) Binary Tree: A \lstinline{Binary Tree} that is not balanced, where the height of the tree is equal to the number of nodes in the tree.
 \end{enumerate}
 
+% Binary Tree Efficiency Analysis
+\begin{table}[h]
+    \centering
+    \caption{Efficiency Analysis of Binary Tree Operations}
+    \label{tab:binary-tree-efficiency-analysis}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Operation & Worst Case & Average Case \\ \hline
+        Search    & $O(n)$     & $O(\log n)$  \\ \hline
+        Insert    & $O(n)$     & $O(\log n)$  \\ \hline
+        Delete    & $O(n)$     & $O(\log n)$  \\ \hline
+    \end{tabular}
+\end{table}
 % TODO: Add image of binary tree data structure
-
-
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{binary-tree.png}
+    \caption{Binary Tree \cite{mcmahon_2020}}
+    \label{fig:binary-tree}
+\end{figure}
+\newpage
 % TODO: Add binary tree detailed efficiency analysis of each operation
 
 % TODO: Add references
