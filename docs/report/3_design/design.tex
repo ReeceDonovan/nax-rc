@@ -240,8 +240,27 @@ Each element in a \lstinline{Hash Table} consists of:
 When a new element is added to a \lstinline{Hash Table}, the key is passed through a \lstinline{hash} function which produces an \lstinline{index} (also called a hash value or bucket) where the element is stored.
 When a value is to be retrieved, the key is passed through the same hash function, and the resulting \lstinline{index} is used to look up the corresponding value in the \lstinline{Hash Table}.
 
-% TODO: Add an image of a hash table data structure
-
+% Hash Table Efficiency Analysis
+\begin{table}[h]
+    \centering
+    \caption{Efficiency Analysis of Hash Table Operations}
+    \label{tab:hash-table-efficiency-analysis}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        Operation & Worst Case & Average Case \\ \hline
+        Search    & $O(n)$     & $\Theta(1)$  \\ \hline
+        Insert    & $O(n)$     & $\Theta(1)$  \\ \hline
+        Delete    & $O(n)$     & $\Theta(1)$  \\ \hline
+    \end{tabular}
+\end{table}
+% Image of hash table data structure
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{hash-table.png}
+    \caption{Hash Table \cite{stemmler_2022}}
+    \label{fig:hash-table}
+\end{figure}
+\newpage
 % TODO: Add hash table detailed efficiency analysis of each operation
 
 % TODO: Add references
