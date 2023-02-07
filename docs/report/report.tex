@@ -10,6 +10,7 @@
 
 % Images and figures setup
 % ==============================================================================
+\usepackage{array}
 \usepackage{graphicx}
 \graphicspath{{../images/}}
 
@@ -110,10 +111,30 @@
 \input{6_conclusion/conclusion.tex}
 \newpage
 
-% Bibliography setup
+% Terminology section
+% ==============================================================================
+% TODO: Add terminology
+% ==============================================================================
+
+% Figures section
+% ==============================================================================
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+\newpage
+% ==============================================================================
+
+% Tables section
+% ==============================================================================
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+\newpage
+% ==============================================================================
+
+% Bibliography section
 % ==============================================================================
 \bibliographystyle{ieeetr}
 \bibliography{../bibliography/vcs_info}
+\addcontentsline{toc}{chapter}{Bibliography}
 % ==============================================================================
 
 \end{document}
