@@ -1,6 +1,8 @@
 package datastructures
 
-// Doubly linked list for use in a basic version control system
+import (
+	"fmt"
+)
 
 type Node struct {
 	Data interface{}
@@ -16,6 +18,26 @@ type LinkedList struct {
 // Create an empty linked list
 func NewLinkedList() *LinkedList {
 	return &LinkedList{}
+}
+
+// Display the linked list
+func (ll *LinkedList) Show() { // O(n) time | O(1) space
+	node := ll.Head
+	for node != nil {
+		fmt.Printf("%v ", node.Data)
+		node = node.Next
+	}
+	fmt.Println()
+}
+
+// Display the linked list in reverse
+func (ll *LinkedList) ShowReverse() { // O(n) time | O(1) space
+	node := ll.Tail
+	for node != nil {
+		fmt.Printf("%v ", node.Data)
+		node = node.Prev
+	}
+	fmt.Println()
 }
 
 // Set the head of the linked list
