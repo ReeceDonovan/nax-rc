@@ -12,10 +12,10 @@ def populate_revlog(file_name, revision_range):
         timestamp = time.time_ns() // 1000
         for i in range(num_revisions):
             revision = random.choice(revisions)
+            revision_number = i + 1
             current_content += revision
             timestamp += random.randint(1, 1000)
-            f.write(f"Revision {i + 1}: {revision} ({timestamp})\n")
-            f.write(f"Content: {current_content}\n")
+            f.write(f"{timestamp} {revision_number} {revision} {current_content}\n")
 
 
 def generate_revlogs(num_files, revision_range):
