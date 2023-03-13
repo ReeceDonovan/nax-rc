@@ -1,0 +1,238 @@
+% Setup
+% ==============================================================================
+\documentclass[a4paper,12pt]{article}
+
+% Basic packages
+% ==============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+% \usepackage{hyperref}
+
+% Images and figures setup
+% ==============================================================================
+\usepackage{array}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+
+% Bookmarks setup
+% ==============================================================================
+\usepackage[
+    pdfproducer={Texmaker},      
+    pdfcreator={pdfLaTeX},       
+    hidelinks,         
+    bookmarksnumbered, 
+    ]{hyperref}          
+
+% Page setup
+% ==============================================================================
+\usepackage{needspace}
+\makeatletter
+\renewcommand{\section}{\needspace{.25\textheight} \@startsection{section}{1}{0mm}
+  {\baselineskip}
+  {\baselineskip}{\Large\bfseries\scshape}}
+\renewcommand{\subsection}{\needspace{.15\textheight} \@startsection{subsection}{1}{0mm}
+  {\baselineskip}
+  {\baselineskip}{\large\bfseries\scshape}}
+\makeatother
+
+% Create title
+% ==============================================================================
+% \title{\textbf{Exploring the Data Structures and Algorithms behind Version Control Systems}}
+% \author{
+%     Reece Donovan
+% \\\\\small{Final Year Project - Extended Abstract}
+% \\\\\small{B.Sc. Computer Science}
+% \\\\\small{Prof. Ken Brown}
+% \\\\\small{University College Cork}
+% }
+% \date{March 2023}
+
+
+% \title{
+%     Exploring the Data Structures and Algorithms behind Version Control Systems \\[1ex]
+%     \large \textbf{Extended Abstract}
+%     }
+% \author{Reece Donovan}
+% \date{March 2023}
+
+% Begin document
+% ==============================================================================
+\begin{document}
+\pagenumbering{roman}
+
+% TODO: Also consider for full report
+% Create title page
+% ==============================================================================
+\begin{titlepage}
+  \begin{center}
+    \vspace*{\fill}
+
+    % % Title
+    % \textbf{\LARGE{Exploring the Data Structures and Algorithms behind Version Control Systems}}
+
+    % % Author
+    % \vspace{1cm}
+    % \textbf{\Large{Reece Donovan}}
+
+    % % Deliverable
+    % \vspace{1.1cm}
+    % \large{Final Year Project - Extended Abstract}
+
+    % % Course
+    % \large{B.Sc. Computer Science}
+
+    % % Supervisor
+    % \vspace{1.3cm}
+    % \large{Supervisor: Prof.\ Ken Brown}
+
+    % % Department and University
+    % \vspace{1.25cm}
+    % \small{Department of Computer Science}
+
+    % \small{University College Cork}
+
+    % % Date (Month Year)
+    % \vspace{1.75cm}
+    % \large{March 2023}
+
+    % Title
+    \textbf{\LARGE{Exploring the Data Structures and Algorithms behind Version Control Systems}}
+    % \textbf{\Large{Exploring the Data Structures and Algorithms behind Version Control Systems}}
+
+    % Author
+    \vspace{1.3cm}
+    % \textbf{\large{Reece Donovan}}
+    \textbf{\Large{Reece Donovan}}
+
+    % Deliverable
+    \vspace{1.3cm}
+    % \normalsize{Final Year Project - Extended Abstract}
+    \large{Final Year Project - Extended Abstract}
+
+    % Course
+    % \normalsize{B.Sc. Computer Science}
+    \large{B.Sc. Computer Science}
+
+    % Supervisor
+    \vspace{1.4cm}
+    % \normalsize{Supervisor: Prof.\ Ken Brown}
+    \large{Supervisor: Prof.\ Ken Brown}
+
+    % Department and University
+    \vspace{1.45cm}
+    % \small{Department of Computer Science}
+
+    % \small{University College Cork}
+    \normalsize{Department of Computer Science}\\
+    \normalsize{University College Cork}
+
+    % Date (Month Year)
+    \vspace{1.5cm}
+    \large{March 2023}
+    % \textbf{\large{March 2023}}
+
+
+    \vspace*{\fill}
+  \end{center}
+\end{titlepage}
+
+% TODO: Create table of contents
+\tableofcontents
+
+\newpage
+\pagenumbering{arabic}
+
+\section{Introduction}
+\textbf{Version Control} is a critical aspect of software development that helps developers keep track of changes made to a codebase. It enables software teams to work collaboratively, efficiently, and accurately on projects, reducing the likelihood of errors and conflicts. In essence, version control is the process of tracking and managing changes to files over time.
+\vspace{9pt}
+
+\textbf{Version Control System (VCS)} is a software tool that automates the version control process. It provides a centralised repository where developers can store their code, track changes, and collaborate with other team members. The Version Control System ensures that each team member has access to the latest version of the code and can work on it simultaneously.
+% Additionally, it maintains a complete history of all changes made to the codebase, making it easy to roll back to a previous version if necessary.
+\vspace{9pt}
+
+The impact of \textbf{Version Control Systems} on software development has been immense. Before the advent of Version Control Systems, developers used to rely on manual processes to track changes, which was time-consuming and error-prone. With VCS, software teams can work together more efficiently, manage changes more effectively, and deliver better-quality software products.
+\vspace{9pt}
+
+Version Control Systems have also facilitated the rapid growth of \textbf{Continuous Integration} and \textbf{Continuous Delivery} (CI/CD), which have become essential systems in modern large scale software development. Overall, Version Control Systems have revolutionised how software is developed, making it easier, faster, and more reliable.
+
+\section{Motivation}
+Over the years, Version Control Systems have become essential for software developers, enabling them to collaborate and work more effectively. As the software development industry has evolved, so have Version Control Systems, leading to the creation of many different software solutions, each with unique features and strengths. However, these systems' core data structures and algorithms have remained relatively unchanged.
+\vspace{9pt}
+
+The performance of Version Control Systems can be crucial in determining the efficiency of software development projects. Slow or inefficient Version Control Systems can result in delays, errors, and even project failure. Therefore, it is important to explore alternative data structures and algorithms that could improve the performance of these systems.
+
+\section{Objective}
+Version Control Systems (VCS) have become essential for software developers to collaborate effectively and efficiently. However, many users may not fully comprehend the intricacies of the underlying concepts at the core of these systems.
+\vspace{9pt}
+
+This report aimed to address this knowledge gap by exploring the underlying data structures and algorithms used to power Version Control Systems and by evaluating potential trade-offs and benefits of alternative approaches. In order to provide insight into how these factors impact system performance, scalability, and overall effectiveness.
+\vspace{9pt}
+
+In addition, this report aimed to provide a comprehensive overview of the evolution of Version Control Systems, including an overview of the most popular version control solutions throughout the years, such as Source Code Control System (1972), Apache Subversion (2000), and Git (2005).
+
+\section{Approach}
+The following steps were taken to achieve the objectives of this report:
+
+\subsection{Background Research}
+This step involved a comprehensive review of Version Control Systems, including their history, different types, and existing systems. This review helped discover how the core principles of Version Control Systems have evolved over the years and establish which features are critical when evaluating different data structures and algorithms.
+\vspace{9pt}
+
+The aim was to understand better the historical and current state of Version Control Systems and identify the most relevant features and principles that influence the selection of data structures and algorithms.
+
+\subsection{Selection of Data Structures and Algorithms}
+Based on the background research conducted on Version Control Systems, a range of data structures were selected for evaluation. The chosen data structures were selected based on their relevance and suitability towards the core concepts of a Version Control System, taking into account various factors such as ease of implementation.
+\vspace{9pt}
+
+In addition to the data structures, a set of core functionalities were identified, including Searching, Diffing, and others. Then, two algorithms per feature were selected along with the data structures for further evaluation. The algorithms were chosen based on their suitability for the different data structures and their ability to provide efficient and effective solutions to the core functionalities required by a Version Control System.
+
+\subsection{Implementation of Data Structures}
+The selected data structures – linked lists, trees, hash tables, and directed acyclic graphs (DAGs) – were implemented in the Go programming language, the language chosen for this project. One of the design principles used was to implement the data structures to fit a common interface, allowing for one set of tests and benchmarks to be used for each data structure.
+\vspace{9pt}
+
+In the Go programming language, an interface is a collection of method signatures defining a set of behaviours that a type must implement to satisfy the interface. They make it possible to write generic functions and data structures that can work with various types without knowing anything about those types in advance.
+
+\subsection{Implementation of Algorithms}
+The algorithms selected for each core functionality, such as the Longest Common Subsequence (LCS) and the Myers' Diff algorithms selected for the core Diffing functionality, were implemented in the Go programming language. The implementations were checked against implementations found in well-regarded data structure and algorithms textbooks to ensure that the algorithms used in the project were accurate and representative of the algorithm itself, not a potentially flawed implementation.
+\vspace{9pt}
+
+The implementation of the algorithms followed the same design principles used for the data structures, which was to fit a common interface to enable uniform testing and benchmarking of each algorithm. In addition, this approach allowed for a fair comparison between the different algorithms and data structures evaluated in the report.
+
+\subsection{Design of Test Cases and Benchmarks}
+A set of test cases and benchmarks were designed to evaluate the performance of the different data structures and algorithms. The tests and benchmarks were designed to measure relevant metrics such as performance, memory usage, and scalability.
+\vspace{9pt}
+
+For the data structure benchmarks, tests were designed for evaluating data structure operations such as insert, remove, search, and more. To test the data structures' performance and memory usage under different conditions, mock data was generated to create data structures of varying sizes, from small to very large.
+\vspace{9pt}
+
+For the algorithm benchmarks, tests were designed similarly to the data structure benchmarks; mock data was generated to create data structures of varying sizes to test the algorithms' performance and memory usage under different conditions.
+\vspace{9pt}
+
+Benchmarking was conducted using the Go programming languages built-in testing and benchmarking features. The tests and benchmarks were designed to measure relevant metrics, and care was taken to ensure they were realistic and representative of real-world scenarios.
+In addition, the student had to learn how to use Go's built-in testing and benchmarking features, which were initially unfamiliar to them, to ensure the tests and benchmarks were executed correctly.
+
+\subsection{Execution of Benchmarks and Collection of Data}
+The student utilised the command line features of Go's benchmarking package to allow the execution of multiple benchmarks with minimal effort. Command flags were used when executing benchmarks through the command line to enable profiling of additional useful metrics such as CPU usage and memory allocation. These metrics provided further insight into the performance and efficiency of the different data structures and algorithms evaluated in the report.
+\vspace{9pt}
+
+The benchmark results were collected and recorded for each data structure and algorithm, then analysed to identify any patterns or trends in the performance of the different data structures and algorithms under different conditions. The collected data was then used to generate graphs and charts to visualise the performance of the different data structures and competing algorithms. These visualisations allow for easy comparison between the data structures and algorithms evaluated in the report.
+
+\section{Challenges}
+Several challenges were faced during the course of this project, the main ones being:
+
+Firstly, it was challenging to find information on the technical aspects of existing Version Control Systems, especially the earlier generations of Version Control Systems. The lack of information on these technical aspects made it difficult to understand how the systems were implemented and what underlying data structures and algorithms were used.
+\vspace{9pt}
+
+Secondly, it was challenging to identify which data structures and algorithms would provide meaningful points of comparison. The vast number of data structures and algorithms made it challenging to select a suitable set for evaluation. The selected data structures and algorithms had to be representative of those used in real-world Version Control Systems and provide a basis for meaningful comparison.
+\vspace{9pt}
+
+Thirdly, the student had to learn the Go programming language's built-in benchmarking package, which they were initially unfamiliar with. The learning curve for this package was steep, and it took time to understand how to use it effectively for the purposes of this research project.
+\vspace{9pt}
+
+Finally, it was challenging to design automated benchmarks using mock data that were still representative of real-world use. The mock data had to be generated in a way that was realistic and representative of the data used in real-world Version Control Systems. This required careful consideration of the different types of data used in Version Control Systems and how they could be represented in the mock data.
+
+\section{Future Work}
+One possible area for future work is implementing a fully functional Version Control System to obtain the most realistic data for benchmarking. The fully functional Version Control System would allow for more realistic testing and benchmarking of the data structures and algorithms and provide insight into their performance under real-world usage scenarios.
+% \vspace{9pt}
+Other areas for future work are evaluating other data structures and algorithms not considered in this research project and developing more advanced benchmarking techniques than those used in this project.
+
+\end{document}
