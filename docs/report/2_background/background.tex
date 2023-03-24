@@ -83,18 +83,23 @@
 %
 % ==============================================================================
 %
+% \section{What is a Version Control System}
 \section{What is a Version Control System}
-A Version Control System (VCS) saves modifications made by individual software developers, allowing them to track their work over time and making the process more accessible. Furthermore, it facilitates sharing data between nodes, where each node can be kept up to date with the latest versions, minimising the need to handle merge conflicts.
+A \acrfull{vcs} saves modifications made by individual software developers, allowing them to track their work over time and making the process more accessible. Furthermore, it facilitates sharing data between nodes, where each node can be kept up to date with the latest versions, minimising the need to handle merge conflicts.
+\smallskip
 
-Version Control Systems provide several advantages, such as aiding in collaboration among programmers and improving efficiency when working on large groups of mixed products. In addition, VCS offers an audit trail and easy branching functionality, simplifying team-based development. It also enables an understanding of who has worked on specific pieces or sections during a given period.
+\acrlongpl{vcs} provide several advantages, such as aiding in collaboration among programmers and improving efficiency when working on large groups of mixed products. In addition, \acrshortpl{vcs} offer an audit trail and easy branching functionality, simplifying team-based development. It also enables an understanding of who has worked on specific pieces or sections during a given period.
+\smallskip
 
-By ensuring all changes are appropriately tracked, VCS promotes transparency within teams while maintaining optimal performance levels through streamlined management processes. This helps avoid errors arising from inconsistencies between versions, such as mismatched documents or programming problems resulting from conflicting edit operations.
+By ensuring all changes are appropriately tracked, \acrshortpl{vcs} promote transparency within teams while maintaining optimal performance levels through streamlined management processes. This helps avoid errors arising from inconsistencies between versions, such as mismatched documents or programming problems resulting from conflicting edit operations.
 
 \paragraph{Significance of Version Control Systems}
 \hfill\medskip\\
 For most software projects, the source code is a valuable asset that must be protected. Additionally, for many software teams, the source code represents a repository of invaluable knowledge and understanding about the problem that developers have amassed and refined through meticulous effort.
+\smallskip
 
 Version control safeguards this precious resource by preventing catastrophes, casual degradation, human error, or unintended consequences from affecting its quality. Software developers working in teams continually write new source code and modify existing code, which is organised into file folders called "file trees". Developers may work on different tasks simultaneously, such as implementing new features or fixing unrelated bugs, by altering parts of the file tree.
+\smallskip
 
 Version control assists teams in addressing these challenges by tracking each change made by contributors, helping to prevent concurrent work from conflicting with one another. Consequently, any incompatibility can be detected and resolved without impeding team members' progress further down the line, ensuring that changes do not introduce bugs.
 
@@ -102,13 +107,14 @@ Version control assists teams in addressing these challenges by tracking each ch
 \section{Evolution of Version Control Systems}
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.9\textwidth]{vcs-timeline.png}
+    \includegraphics[width=0.95\textwidth]{vcs-timeline.png}
     \caption{Timeline of the Creation of Version Control Systems \cite{stopak_2019}}
     \label{fig:vcs-timeline}
 \end{figure}
 \subsection{Local Version Control Systems (LVCS)}
 % Early VCS were intended to track changes for individual files and checked-out files could only be edited locally by one user at a time. They were built on the assumption that all users would log into the same shared Unix host with their own accounts, but it was not always possible. As you can imagine, these early systems made it easier for small teams to revisit code states from various points in history.
 Local Version Control Systems are systems designed to operate on a single machine, early VCSs were intended to track changes for individual files, and checked-out files could only be edited locally by one user at a time. In addition, they were built on the assumption that all users would log into the same shared Unix host with their own accounts, which was not always possible.
+\smallskip
 
 The main benefit of LVCS is that it provides a basic level of version control functionality without requiring any network connectivity. However, this can also be seen as a drawback when you consider that with LVCS, there is no central repository to store the code, which means that each developer has their own copy. This can lead to issues with merging changes and tracking changes across multiple copies.
 
@@ -119,32 +125,44 @@ The main benefit of LVCS is that it provides a basic level of version control fu
     \label{fig:lvcs-structure}
 \end{figure}
 
-\subsubsection{Source Code Control System (SCCS)}
-SCCS was released in 1972 and is one of the first successful VCS tools. It was written by Marc Rochkind at Bell Labs, who wanted to solve the problem of tracking file revisions. The tool made tracking down bugs introduced into a program significantly more manageable. SCCS is worth understanding at a basic level because it helped set up modern VCS tools that developers use today.
+% \subsubsection{Source Code Control System (SCCS)}
+\subsubsection{\texorpdfstring{\acrfull*{sccs}}{Source Code Control System (SCCS)}}
+\label{sec:sccs}
+% SCCS was released in 1972 and is one of the first successful VCS tools. It was written by Marc Rochkind at Bell Labs, who wanted to solve the problem of tracking file revisions. The tool made tracking down bugs introduced into a program significantly more manageable. SCCS is worth understanding at a basic level because it helped set up modern VCS tools that developers use today.
+\acrlong{sccs} was released in 1972 and is one of the first successful \acrshort{vcs} tools \cite{stopak_2019}. It was written by Marc Rochkind at Bell Labs, who wanted to solve the problem of tracking file revisions. The tool made tracking down bugs introduced into a program significantly more manageable. \acrshort{sccs} is worth understanding at a basic level because it helped set up modern \acrshort{vcs} tools that developers use today.
 \paragraph{Architecture}
-Much like modern VCS tools, SCCS has a set of commands that allow developers to work with versioning of files. The basic command functionality are:
+% Much like modern VCS tools, SCCS has a set of commands that allow developers to work with versioning of files. The basic command functionality are:
+Much like modern \acrshort{vcs} tools, \acrshort{sccs} has a set of commands that allow developers to work with the versioning of files. The basic command functionality is:
 \begin{itemize}
-    \item Check in files to track their history.
-    \item Check out specific file versions for review.
-    \item Check out specific file versions for editing.
-    \item Check in new file versions with comments explaining the changes.
-    \item Revert changes made to a checked out file.
+    \item Check-in files to track their history.
+    \item Check-out specific file versions for review.
+    \item Check-out specific file versions for editing.
+    \item Check-in new file versions with comments explaining the changes.
+    \item Revert changes made to a checked-out file.
     \item Basic branching and merging of changes.
     \item Print a log of a file's version history.
 \end{itemize}
-A special type of file called a \lstinline{s-file} or a \lstinline{history file} is created when a file is tracked by SCCS. This file is named with the original filename prefixed with a \lstinline{s.}, and is stored in a subdirectory called \lstinline{SCCS}.
+% A special type of file called a \lstinline{s-file} or a \lstinline{history file} is created when a file is tracked by SCCS. This file is named with the original filename prefixed with a \lstinline{s.}, and is stored in a subdirectory called \lstinline{SCCS}.
+A particular type of file called an \lstinline{s-file} or a \lstinline{history file} is created when a file is tracked by SCCS. This file is named with the original filename prefixed with an \lstinline{s.} and is stored in a subdirectory called \lstinline{SCCS}.
+\smallskip
 
-So a file called \lstinline{test.txt} would get a history file created in the \lstinline{./SCCS/} directory with a name of \lstinline{s.test.txt}. When created, the \lstinline{s-file} contains the original file contents, a header that contains the file's version number, and some other metadata. There are also checksums stored in the \lstinline{s-file} that are used to verify the integrity of the file (i.e. to make sure that the file has not been tampered with). The \lstinline{s-file} content is not encoded or compressed in any way, which is a clear difference from modern VCS tools.
+So a file called \lstinline{test.txt} would get a history file created in the \lstinline{./SCCS/} directory with the name of \lstinline{s.test.txt}. When created, the \lstinline{s-file} contains the original file contents, a header that contains the file's version number, and some other metadata. There are also checksums stored in the \lstinline{s-file} that are used to verify the integrity of the file (i.e. to ensure that the file has not been tampered with). The \lstinline{s-file} content is not encoded or compressed in any way, which is a clear difference from modern VCS tools.
+\smallskip
 
-Since the original file's content is now stored in the history file, it can be retrieved into the working directory for review, compilation, or editing. Further changes made to this new copy, such as line additions, modifications and removals, can be checked back into a revised version of the history file, which increments its revision number.
+Since the original file's content is now stored in the history file, it can be retrieved into the working directory for review, compilation, or editing. Further changes made to this new copy, such as line additions, modifications and removals, can be checked back into a revised version of the history file, which increments its revision number \cite{stopak_2019}.
+\smallskip
 
 Subsequent SCCS check-ins only store only deltas or changes to a file instead of storing entire contents each time; when a check-in is made, subsequent revisions are added onto existing delta tables inside an amended history file (history files do not use compression). This decreases the size of these large histories since they are not using compression on their files, so they take up more space than just having one complete copy that you are tracking with no differences like Word docs etc.
+\smallskip
 
 As previously mentioned, SCCS uses the Delta method known as Interleaved Deltas, which allows constant-time checkout regardless of how old your checked-out revision is - i.e., older revisions do not take longer than newer ones.
+\smallskip
 
-It is important to note that all files are tracked and checked in separately; there is no way to check in changes on multiple files as a part of one atomic unit - like a commit in Git. Each tracked file has its corresponding history file, which stores revisions. Generally, this means that the version numbers of different files cannot match each other. However, matching revision numbers can be achieved by editing every file at once (even if not all of the changed areas have fundamental changes) and checking them all together. This will increment revision numbers for any modified content, so they'll be consistent with their revisions—but it's not comparable to including lots of different pieces within a single commit like you would in Git. In SCCS, these make individual check-ins across separate history folders rather than one extensive report containing everything at once.
+It is important to note that all files are tracked and checked in separately; there is no way to check in changes on multiple files as a part of one atomic unit - like a commit in \nameref{sec:git}. Each tracked file has its corresponding history file, which stores revisions. Generally, this means that the version numbers of different files cannot match each other. However, matching revision numbers can be achieved by editing every file at once (even if not all of the changed areas have fundamental changes) and checking them all together. This will increment revision numbers for any modified content, so they will be consistent with their revisions—but it's not comparable to including lots of different pieces within a single commit like you would in \nameref{sec:git}. In SCCS, these make individual check-ins across separate history folders rather than one extensive report containing everything at once.
+\smallskip
 
 When a file is checked out for editing in SCCS, it is locked so that anyone else cannot edit it. This prevents changes from being overwritten by other users and limits development since only one user can edit the file simultaneously.
+\smallskip
 
 The software supports branches that store sequences of changes to specific files - these can then be merged back into the original versions or with copies of other branched versions of the same parent branch.
 
@@ -346,6 +364,7 @@ The two most prevalent complaints about the disadvantages of DVCS are that: pess
 \end{figure}
 
 \subsubsection{Git}
+\label{sec:git}
 % Git is a distributed VCS that was developed by Linus Torvalds in 2005. Git is a free and open source VCS that is used by many large companies, such as Google, Facebook and Twitter. It is one of the most popular version control systems in use today.
 % TODO: Rewrite this section
 % ==============================================================================

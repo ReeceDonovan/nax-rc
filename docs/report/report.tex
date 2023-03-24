@@ -112,6 +112,41 @@
   backgroundcolor=\color{lightgray},
 }
 
+% File import setup
+% ==============================================================================
+\usepackage{blindtext}
+\usepackage{subfiles}
+
+% Glossary setup
+% ==============================================================================
+\usepackage[toc,acronym]{glossaries}
+
+\makeglossaries
+
+% Types of version control systems
+\newacronym[shortplural=VCSs,plural=Version Control Systems]{vcs}{VCS}{Version Control System}
+\newacronym[shortplural=LVCSs,plural=Local Version Control Systems]{lvcs}{LVCS}{Local Version Control System}
+\newacronym[shortplural=CVCSs,plural=Centralized Version Control Systems]{cvcs}{CVCS}{Centralized Version Control System}
+\newacronym[shortplural=DVCSs,plural=Distributed Version Control Systems]{dvcs}{DVCS}{Distributed Version Control System}
+
+% Exisiting version control systems
+% First generation
+\newacronym{sccs}{SCCS}{Source Code Control System}
+\newacronym{rcs}{RCS}{Revision Control System}
+% Second generation
+\newacronym{cvs}{CVS}{Concurrent Versions System}
+\newacronym{svn}{SVN}{Apache Subversion}
+\newacronym{perforce}{Perforce}{Perforce Helix Core}
+% Third generation
+\newacronym{git}{Git}{Git}
+\newacronym{mercurial}{Mercurial}{Mercurial}
+\newacronym{bitkeeper}{BitKeeper}{BitKeeper}
+\newacronym{darcs}{Darcs}{Darc's Advanced Revision Control System}
+\newacronym{monotone}{Monotone}{Monotone}
+\newacronym{bazaar}{Bazaar}{Bazaar}
+\newacronym{fossil}{Fossil}{Fossil SCM}
+% ==============================================================================
+
 % Begin document
 % ==============================================================================
 \begin{document}
@@ -165,30 +200,46 @@
 
 % Import content
 % ==============================================================================
-\input{0.1_abstract/abstract.tex}
+% \input{0.1_abstract/abstract.tex}
+\subfile{0.1_abstract/abstract.tex}
 \newpage
-\input{0.2_declaration/declaration.tex}
+% \input{0.2_declaration/declaration.tex}
+\subfile{0.2_declaration/declaration.tex}
 \newpage
-\input{0.3_acknowledge/acknowledgements.tex}
+% \input{0.3_acknowledge/acknowledgements.tex}
+\subfile{0.3_acknowledge/acknowledgements.tex}
 \tableofcontents
 \newpage
 \pagenumbering{arabic}
-\input{1_introduction/introduction.tex}
+% \input{1_introduction/introduction.tex}
+\subfile{1_introduction/introduction.tex}
 \newpage
-\input{2_background/background.tex}
+% \input{2_background/background.tex}
+\subfile{2_background/background.tex}
 \newpage
-\input{3_design/design.tex}
+% \input{3_design/design.tex}
+\subfile{3_design/design.tex}
 \newpage
-\input{4_implementation/implementation.tex}
+% \input{4_implementation/implementation.tex}
+\subfile{4_implementation/implementation.tex}
 \newpage
-\input{5_evaluation/evaluation.tex}
+% \input{5_evaluation/evaluation.tex}
+\subfile{5_evaluation/evaluation.tex}
 \newpage
-\input{6_conclusion/conclusion.tex}
+% \input{6_conclusion/conclusion.tex}
+\subfile{6_conclusion/conclusion.tex}
 \newpage
 
-% Terminology section
+% Glossary section
 % ==============================================================================
-% TODO: Add terminology
+% \glsaddall
+% \printglossary[type=\acronymtype]
+% \addcontentsline{toc}{chapter}{Glossary}
+% \printglossary[title=List of Terms,toctitle=Terms and abbreviations]
+% \clearpage
+% \printglossary[type=\acronymtype]
+% \printglossary
+% \newpage
 % ==============================================================================
 
 % Figures section
