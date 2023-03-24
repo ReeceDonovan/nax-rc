@@ -38,11 +38,35 @@
 % Bookmarks setup
 % ==============================================================================
 \usepackage[
-    pdfproducer={Texmaker},      
-    pdfcreator={pdfLaTeX},       
-    hidelinks,         
-    bookmarksnumbered, 
-    ]{hyperref}          
+  pdfproducer={Texmaker},
+  pdfcreator={pdfLaTeX},
+  hidelinks,
+  bookmarksnumbered,
+]{hyperref}
+
+% Bibliography setup
+% ==============================================================================
+\usepackage[
+  backend=biber,
+  style=ieee,
+  citestyle=ieee,
+  sorting=nty,
+  maxbibnames=99,
+  minbibnames=2,
+  maxcitenames=2,
+  mincitenames=1,
+  doi=true,
+  isbn=true,
+  eprint=true,
+  maxnames=99,
+  minnames=2,
+  maxalphanames=99,
+  minalphanames=2,
+  giveninits=true,
+  url=true,
+  hyperref=true,
+]{biblatex}
+\addbibresource{../bibliography/vcs_info.bib}
 
 % Code highlighting setup
 % ==============================================================================
@@ -90,18 +114,57 @@
 
 % Begin document
 % ==============================================================================
-\title{Version Control System}
-\author{
-    \textbf{Reece Donovan}
-\\\\\small{B.Sc. Computer Science - Final Year Project}
-\\\\\small{Prof. Ken Brown}
-\\\\\small{University College Cork}
-}
-% TODO: Add date
-
 \begin{document}
 \pagenumbering{roman}
-\maketitle
+
+% Title page
+% ==============================================================================
+\begin{titlepage}
+  \begin{center}
+    \vspace*{\fill}
+
+    % Title
+    \textbf{\LARGE{Exploring the Data Structures and Algorithms behind Version Control Systems}}
+
+    % Subtitle
+    \medskip
+    \large{(Student Proposed)}
+
+    % Author
+    \vspace{1.3cm}
+    \textbf{\Large{Reece Donovan}}
+
+    % Deliverable
+    \vspace{1.3cm}
+    \large{Final Year Project}
+
+    % Course
+    \large{B.Sc. Computer Science}
+
+    % Supervisor
+    \vspace{1.4cm}
+    \large{Supervisor: Prof.\ Ken Brown}
+
+    % Second Reader
+    % TODO: Add second reader !IMPORTANT!
+    \large{Second Reader: Prof.\ Placeholder}
+
+    % Department and University
+    \vspace{1.45cm}
+
+    \normalsize{Department of Computer Science}\\
+    \normalsize{University College Cork}
+
+    % Date (Month Year)
+    \vspace{1.5cm}
+    \large{April 2023}
+
+    \vspace*{\fill}
+  \end{center}
+\end{titlepage}
+
+% Import content
+% ==============================================================================
 \input{0.1_abstract/abstract.tex}
 \newpage
 \input{0.2_declaration/declaration.tex}
@@ -144,9 +207,10 @@
 
 % Bibliography section
 % ==============================================================================
-\bibliographystyle{ieeetr}
-\bibliography{../bibliography/vcs_info}
+\printbibliography
 \addcontentsline{toc}{chapter}{Bibliography}
+% \bibliographystyle{ieeetr}
+% \bibliography{../bibliography/vcs_info}
 % ==============================================================================
 
 \end{document}
