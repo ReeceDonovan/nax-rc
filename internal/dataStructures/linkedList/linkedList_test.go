@@ -54,28 +54,6 @@ func TestLinkedList_Remove(t *testing.T) {
 	}
 }
 
-func TestLinkedList_Search(t *testing.T) {
-	list := createTestList()
-
-	node := list.Search(2)
-	if node.Data != 2 {
-		t.Errorf("Expected to find node with data 2, got %d", node.Data)
-	}
-
-	node = list.Search(4)
-	if node != nil {
-		t.Errorf("Expected to not find node with data 4, got %d", node.Data)
-	}
-}
-
-func TestLinkedList_SearchEmptyList(t *testing.T) {
-	list := &LinkedList{}
-	node := list.Search(1)
-	if node != nil {
-		t.Errorf("Expected to not find node with data 1, got %d", node.Data)
-	}
-}
-
 func BenchmarkLinkedList_Append(b *testing.B) {
 	list := &LinkedList{}
 	for i := 0; i < b.N; i++ {
@@ -96,21 +74,5 @@ func BenchmarkLinkedList_Remove(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		list.Remove(list.Head)
 		list.Append(i)
-	}
-}
-
-func BenchmarkLinkedList_Search(b *testing.B) {
-	list := createTestList()
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		list.Search(2)
-	}
-}
-
-func BenchmarkLinkedList_SearchEmptyList(b *testing.B) {
-	list := &LinkedList{}
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		list.Search(1)
 	}
 }

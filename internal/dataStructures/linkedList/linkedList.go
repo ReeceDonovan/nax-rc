@@ -5,6 +5,11 @@ import (
 	"fmt"
 )
 
+type Data interface {
+	ID() int
+	Data() []byte
+}
+
 type LinkedListNode struct {
 	Data interface{}
 	Next *LinkedListNode
@@ -18,6 +23,14 @@ type LinkedList struct {
 
 func (list *LinkedList) IsEmpty() bool {
 	return list.Head == nil
+}
+
+func (list *LinkedList) First() *LinkedListNode {
+	return list.Head
+}
+
+func (list *LinkedList) Last() *LinkedListNode {
+	return list.Tail
 }
 
 func (list *LinkedList) Append(data interface{}) {
@@ -74,15 +87,4 @@ func (list *LinkedList) String() string {
 	}
 	buffer.WriteString("nil")
 	return buffer.String()
-}
-
-func (list *LinkedList) Search(data interface{}) *LinkedListNode {
-	current := list.Head
-	for current != nil {
-		if current.Data == data {
-			return current
-		}
-		current = current.Next
-	}
-	return nil
 }
