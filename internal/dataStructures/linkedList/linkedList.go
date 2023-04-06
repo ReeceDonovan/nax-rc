@@ -75,3 +75,14 @@ func (list *LinkedList) String() string {
 	buffer.WriteString("nil")
 	return buffer.String()
 }
+
+func (list *LinkedList) Search(data interface{}) *LinkedListNode {
+	current := list.Head
+	for current != nil {
+		if current.Data == data {
+			return current
+		}
+		current = current.Next
+	}
+	return nil
+}
