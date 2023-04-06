@@ -1,4 +1,6 @@
-package datastructures
+package revlog
+
+// package datastructures
 
 import (
 	"fmt"
@@ -24,12 +26,35 @@ func getFilesFromDirectory(dirPath string) ([]string, error) {
 	return files, nil
 }
 
+/*
+// Revision is a single revision of a file.
+type Revision struct {
+	// The revision id.
+	ID int
+	// The file contents.
+	Data []byte
+}
+
+// Revlog is a log of revisions to a file.
+type Revlog interface {
+	// Add a new revision to the log.
+	Add(rev *Revision) error
+	// Get the revision with the given id.
+	Get(rId int) (*Revision, error)
+	// Remove the revision with the given id.
+	Remove(rId int) error
+	// Get the number of revisions in the log.
+	Count() int
+}
+*/
+
 func testRevlogAPI(revlog Revlog, t *testing.T) {
 	if revlog.Count() != 0 {
 		t.Errorf("expected count to be 0")
 	}
 	for i := 1; i <= 100; i++ {
-		revlog.Add(Revision{ID: i, Data: []byte(fmt.Sprintf("Revision %d", i))})
+		// revlog.Add(Revision{ID: i, Data: []byte(fmt.Sprintf("Revision %d", i))})
+		revlog.Add(&Revision{ID: i, Data: []byte(fmt.Sprintf("Revision %d", i))})
 	}
 	if revlog.Count() != 100 {
 		t.Errorf("expected count to be 100")
@@ -122,39 +147,23 @@ func TestDoublyLinkedListRevlog(t *testing.T) {
 // Benchmark finding a specific revision in a revlog using the revision id
 func benchmarkFindRevision(revlog Revlog, rId int, b *testing.B) {
 	r, err := revlog.Get(rId)
+	// _, err := revlog.Get(rId)
 	if err != nil {
 		b.Errorf("error finding revision: %v", err)
 	}
-	b.Logf("found revision: %v", r)
+	// b.Logf("found revision: %v", r)
+	// b.Logf("found revision: %d\n\n", r.ID)
+	b.Logf("found revision: %d", r.ID)
 }
-
-// func BenchmarkDoublyLinkedListFindRevision(b *testing.B) {
-// 	// b.N = 500
-// 	for n := 0; n < b.N; n++ {
-// 		// set num revisions to a random number between 100000 and 250000
-// 		var numRevisions = rand.Intn(250000) + 250000
-// 		// set target revision to a random number between 45% and 85% of numRevisions
-// 		var targetRevision = rand.Intn(int(float64(numRevisions)*0.4)) + int(float64(numRevisions)*0.45)
-
-// 		// b.Logf("number of revisions: %d", numRevisions)
-// 		// b.Logf("target revision: %d", targetRevision)
-
-// 		var revlog Revlog = NewDoublyLinkedList()
-// 		for i := 0; i <= numRevisions; i++ {
-// 			revlog.Add(Revision{ID: i, Data: []byte(fmt.Sprintf("Revision %d", i))})
-// 		}
-
-// 		b.ResetTimer()
-// 		benchmarkFindRevision(revlog, targetRevision, b)
-// 	}
-// }
 
 func BenchmarkDoublyLinkedListFindRevision(b *testing.B) {
 	var numRevisions = 500000
 	var revlog Revlog = NewDoublyLinkedList()
 	for i := 0; i <= numRevisions; i++ {
-		revlog.Add(Revision{ID: i, Data: []byte(fmt.Sprintf("Revision %d", i))})
+		// revlog.Add(Revision{ID: i, Data: []byte(fmt.Sprintf("Revision %d", i))})
+		revlog.Add(&Revision{ID: i, Data: []byte(fmt.Sprintf("Revision %d", i))})
 	}
+	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
 		// set target revision to a random number between 55% and 85% of numRevisions
 		var targetRevision = rand.Intn(int(float64(numRevisions)*0.3)) + int(float64(numRevisions)*0.55)
