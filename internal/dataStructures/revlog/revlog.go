@@ -1,22 +1,10 @@
 package revlog
-// package datastructures
 
 import (
 	"fmt"
 	"strconv"
 	"strings"
 )
-
-// Rudimentary implementation of a version control system.
-
-// Revision is a single revision of a file.
-type Revision struct {
-	// The revision id.
-	ID int
-	// The file contents.
-	Data []byte
-	// TODO: Consider adding a timestamp.
-}
 
 // Revlog is a log of revisions to a file.
 type Revlog interface {
@@ -31,7 +19,7 @@ type Revlog interface {
 }
 
 // Create a new revision from a given log line.
-func ParseRevisionFromLog(line string) (*Revision, error) {
+func ParseRevisionFromLog(line string) (Revision, error) {
 
 	// Format: `<epoch_time_in_microseconds> <revision_id> <content_added> <file_content>`
 
@@ -77,11 +65,14 @@ func ParseRevisionFromLog(line string) (*Revision, error) {
 	// 	Data: []byte(fileContent),
 	// }, nil
 
+	// // Create a new revision.
+	// revision := &Revision{
+	// 	ID:   revisionID,
+	// 	Data: []byte(fileContent),
+	// }
+
 	// Create a new revision.
-	revision := &Revision{
-		ID:   revisionID,
-		Data: []byte(fileContent),
-	}
+	revision := NewRevision(revisionID, []byte(fileContent))
 
 	return revision, nil
 }
