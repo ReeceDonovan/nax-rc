@@ -36,10 +36,33 @@ func (graph *Graph) Vertices() []Vertex {
 
 func (graph *Graph) Edges() []Edge {
 	edges := make([]Edge, 0, len(graph.edges))
-	for _, elem := range graph.edges {
+	edgeList := graph.edges.List()
+	for _, elem := range edgeList {
 		edges = append(edges, elem.(Edge))
 	}
 	return edges
+}
+
+func (graph *Graph) OutgoingEdges(vertex Vertex) []Edge {
+	var outEdges []Edge
+	sourceVertexHashcode := GetElementHashcode(vertex)
+	for _, elem := range graph.Edges() {
+		if GetElementHashcode(elem.SourceVertex()) == sourceVertexHashcode {
+			outEdges = append(outEdges, elem)
+		}
+	}
+	return outEdges
+}
+
+func (graph *Graph) IncomingEdges(vertex Vertex) []Edge {
+	var inEdges []Edge
+	targetVertexHashcode := GetElementHashcode(vertex)
+	for _, elem := range graph.Edges() {
+		if GetElementHashcode(elem.TargetVertex()) == targetVertexHashcode {
+			inEdges = append(inEdges, elem)
+		}
+	}
+	return inEdges
 }
 
 func (graph *Graph) AddVertex(vertex Vertex) Vertex {
@@ -65,9 +88,9 @@ func (graph *Graph) AddEdge(edge Edge) {
 	graph.init()
 
 	sourceVertex := edge.SourceVertex()
-	sourceVertexHashcode := getElementHashcode(sourceVertex)
+	sourceVertexHashcode := GetElementHashcode(sourceVertex)
 	targetVertex := edge.TargetVertex()
-	targetVertexHashcode := getElementHashcode(targetVertex)
+	targetVertexHashcode := GetElementHashcode(targetVertex)
 
 	// Ensure that the edge is not already in the graph
 	if set, ok := graph.outgoingEdges[sourceVertexHashcode]; ok && set.Contains(targetVertex) {
@@ -97,10 +120,10 @@ func (graph *Graph) AddEdge(edge Edge) {
 func (graph *Graph) RemoveEdge(edge Edge) {
 	graph.init()
 	graph.edges.Delete(edge)
-	if set, ok := graph.outgoingEdges[getElementHashcode(edge.SourceVertex())]; ok {
+	if set, ok := graph.outgoingEdges[GetElementHashcode(edge.SourceVertex())]; ok {
 		set.Delete(edge.TargetVertex())
 	}
-	if set, ok := graph.incomingEdges[getElementHashcode(edge.TargetVertex())]; ok {
+	if set, ok := graph.incomingEdges[GetElementHashcode(edge.TargetVertex())]; ok {
 		set.Delete(edge.SourceVertex())
 	}
 }
@@ -126,12 +149,12 @@ func (graph *Graph) init() {
 
 func (graph *Graph) incomingEdgesRaw(vertex Vertex) GenericSet {
 	graph.init()
-	return graph.incomingEdges[getElementHashcode(vertex)]
+	return graph.incomingEdges[GetElementHashcode(vertex)]
 }
 
 func (graph *Graph) outgoingEdgesRaw(vertex Vertex) GenericSet {
 	graph.init()
-	return graph.outgoingEdges[getElementHashcode(vertex)]
+	return graph.outgoingEdges[GetElementHashcode(vertex)]
 }
 
 func (graph *Graph) String() string {
@@ -149,7 +172,7 @@ func (graph *Graph) String() string {
 
 	for _, label := range labels {
 		vertex := labelMap[label]
-		targetVertices := graph.outgoingEdges[getElementHashcode(vertex)]
+		targetVertices := graph.outgoingEdges[GetElementHashcode(vertex)]
 
 		buffer.WriteString(fmt.Sprintf("%s\n", label))
 

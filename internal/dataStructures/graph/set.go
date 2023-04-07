@@ -8,9 +8,9 @@ type HashableElement interface {
 	Hashcode() interface{}
 }
 
-// getElementHashcode returns the hashcode of an element if it implements the HashableElement interface.
+// GetElementHashcode returns the hashcode of an element if it implements the HashableElement interface.
 // Otherwise, it returns the element itself.
-func getElementHashcode(element interface{}) interface{} {
+func GetElementHashcode(element interface{}) interface{} {
 	// If the element implements the HashableElement interface, use that to get a hashcode.
 	if hashableElement, ok := element.(HashableElement); ok {
 		return hashableElement.Hashcode()
@@ -21,20 +21,20 @@ func getElementHashcode(element interface{}) interface{} {
 
 // Contains checks if the set contains a specific element.
 func (set GenericSet) Contains(element interface{}) bool {
-	elementHash := getElementHashcode(element)
+	elementHash := GetElementHashcode(element)
 	_, ok := set[elementHash]
 	return ok
 }
 
 // Add inserts an element into the set.
 func (set GenericSet) Add(element interface{}) {
-	hashcode := getElementHashcode(element)
+	hashcode := GetElementHashcode(element)
 	set[hashcode] = element
 }
 
 // Delete removes an element from the set.
 func (set GenericSet) Delete(element interface{}) {
-	hashcode := getElementHashcode(element)
+	hashcode := GetElementHashcode(element)
 	delete(set, hashcode)
 }
 
@@ -101,7 +101,7 @@ func (set GenericSet) Length() int {
 }
 
 // ToList converts the set to a list of elements.
-func (set GenericSet) ToList() []interface{} {
+func (set GenericSet) List() []interface{} {
 	if set == nil {
 		return nil
 	}

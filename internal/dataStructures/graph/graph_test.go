@@ -45,8 +45,8 @@ func BenchmarkGraphRemove(b *testing.B) {
 	}
 }
 
-func createGenericRevFromID(id int) *revlog.Revision {
-	return &revlog.Revision{ID: id, Data: nil}
+func createGenericRevFromID(id int) revlog.Revision {
+	return revlog.NewBlankRevision(id)
 }
 
 func BenchmarkGraphRev(b *testing.B) {
