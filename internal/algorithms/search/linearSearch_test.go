@@ -5,17 +5,9 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/ReeceDonovan/nax-rc/internal/dataStructures/linkedlist"
+	"github.com/ReeceDonovan/nax-rc/internal/dataStructures/linkedList"
 	"github.com/ReeceDonovan/nax-rc/internal/dataStructures/revlog"
 )
-
-/*
-These tests and benchmarks will involve generating a mock linked list that acts as a basic version control system.
-The mocked linked list will contain `numRevisions` number of revisions (nodes). Each node will have an ID that is its revision number, and a Data field that is a `dataSize` length byte slice of random data.
-We want to test the performance of the linear search algorithm on a linked list of varying sizes, and with varying data sizes.
-
-Create a table of values for the number of revisions and data size, and run benchmarks for each combination.
-*/
 
 var NUMBER_OF_REVISIONS = []struct {
 	numRevisions int
@@ -36,6 +28,7 @@ var DATA_SIZE = []struct {
 	{1000000},
 }
 
+// TODO: Clean up this benchmark
 func BenchmarkLinearSearch(b *testing.B) {
 	// var numRevisions = NUMBER_OF_REVISIONS[2].numRevisions
 	for _, numRevisions := range NUMBER_OF_REVISIONS {
@@ -58,7 +51,7 @@ func BenchmarkLinearSearch(b *testing.B) {
 				// Run the benchmark
 				for i := 0; i < b.N; i++ {
 					// Create a linked list of revisions
-					list := linkedlist.LinkedList{}
+					list := linkedList.LinkedList{}
 					// TODO: Consider moving this out of the main b.N loop
 					for i := 0; i < numRevisions; i++ {
 						// Create a revision with random data of size `dataSize`

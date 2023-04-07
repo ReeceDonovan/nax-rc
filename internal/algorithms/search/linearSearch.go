@@ -1,11 +1,11 @@
 package search
 
 import (
-	"github.com/ReeceDonovan/nax-rc/internal/dataStructures/linkedlist"
+	"github.com/ReeceDonovan/nax-rc/internal/dataStructures/linkedList"
 	"github.com/ReeceDonovan/nax-rc/internal/dataStructures/revlog"
 )
 
-func LinearSearch(list linkedlist.LinkedList, id int) *linkedlist.LinkedListNode {
+func LinearSearch(list linkedList.LinkedList, id int) *linkedList.LinkedListNode {
 	current := list.First()
 	for current != nil {
 		currentData := current.Data.(revlog.Revision)
