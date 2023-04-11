@@ -42,7 +42,7 @@ Lastly, the \lstinline{implementation details} must be considered, including the
 % ------------------------------------------------------------------------------
 % TODO: Add explanation of why a linked list is suitable for a Version Control System
 % ------------------------------------------------------------------------------
-A \lstinline{Linked List} is a linear collection of data elements, called nodes, each pointing to the next node by means of a pointer. The \lstinline{Linked List} is the most sought-after data structure when it comes to handling dynamic data elements \cite{ravikiran_2022}.
+A \lstinline{Linked List} is a linear collection of data elements, called nodes, each pointing to the next node by means of a pointer. The \lstinline{Linked List} is the most sought-after data structure when it comes to handling dynamic data elements \cite{ravikiran_linked_list}.
 \smallskip
 
 There are two main types of \lstinline{Linked Lists}: \nameref{par:singly-linked-list} and \nameref{par:doubly-linked-list}, but we will only be considering the \nameref{par:doubly-linked-list} when we reach the \nameref{chap:implementation} chapter.
@@ -456,41 +456,118 @@ A \lstinline{Directed Acyclic Graph (DAG)} is a data structure that consists of 
 
 % ------------------------------------------------------------------------------
 
-\subsection{Traversal}
+\subsection{Searching}
 
 % TODO: Explain what traversal is and why it is important in a VCS
 
 % TODO: Fill in !important
+\subsubsection{Linear Search}
+\lstinline{Linear Search} is a simple and straightforward search algorithm that works on unsorted and sorted lists. It sequentially checks each element in the list until the desired element is found or the end of the list is reached \cite{shaalaa_linear_search}. The algorithm compares each element in the list with the target value, starting from the first element and moving through the list one element at a time. Linear Search has an average case time complexity of $O(n)$ and a worst case time complexity of $O(n)$, where $n$ is the number of elements in the list.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{linear-search-algorithm}
+    \caption{Linear Search Algorithm \cite{ravikiran_linear_search}}
+    \label{fig:linear-search-algorithm}
+\end{figure}
+
+\paragraph{Advantages}
+\begin{itemize}
+    \item Simple and easy to implement.
+    \item Works on unsorted and sorted lists.
+    \item No additional memory requirements or data structure modifications needed.
+    \item Performs well for small data sets or when the target element is near the beginning of the list.
+    \item Can be used as a building block for more advanced search algorithms.
+\end{itemize}
+\paragraph{Disadvantages}
+\begin{itemize}
+    \item Inefficient for large data sets, as it has to check each element in the list.
+    \item Slower than other search algorithms for sorted lists, such as binary search.
+    \item Does not take advantage of any existing order in the list.
+    \item May not be suitable for real-time or performance-critical applications.
+\end{itemize}
+
+\subsubsection{Binary Search}
+\lstinline{Binary Search} is an efficient search algorithm that works on sorted lists \cite{popovi_binary_search}. It repeatedly divides the list in half, comparing the middle element with the target value. If the middle element is equal to the target, the search is successful. If the target value is less than the middle element, the search continues in the left half of the list, otherwise in the right half. This process is repeated until the target value is found or the remaining list becomes empty. Binary Search has an average case time complexity of $O(\log n)$ and a worst case time complexity of $O(\log n)$, where $n$ is the number of elements in the list.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{binary-search-algorithm}
+    \caption{Binary Search Algorithm \cite{jamie_binary_search}}
+    \label{fig:binary-search-algorithm}
+\end{figure}
+
+\paragraph{Advantages}
+\begin{itemize}
+    \item Efficient search algorithm for sorted lists, with a time complexity of $O(\log n)$.
+    \item Takes advantage of the existing order in the list.
+    \item Requires fewer comparisons than linear search for large data sets.
+    \item Can be implemented iteratively or recursively.
+    \item Provides a foundation for more advanced search algorithms, like interpolation search.
+\end{itemize}
+\paragraph{Disadvantages}
+\begin{itemize}
+    \item Requires the list to be sorted in ascending order beforehand.
+    \item Not suitable for unsorted lists or lists with frequently changing data.
+    \item Can be more complex to implement compared to linear search.
+    \item Does not work well with large lists stored on slow access media (e.g., hard drives) due to multiple random access operations.
+\end{itemize}
+
 \subsubsection{Depth First Search (DFS)}
+\lstinline{Depth First Search} is a graph traversal algorithm that explores as far as possible along a branch before backtracking. It can be implemented using recursion or an explicit stack data structure. Starting from a source node, DFS visits a node and marks it as visited. Then, it recursively explores each unvisited neighbor of the current node, treating the neighbor as the new current node. The algorithm continues this process until all reachable nodes have been visited. DFS has an average case time complexity of $O(V + E)$ and a worst case time complexity of $O(V + E)$, where $V$ is the number of vertices and $E$ is the number of edges in the graph.
 
-% TODO: Add references
-% Advantages and Disadvantages in the context of a Version Control System
-% TODO: Fill in !important
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{depth-first-search-algorithm}
+    \caption{Depth First Search Algorithm \cite{zaltsman_dfs_bfs}}
+    \label{fig:depth-first-search-algorithm}
+\end{figure}
+
 \paragraph{Advantages}
-% TODO: Fill in !important
+\begin{itemize}
+    \item Can be used to find connected components, cycles, and paths in a graph.
+    \item Effective for searching large, sparsely connected graphs.
+    \item Can be implemented using recursion or an explicit stack data structure.
+    \item Visits nodes in a linear and natural order.
+    \item Can be adapted for other graph traversal problems, like topological sorting.
+\end{itemize}
 \paragraph{Disadvantages}
+\begin{itemize}
+    \item May consume a large amount of memory for deep graphs when implemented recursively.
+    \item Can get stuck in cycles if not properly implemented with visited node tracking.
+    \item Does not always find the shortest path in weighted graphs.
+    \item May be less intuitive than Breadth First Search for certain problems.
+\end{itemize}
 
-% TODO: Add implementation details
-\paragraph{Implementation Details}
-
-% TODO: Summary of the suitability of the algorithm in the context of a Version Control System
-\paragraph{Summary}
-
-% TODO: Fill in !important
 \subsubsection{Breadth First Search (BFS)}
+\lstinline{Breadth First Search} is a graph traversal algorithm that visits all nodes at the same level before moving on to the next level. It can be implemented using a queue data structure. Starting from a source node, BFS visits and marks the node as visited. Then, it enqueues all unvisited neighbors of the current node. The algorithm dequeues the next node from the front of the queue and repeats the process until the queue is empty, ensuring that all reachable nodes have been visited. BFS has an average case time complexity of $O(V + E)$ and a worst case time complexity of $O(V + E)$, where $V$ is the number of vertices and $E$ is the number of edges in the graph.
 
-% TODO: Add references
-% Advantages and Disadvantages in the context of a Version Control System
-% TODO: Fill in !important
+% TODO: Check placement of figure
+% \newpage
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=0.5\textwidth]{breadth-first-search-algorithm}
+    \caption{Breadth First Search Algorithm \cite{zaltsman_dfs_bfs}}
+    \label{fig:breadth-first-search-algorithm}
+\end{figure}
+% \hfill\medskip\\
+% \newpage
+
 \paragraph{Advantages}
-% TODO: Fill in !important
+\begin{itemize}
+    \item Can be used to find the shortest path in unweighted graphs or determine the level of each node from the source node.
+    \item Effective for searching large, densely connected graphs.
+    \item Can be implemented using a queue data structure, avoiding recursion.
+    \item Visits nodes in a level-wise order, which can be more intuitive for certain problems.
+    \item Can be adapted for other graph traversal problems, like bipartite graph checking.
+\end{itemize}
 \paragraph{Disadvantages}
-
-% TODO: Add implementation details
-\paragraph{Implementation Details}
-
-% TODO: Summary of the suitability of the algorithm in the context of a Version Control System
-\paragraph{Summary}
+\begin{itemize}
+    \item Can consume a large amount of memory for densely connected graphs due to the use of a queue.
+    \item Not well-suited for finding all paths or connected components in a graph.
+    \item Does not work efficiently for searching large, sparsely connected graphs.
+    \item Can be slower than \lstinline{Depth First Search} for certain problems, such as finding cycles or connected components.
+\end{itemize}
 
 % ------------------------------------------------------------------------------
 
