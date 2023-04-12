@@ -451,16 +451,13 @@ A \lstinline{Directed Acyclic Graph (DAG)} is a data structure that consists of 
 % TODO: Add intro paragraph
 
 
-
 % TODO: Explain the core functionality of the VCS that require algorithms (Traversal/Searching, Hashing, Diffing, etc.)
 
 % ------------------------------------------------------------------------------
-
 \subsection{Searching}
 
-% TODO: Explain what traversal is and why it is important in a VCS
+\lstinline{Search algorithms} are computational methods to locate specific items, solve problems, or explore and analyse data structures. They are essential tools in computer science, artificial intelligence, and various other domains, as they facilitate efficient processing and management of large datasets. By systematically searching through data or traversing complex structures, these algorithms identify target elements, optimal solutions, or specific patterns.
 
-% TODO: Fill in !important
 \subsubsection{Linear Search}
 \lstinline{Linear Search} is a simple and straightforward search algorithm that works on unsorted and sorted lists. It sequentially checks each element in the list until the desired element is found or the end of the list is reached \cite{shaalaa_linear_search}. The algorithm compares each element in the list with the target value, starting from the first element and moving through the list one element at a time. Linear Search has an average case time complexity of $O(n)$ and a worst case time complexity of $O(n)$, where $n$ is the number of elements in the list.
 
@@ -514,9 +511,9 @@ A \lstinline{Directed Acyclic Graph (DAG)} is a data structure that consists of 
 \end{itemize}
 
 \subsubsection{Depth First Search (DFS)}
-\lstinline{Depth First Search} is a graph traversal algorithm that explores as far as possible along a branch before backtracking. It can be implemented using recursion or an explicit stack data structure. Starting from a source node, DFS visits a node and marks it as visited. Then, it recursively explores each unvisited neighbor of the current node, treating the neighbor as the new current node. The algorithm continues this process until all reachable nodes have been visited. DFS has an average case time complexity of $O(V + E)$ and a worst case time complexity of $O(V + E)$, where $V$ is the number of vertices and $E$ is the number of edges in the graph.
+\lstinline{Depth First Search} is a graph traversal algorithm that explores as far as possible along a branch before backtracking. It can be implemented using recursion or an explicit stack data structure. Starting from a source node, DFS visits a node and marks it as visited. Then, it recursively explores each unvisited neighbour of the current node, treating the neighbor as the new current node. The algorithm continues this process until all reachable nodes have been visited. DFS has an average case time complexity of $O(V + E)$ and a worst case time complexity of $O(V + E)$, where $V$ is the number of vertices and $E$ is the number of edges in the graph.
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=0.5\textwidth]{depth-first-search-algorithm}
     \caption{Depth First Search Algorithm \cite{zaltsman_dfs_bfs}}
@@ -540,7 +537,7 @@ A \lstinline{Directed Acyclic Graph (DAG)} is a data structure that consists of 
 \end{itemize}
 
 \subsubsection{Breadth First Search (BFS)}
-\lstinline{Breadth First Search} is a graph traversal algorithm that visits all nodes at the same level before moving on to the next level. It can be implemented using a queue data structure. Starting from a source node, BFS visits and marks the node as visited. Then, it enqueues all unvisited neighbors of the current node. The algorithm dequeues the next node from the front of the queue and repeats the process until the queue is empty, ensuring that all reachable nodes have been visited. BFS has an average case time complexity of $O(V + E)$ and a worst case time complexity of $O(V + E)$, where $V$ is the number of vertices and $E$ is the number of edges in the graph.
+\lstinline{Breadth First Search} is a graph traversal algorithm that visits all nodes at the same level before moving on to the next level. It can be implemented using a queue data structure. Starting from a source node, BFS visits and marks the node as visited. Then, it enqueues all unvisited neighbors of the current node. Finally, the algorithm dequeues the next node from the front of the queue and repeats the process until the queue is empty, ensuring that all reachable nodes have been visited. BFS has an average case time complexity of $O(V + E)$ and a worst case time complexity of $O(V + E)$, where $V$ is the number of vertices and $E$ is the number of edges in the graph.
 
 % TODO: Check placement of figure
 % \newpage
@@ -571,121 +568,7 @@ A \lstinline{Directed Acyclic Graph (DAG)} is a data structure that consists of 
 
 % ------------------------------------------------------------------------------
 
-\subsection{Hashing}
-
-% TODO: Explain what hashing is and why it is important in a VCS
-
-% TODO: Fill in !important
-\subsubsection{SHA-2}
-
-% TODO: Add references
-% Advantages and Disadvantages in the context of a Version Control System
-% TODO: Fill in !important
-\paragraph{Advantages}
-% TODO: Fill in !important
-\paragraph{Disadvantages}
-
-% TODO: Add implementation details
-\paragraph{Implementation Details}
-
-% TODO: Summary of the suitability of the algorithm in the context of a Version Control System
-\paragraph{Summary}
 
 
-% TODO: Fill in !important
-\subsubsection{Rabin-Karp Algorithm}
-
-% TODO: Add references
-% Advantages and Disadvantages in the context of a Version Control System
-% TODO: Fill in !important
-\paragraph{Advantages}
-% TODO: Fill in !important
-\paragraph{Disadvantages}
-
-% TODO: Add implementation details
-\paragraph{Implementation Details}
-
-% TODO: Summary of the suitability of the algorithm in the context of a Version Control System
-\paragraph{Summary}
-
-
-% ------------------------------------------------------------------------------
-
-\subsection{Diffing}
-
-% TODO: Explain what diffing is and why it is important in a VCS
-
-% TODO: Fill in !important
-\subsubsection{Longest Common Subsequence (LCS)}
-
-% TODO: Add references
-% Advantages and Disadvantages in the context of a Version Control System
-% TODO: Fill in !important
-\paragraph{Advantages}
-% TODO: Fill in !important
-\paragraph{Disadvantages}
-
-% TODO: Add implementation details
-\paragraph{Implementation Details}
-
-% TODO: Summary of the suitability of the algorithm in the context of a Version Control System
-\paragraph{Summary}
-
-
-% TODO: Fill in !important
-\subsubsection{Myers' Diff Algorithm}
-
-% TODO: Add references
-% Advantages and Disadvantages in the context of a Version Control System
-% TODO: Fill in !important
-\paragraph{Advantages}
-% TODO: Fill in !important
-\paragraph{Disadvantages}
-
-% TODO: Add implementation details
-\paragraph{Implementation Details}
-
-% TODO: Summary of the suitability of the algorithm in the context of a Version Control System
-\paragraph{Summary}
-
-
-% ------------------------------------------------------------------------------
-
-\subsection{Merging}
-
-% TODO: Explain what merging is and why it is important in a VCS
-
-% TODO: Fill in !important
-\subsubsection{3-Way Merge}
-
-% TODO: Add references
-% Advantages and Disadvantages in the context of a Version Control System
-% TODO: Fill in !important
-\paragraph{Advantages}
-% TODO: Fill in !important
-\paragraph{Disadvantages}
-
-% TODO: Add implementation details
-\paragraph{Implementation Details}
-
-% TODO: Summary of the suitability of the algorithm in the context of a Version Control System
-\paragraph{Summary}
-
-
-% TODO: Fill in !important
-\subsubsection{Recursive Merge Algorithm}
-
-% TODO: Add references
-% Advantages and Disadvantages in the context of a Version Control System
-% TODO: Fill in !important
-\paragraph{Advantages}
-% TODO: Fill in !important
-\paragraph{Disadvantages}
-
-% TODO: Add implementation details
-\paragraph{Implementation Details}
-
-% TODO: Summary of the suitability of the algorithm in the context of a Version Control System
-\paragraph{Summary}
 
 % ------------------------------------------------------------------------------
