@@ -6,6 +6,16 @@ import (
 	"testing"
 )
 
+//	var DATA_SIZE = []struct {
+//		dataSize int
+//	}{
+//
+//		{100},
+//		{1000},
+//		{10000},
+//		{100000},
+//		{1000000},
+//	}
 func BenchmarkBreadthFirstSearch(b *testing.B) {
 	for _, dataSize := range DATA_SIZE {
 		b.Run(fmt.Sprintf("BreadthFirstSearch_%d", dataSize.dataSize), func(b *testing.B) {

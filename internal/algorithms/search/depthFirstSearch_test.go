@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/ReeceDonovan/nax-rc/internal/dataStructures/graph"
-	"github.com/ReeceDonovan/nax-rc/internal/dataStructures/revlog"
+	"github.com/ReeceDonovan/nax-rc/internal/types"
 )
 
 // var DATA_SIZE = []struct {
@@ -19,13 +19,23 @@ import (
 // 	{1000000},
 // }
 
-func createBigGraph(dataSize int) (graph.Graph, map[string]revlog.Revision) {
+var DATA_SIZE = []struct {
+	dataSize int
+}{
+	{100},
+	{1000},
+	{10000},
+	{100000},
+	{1000000},
+}
+
+func createBigGraph(dataSize int) (graph.Graph, map[string]types.Revision) {
 	var g graph.Graph
 
 	// Create a map of letters A-Z to use as vertex labels, each letter will correspond to a random revision
-	var revisions = make(map[string]revlog.Revision)
+	var revisions = make(map[string]types.Revision)
 	for i := 65; i < 91; i++ {
-		revision := revlog.NewRandomRevision(i, dataSize)
+		revision := types.NewRandomRevision(i, dataSize)
 		revisions[fmt.Sprintf("%c", i)] = revision
 		g.AddVertex(revision)
 	}

@@ -2,10 +2,10 @@ package search
 
 import (
 	"github.com/ReeceDonovan/nax-rc/internal/dataStructures/graph"
-	"github.com/ReeceDonovan/nax-rc/internal/dataStructures/revlog"
+	"github.com/ReeceDonovan/nax-rc/internal/types"
 )
 
-func DepthFirstSearch(g graph.Graph, startVertex graph.Vertex, id int) revlog.Revision {
+func DepthFirstSearch(g graph.Graph, startVertex graph.Vertex, id int) types.Revision {
 	visited := make(map[graph.Vertex]bool)
 	stack := []graph.Vertex{startVertex}
 
@@ -16,7 +16,7 @@ func DepthFirstSearch(g graph.Graph, startVertex graph.Vertex, id int) revlog.Re
 		currentVertexHashcode := graph.GetElementHashcode(currentVertex)
 		if !visited[currentVertexHashcode] {
 			visited[currentVertexHashcode] = true
-			currentVertexData := currentVertex.(revlog.Revision)
+			currentVertexData := currentVertex.(types.Revision)
 			if currentVertexData.ID() == id {
 				return currentVertexData
 			}
