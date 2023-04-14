@@ -1,78 +1,255 @@
 package linkedList
 
 import (
+	"fmt"
+	"math/rand"
 	"testing"
+
+	"github.com/ReeceDonovan/nax-rc/internal/types"
+	"github.com/stretchr/testify/assert"
 )
 
-// Helper function to create a list for testing
-func createTestList() *LinkedList {
-	list := &LinkedList{}
-	list.Append(1)
-	list.Append(2)
-	list.Append(3)
-	return list
+func TestNewDoublyLinkedList(t *testing.T) {
+	list := NewDoublyLinkedList()
+
+	assert.Nil(t, list.Head)
+	assert.Nil(t, list.Tail)
 }
 
-func TestLinkedList_IsEmpty(t *testing.T) {
-	list := &LinkedList{}
-	if !list.IsEmpty() {
-		t.Error("Expected list to be empty")
-	}
+func TestDoublyLinkedList_SetHead(t *testing.T) {
+	list := NewDoublyLinkedList()
+	node := &Node{Revision: types.NewBlankRevision(1)}
 
-	list.Append(1)
-	if list.IsEmpty() {
-		t.Error("Expected list to not be empty")
-	}
+	list.SetHead(node)
+
+	assert.Equal(t, node, list.Head)
+	assert.Equal(t, node, list.Tail)
 }
 
-func TestLinkedList_Append(t *testing.T) {
-	list := createTestList()
-	expected := "1 -> 2 -> 3 -> nil"
+func TestDoublyLinkedList_SetTail(t *testing.T) {
+	list := NewDoublyLinkedList()
+	node := &Node{Revision: types.NewBlankRevision(1)}
 
-	if list.String() != expected {
-		t.Errorf("Expected list to be %s, got %s", expected, list.String())
-	}
+	list.SetTail(node)
+
+	assert.Equal(t, node, list.Head)
+	assert.Equal(t, node, list.Tail)
 }
 
-func TestLinkedList_Prepend(t *testing.T) {
-	list := createTestList()
-	list.Prepend(0)
-	expected := "0 -> 1 -> 2 -> 3 -> nil"
+func TestDoublyLinkedList_InsertBefore(t *testing.T) {
+	list := NewDoublyLinkedList()
+	node1 := &Node{Revision: types.NewBlankRevision(1)}
+	node2 := &Node{Revision: types.NewBlankRevision(2)}
 
-	if list.String() != expected {
-		t.Errorf("Expected list to be %s, got %s", expected, list.String())
-	}
+	list.SetHead(node1)
+	list.InsertBefore(node1, node2)
+
+	assert.Equal(t, node2, list.Head)
+	assert.Equal(t, node1, list.Tail)
+	assert.Equal(t, node1, node2.Next)
+	assert.Equal(t, node2, node1.Prev)
 }
 
-func TestLinkedList_Remove(t *testing.T) {
-	list := createTestList()
-	list.Remove(list.Head.Next) // Remove '2'
-	expected := "1 -> 3 -> nil"
+func TestDoublyLinkedList_InsertAfter(t *testing.T) {
+	list := NewDoublyLinkedList()
+	node1 := &Node{Revision: types.NewBlankRevision(1)}
+	node2 := &Node{Revision: types.NewBlankRevision(2)}
 
-	if list.String() != expected {
-		t.Errorf("Expected list to be %s, got %s", expected, list.String())
-	}
+	list.SetHead(node1)
+	list.InsertAfter(node1, node2)
+
+	assert.Equal(t, node1, list.Head)
+	assert.Equal(t, node2, list.Tail)
+	assert.Equal(t, node2, node1.Next)
+	assert.Equal(t, node1, node2.Prev)
 }
 
-func BenchmarkLinkedList_Append(b *testing.B) {
-	list := &LinkedList{}
+func TestDoublyLinkedList_InsertAtPosition(t *testing.T) {
+	list := NewDoublyLinkedList()
+	node1 := &Node{Revision: types.NewBlankRevision(1)}
+	node2 := &Node{Revision: types.NewBlankRevision(2)}
+	node3 := &Node{Revision: types.NewBlankRevision(3)}
+
+	list.SetHead(node1)
+	list.SetTail(node3)
+	list.InsertAtPosition(2, node2)
+
+	assert.Equal(t, node1, list.Head)
+	assert.Equal(t, node3, list.Tail)
+	assert.Equal(t, node2, node1.Next)
+	assert.Equal(t, node1, node2.Prev)
+	assert.Equal(t, node3, node2.Next)
+	assert.Equal(t, node2, node3.Prev)
+}
+
+func TestDoublyLinkedList_RemoveNodesWithID(t *testing.T) {
+	list := NewDoublyLinkedList()
+	node1 := &Node{Revision: types.NewBlankRevision(1)}
+	node2 := &Node{Revision: types.NewBlankRevision(2)}
+	node3 := &Node{Revision: types.NewBlankRevision(2)}
+
+	list.SetHead(node1)
+	list.SetTail(node2)
+	list.InsertAfter(node2, node3)
+	list.RemoveNodesWithID(2)
+
+	assert.Equal(t, node1, list.Head)
+	assert.Equal(t, node1, list.Tail)
+	assert.Nil(t, node1.Prev)
+	assert.Nil(t, node1.Next)
+}
+
+func TestDoublyLinkedList_ContainsNodeWithID(t *testing.T) {
+	list := NewDoublyLinkedList()
+	node1 := &Node{Revision: types.NewBlankRevision(1)}
+	node2 := &Node{Revision: types.NewBlankRevision(2)}
+	node3 := &Node{Revision: types.NewBlankRevision(3)}
+
+	list.SetHead(node1)
+	list.SetTail(node2)
+	list.InsertAfter(node2, node3)
+
+	assert.True(t, list.ContainsNodeWithID(1))
+	assert.True(t, list.ContainsNodeWithID(2))
+	assert.True(t, list.ContainsNodeWithID(3))
+	assert.False(t, list.ContainsNodeWithID(4))
+}
+
+func TestDoublyLinkedList_Remove(t *testing.T) {
+	list := NewDoublyLinkedList()
+	node1 := &Node{Revision: types.NewBlankRevision(1)}
+	node2 := &Node{Revision: types.NewBlankRevision(2)}
+	node3 := &Node{Revision: types.NewBlankRevision(3)}
+
+	list.SetHead(node1)
+	list.SetTail(node2)
+	list.InsertAfter(node2, node3)
+	list.Remove(node2)
+
+	assert.Equal(t, node1, list.Head)
+	assert.Equal(t, node3, list.Tail)
+	assert.Equal(t, node3, node1.Next)
+	assert.Equal(t, node1, node3.Prev)
+}
+
+func TestDoublyLinkedList_removeNodeBindings(t *testing.T) {
+	list := NewDoublyLinkedList()
+	node1 := &Node{Revision: types.NewBlankRevision(1)}
+	node2 := &Node{Revision: types.NewBlankRevision(2)}
+	node3 := &Node{Revision: types.NewBlankRevision(3)}
+
+	list.SetHead(node1)
+	list.SetTail(node2)
+	list.InsertAfter(node2, node3)
+	list.removeNodeBindings(node2)
+
+	assert.Equal(t, node1, list.Head)
+	assert.Equal(t, node3, list.Tail)
+	assert.Equal(t, node3, node1.Next)
+	assert.Equal(t, node1, node3.Prev)
+	assert.Nil(t, node2.Prev)
+	assert.Nil(t, node2.Next)
+}
+
+func generateRandomNode() *Node {
+	revisionID := rand.Intn(1000)
+	dataSize := rand.Intn(100)
+	revision := types.NewRandomRevision(revisionID, dataSize)
+	return &Node{Revision: revision}
+}
+
+func BenchmarkDoublyLinkedList_InsertBefore(b *testing.B) {
+	list := NewDoublyLinkedList()
+	node := generateRandomNode()
+	list.SetHead(node)
+
 	for i := 0; i < b.N; i++ {
-		list.Append(i)
+		newNode := generateRandomNode()
+		list.InsertBefore(node, newNode)
 	}
 }
 
-func BenchmarkLinkedList_Prepend(b *testing.B) {
-	list := &LinkedList{}
+func BenchmarkDoublyLinkedList_InsertAfter(b *testing.B) {
+	list := NewDoublyLinkedList()
+	node := generateRandomNode()
+	list.SetHead(node)
+
 	for i := 0; i < b.N; i++ {
-		list.Prepend(i)
+		newNode := generateRandomNode()
+		list.InsertAfter(node, newNode)
 	}
 }
 
-func BenchmarkLinkedList_Remove(b *testing.B) {
-	list := createTestList()
+func BenchmarkDoublyLinkedList_InsertAtPosition(b *testing.B) {
+	list := NewDoublyLinkedList()
+	node := generateRandomNode()
+	list.SetHead(node)
+
+	for i := 0; i < b.N; i++ {
+		newNode := generateRandomNode()
+		position := rand.Intn(i+2) + 1
+		list.InsertAtPosition(position, newNode)
+	}
+}
+
+func BenchmarkDoublyLinkedList_RemoveNodesWithID(b *testing.B) {
+	list := NewDoublyLinkedList()
+	node := generateRandomNode()
+	list.SetHead(node)
+
+	for i := 0; i < b.N; i++ {
+		newNode := generateRandomNode()
+		list.InsertAfter(node, newNode)
+		node = newNode
+	}
+
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		list.Remove(list.Head)
-		list.Append(i)
+		revisionID := rand.Intn(1000)
+		list.RemoveNodesWithID(revisionID)
+	}
+}
+
+func BenchmarkDoublyLinkedList_ContainsNodeWithID(b *testing.B) {
+	list := NewDoublyLinkedList()
+	node := generateRandomNode()
+	list.SetHead(node)
+
+	for i := 0; i < b.N; i++ {
+		newNode := generateRandomNode()
+		list.InsertAfter(node, newNode)
+		node = newNode
+	}
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		revisionID := rand.Intn(1000)
+		list.ContainsNodeWithID(revisionID)
+	}
+}
+
+const (
+	smallNumRevisions  = 20
+	mediumNumRevisions = 200
+	largeNumRevisions  = 2000
+	largeDataSize      = 1000000 // 1 Mb
+	mediumDataSize     = 1000    // 1 Kb
+	smallDataSize      = 100     // 100 bytes
+)
+
+// Create a benchmarks for constructing a list of revisions with different sizes
+func BenchmarkDoublyLinkedList_NewDoublyLinkedList(b *testing.B) {
+	for _, numRevisions := range []int{smallNumRevisions, mediumNumRevisions, largeNumRevisions} {
+		for _, dataSize := range []int{smallDataSize, mediumDataSize, largeDataSize} {
+			b.Run(fmt.Sprintf("numRevisions=%d,dataSize=%d", numRevisions, dataSize), func(b *testing.B) {
+				for i := 0; i < b.N; i++ {
+					list := NewDoublyLinkedList()
+					for j := 0; j < numRevisions; j++ {
+						revision := types.NewRandomRevision(j, dataSize)
+						list.InsertAtPosition(j+1, &Node{Revision: revision})
+					}
+				}
+			})
+		}
 	}
 }
