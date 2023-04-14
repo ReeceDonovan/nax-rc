@@ -1,73 +1,131 @@
 package linkedList
 
 import (
-	"bytes"
-	"fmt"
+	"github.com/ReeceDonovan/nax-rc/internal/types"
 )
 
-type Data interface {
-	ID() int
-	Data() []byte
+// Node represents a doubly linked list node containing a revision.
+type Node struct {
+	Revision types.Revision
+	Next     *Node
+	Prev     *Node
 }
 
-type LinkedListNode struct {
-	Data interface{}
-	Next *LinkedListNode
-	Prev *LinkedListNode
+// DoublyLinkedList represents a doubly linked list data structure.
+type DoublyLinkedList struct {
+	Head *Node
+	Tail *Node
 }
 
-type LinkedList struct {
-	Head *LinkedListNode
-	Tail *LinkedListNode
+// NewDoublyLinkedList initializes and returns an empty doubly linked list.
+func NewDoublyLinkedList() *DoublyLinkedList {
+	return &DoublyLinkedList{}
 }
 
-func (list *LinkedList) IsEmpty() bool {
-	return list.Head == nil
-}
-
-func (list *LinkedList) First() *LinkedListNode {
-	return list.Head
-}
-
-func (list *LinkedList) Last() *LinkedListNode {
-	return list.Tail
-}
-
-func (list *LinkedList) Append(data interface{}) {
-	node := &LinkedListNode{Data: data}
-	if list.IsEmpty() {
+// SetHead sets the given node as the head of the doubly linked list.
+func (list *DoublyLinkedList) SetHead(node *Node) {
+	if list.Head == nil {
 		list.Head = node
 		list.Tail = node
 		return
 	}
-	list.Tail.Next = node
-	node.Prev = list.Tail
-	list.Tail = node
+	list.InsertBefore(list.Head, node)
 }
 
-func (list *LinkedList) Prepend(data interface{}) {
-	node := &LinkedListNode{Data: data}
-	if list.IsEmpty() {
-		list.Head = node
-		list.Tail = node
+// SetTail sets the given node as the tail of the doubly linked list.
+func (list *DoublyLinkedList) SetTail(node *Node) {
+	if list.Tail == nil {
+		list.SetHead(node)
 		return
 	}
-	list.Head.Prev = node
-	node.Next = list.Head
-	list.Head = node
+	list.InsertAfter(list.Tail, node)
 }
 
-func (list *LinkedList) Remove(node *LinkedListNode) {
+// InsertBefore inserts a new node before the specified node in the doubly linked list.
+func (list *DoublyLinkedList) InsertBefore(node, nodeToInsert *Node) {
+	if nodeToInsert == list.Head && nodeToInsert == list.Tail {
+		return
+	}
+	list.Remove(nodeToInsert)
+	nodeToInsert.Prev = node.Prev
+	nodeToInsert.Next = node
+	if node.Prev == nil {
+		list.Head = nodeToInsert
+	} else {
+		node.Prev.Next = nodeToInsert
+	}
+	node.Prev = nodeToInsert
+}
+
+// InsertAfter inserts a new node after the specified node in the doubly linked list.
+func (list *DoublyLinkedList) InsertAfter(node, nodeToInsert *Node) {
+	if nodeToInsert == list.Head && nodeToInsert == list.Tail {
+		return
+	}
+	list.Remove(nodeToInsert)
+	nodeToInsert.Prev = node
+	nodeToInsert.Next = node.Next
+	if node.Next == nil {
+		list.Tail = nodeToInsert
+	} else {
+		node.Next.Prev = nodeToInsert
+	}
+	node.Next = nodeToInsert
+}
+
+// InsertAtPosition inserts a new node at the specified position in the doubly linked list.
+func (list *DoublyLinkedList) InsertAtPosition(position int, nodeToInsert *Node) {
+	if position == 1 {
+		list.SetHead(nodeToInsert)
+		return
+	}
+	currentNode := list.Head
+	currentPosition := 1
+	for currentNode != nil && currentPosition != position {
+		currentNode = currentNode.Next
+		currentPosition++
+	}
+	if currentNode != nil {
+		list.InsertBefore(currentNode, nodeToInsert)
+	} else {
+		list.SetTail(nodeToInsert)
+	}
+}
+
+// RemoveNodesWithID removes all nodes with the specified revision ID from the doubly linked list.
+func (list *DoublyLinkedList) RemoveNodesWithID(id int) {
+	currentNode := list.Head
+	for currentNode != nil {
+		nodeToRemove := currentNode
+		currentNode = currentNode.Next
+		if nodeToRemove.Revision.ID() == id {
+			list.Remove(nodeToRemove)
+		}
+	}
+}
+
+// Remove removes the specified node from the doubly linked list.
+func (list *DoublyLinkedList) Remove(node *Node) {
 	if node == list.Head {
 		list.Head = list.Head.Next
 	}
 	if node == list.Tail {
 		list.Tail = list.Tail.Prev
 	}
-	list.removeBindings(node)
+	list.removeNodeBindings(node)
 }
 
-func (list *LinkedList) removeBindings(node *LinkedListNode) {
+// ContainsNodeWithID returns true if the doubly linked list contains a node with the specified revision ID.
+func (list *DoublyLinkedList) ContainsNodeWithID(id int) bool {
+	currentNode := list.Head
+	for currentNode != nil && currentNode.Revision.ID() != id {
+		currentNode = currentNode.Next
+	}
+	return currentNode != nil
+}
+
+// removeNodeBindings removes the bindings of the specified node from the doubly linked list.
+func (list *DoublyLinkedList) removeNodeBindings(node *Node) {
 	if node.Prev != nil {
 		node.Prev.Next = node.Next
 	}
@@ -76,15 +134,4 @@ func (list *LinkedList) removeBindings(node *LinkedListNode) {
 	}
 	node.Prev = nil
 	node.Next = nil
-}
-
-func (list *LinkedList) String() string {
-	var buffer bytes.Buffer
-	current := list.Head
-	for current != nil {
-		buffer.WriteString(fmt.Sprintf("%v -> ", current.Data))
-		current = current.Next
-	}
-	buffer.WriteString("nil")
-	return buffer.String()
 }
