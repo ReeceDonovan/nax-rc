@@ -2,17 +2,16 @@ package search
 
 import (
 	"github.com/ReeceDonovan/nax-rc/internal/dataStructures/linkedList"
-	"github.com/ReeceDonovan/nax-rc/internal/dataStructures/revlog"
 )
 
-func LinearSearch(list linkedList.LinkedList, id int) *linkedList.LinkedListNode {
-	current := list.First()
-	for current != nil {
-		currentData := current.Data.(revlog.Revision)
-		if currentData.ID() == id {
-			return current
+// LinearSearch takes a doubly linked list and a revision ID, and returns the node containing the revision with the given ID or nil if not found.
+func LinearSearch(list *linkedList.DoublyLinkedList, revisionID int) *linkedList.Node {
+	currentNode := list.Head
+	for currentNode != nil {
+		if currentNode.Revision.ID() == revisionID {
+			return currentNode
 		}
-		current = current.Next
+		currentNode = currentNode.Next
 	}
 	return nil
 }
