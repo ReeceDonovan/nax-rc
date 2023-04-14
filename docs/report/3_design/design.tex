@@ -568,7 +568,55 @@ A \lstinline{Directed Acyclic Graph (DAG)} is a data structure that consists of 
 
 % ------------------------------------------------------------------------------
 
+\subsection{Diffing Algorithms}
 
+\lstinline{Diffing algorithms}, also known as difference algorithms or delta algorithms, are specialised computational methods designed to identify and highlight the differences between two sets of data. These algorithms compare input sequences, such as text, code, or binary data, to efficiently determine the changes needed to transform one sequence into the other. By detecting additions, deletions, and modifications, diffing algorithms enable the tracking and management of revisions in a concise and comprehensible manner.
 
+\subsubsection{Myers Diff Algorithm}
+The \lstinline{Myers diffing algorithm}, developed by Eugene W. Myers, is an efficient algorithm for comparing two sequences (such as lines in text files) and finding the shortest edit script that transforms one sequence into the other. The algorithm is based on the concept of an edit graph, where each node represents an element in the sequences, and the edges represent insertions, deletions, or matches. The algorithm finds the shortest path through this graph, also known as the \lstinline{Longest Common Subsequence (LCS)} path, which represents the minimal set of edits required to transform one sequence into the other.
+\smallskip
+
+The time and space complexity of the \lstinline{Myers Diff} algorithm is $O(ND)$, where $N$ is the sum of the lengths of both inputs, and $D$ is the size of the minimum edit script that converts one input to the other. When the number of differences is small, various optimisations can be applied to improve complexity up to $O(N\log N + D^2)$ time and $O(N)$ space.
+
+% TODO: Add diagram for Myers diff algorithm
+
+\paragraph{Advantages}
+\begin{itemize}
+    \item Efficiently finds the shortest edit script, reducing the number of changes needed to transform one sequence into the other.
+    \item Can handle large input sequences, as it has a linear space complexity.
+    \item Can be adapted for various applications, such as comparing text files, source code, or DNA sequences.
+    \item The algorithm is well-established and widely used, making it a reliable choice for many diffing tasks.
+\end{itemize}
+\paragraph{Disadvantages}
+\begin{itemize}
+    \item Can produce suboptimal diffs for specific cases, such as when comparing sequences with many common elements but in a different order.
+    \item The algorithm's implementation can be complex and difficult to understand for those unfamiliar with graph-based algorithms.
+    \item May not be the most efficient algorithm for all diffing tasks, as other algorithms may produce better results in specific cases.
+    \item The quality of the output can be sensitive to the choice of the underlying \lstinline{Longest Common Subsequence} algorithm.
+\end{itemize}
+
+\subsubsection{Patience Diff Algorithm}
+The \lstinline{Patience Diffing algorithm}, developed by Bram Cohen, is a diffing algorithm that aims to produce more human-readable diffs by focusing on finding the \lstinline{Longest Increasing Subsequence (LIS)} in the two sequences. The algorithm first identifies unique matching lines (or elements) between the sequences and sorts them by their position in the first sequence. Then, it finds the \lstinline{LIS} in the sorted list of positions from the second sequence. The algorithm recursively applies this process to the unmatched portions of the sequences until the entire diff is produced.
+\smallskip
+
+The time complexity of the \lstinline{Patience Diff} algorithm is $O(N\log N)$, where $N$ is the sum of the lengths of both inputs.
+
+% TODO: Add diagram for Patience diff algorithm
+
+\paragraph{Advantages}
+\begin{itemize}
+    \item Produces more human-readable diffs, as it focuses on preserving the order of common elements.
+    \item Can handle large input sequences, as it has a linearithmic time complexity.
+    \item Can be used as a standalone algorithm or in combination with other diffing algorithms, such as the Myers algorithm, to improve the quality of the output.
+    \item The algorithm is relatively simple and straightforward to implement compared to some other diffing algorithms.
+    \item Works well for cases where the sequences have many common elements but in a different order.
+\end{itemize}
+\paragraph{Disadvantages}
+\begin{itemize}
+    \item May produce suboptimal diffs for specific cases, such as when comparing sequences with many non-unique elements.
+    \item The algorithm's performance depends on the choice of the underlying \lstinline{LIS} algorithm.
+    \item May not be the most efficient algorithm for all diffing tasks, as other algorithms may produce better results in specific cases.
+    \item Not as widely used or well-established as some other diffing algorithms, such as the \lstinline{Myers algorithm}.
+\end{itemize}
 
 % ------------------------------------------------------------------------------
