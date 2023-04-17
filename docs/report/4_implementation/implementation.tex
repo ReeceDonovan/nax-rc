@@ -1,27 +1,951 @@
 \chapter{Implementation} % (30-40 pages)
 \label{chap:implementation}
+% TODO: Add short introduction to the chapter
+\section{Data Structures}
+% TODO: Add short introduction to the section
+\subsection{Revision Type}
+Before implementing any data structures, I decided to create a foundational component that would serve as a building block for the subsequent data structures and algorithms. This foundational component is the \lstinline{Revision} interface and its implementation, which is designed to represent a single revision of a file in a Version Control System (VCS). The primary goal of this approach was to abstract the representation of a file revision, allowing for a consistent and modular way to manage revisions across the different data structures and algorithms being implemented and compared.
+% \smallskip
 
-% Environment Setup - (1 page)
-% File System Interaction - (1 page)
+\begin{lstlisting}[language=Go]
+type Revision interface {
+	ID() int
+	Data() []byte
+}
+\end{lstlisting}
+\medskip
+% \smallskip
 
-% Data Structures
-% ---------------
-% Implementing the data structures - (4 x 2 page)
-% Testing the data structures - (4 x 1 page)
+The \lstinline{Revision} interface defines two methods: one for obtaining the revision ID as an integer and another for accessing the revision data as a byte slice. The concrete implementation of this interface encapsulates the revision ID and data in two fields. This design enables us to consistently create and manipulate file revisions, regardless of the specific data structures or algorithms employed.
+% \smallskip
 
-% Algorithms
-% ---------------
-% Implementing the algorithms
-%  - Hashing - (2 x 1 page)
-%  - Diffing - (2 x 3 page)
-%  - Merging - (2 x 3 page)
-% Testing the algorithms
-%  - Hashing - (1 page)
-%  - Diffing - (2.5 page)
-%  - Merging - (2.5 page)
+\begin{lstlisting}[language=Go]
+type standardRevision struct {
+	id   int
+	data []byte
+}
 
-% Benchmarks
-% ---------------
-% Data Structures - (1 page)
-% Algorithms - (3 page)
+func (rev *standardRevision) ID() int {
+	return rev.id
+}
 
+func (rev *standardRevision) Data() []byte {
+	return rev.data
+}
+\end{lstlisting}
+\medskip
+% \smallskip
+
+Three functions have been provided to create new revisions with varying initial data. The first function allows users to create a revision with a specified ID and data, while the second function creates a revision with the given ID and no data. Finally, the third function generates a revision with random data of a specified size.
+% \smallskip
+
+\begin{lstlisting}[language=Go]
+func NewRevision(revisionID int, revisionData []byte) Revision {
+	return &standardRevision{revisionID, revisionData}
+}
+
+func NewBlankRevision(revisionID int) Revision {
+	return NewRevision(revisionID, nil)
+}
+
+func NewRandomRevision(revisionID int, dataSize int) Revision {
+	data, err := generateRandomBytes(dataSize)
+	if err != nil {
+		log.Fatalf("error generating random bytes: %v", err)
+	}
+	return NewRevision(revisionID, data)
+}
+\end{lstlisting}
+\medskip
+% \smallskip
+
+This \lstinline{Revision} abstraction can be employed to simulate different scenarios or workloads for the data structures and algorithms under evaluation. For example, the function that generates a revision with random data of a specified size could be used to create many random revisions, allowing for the evaluation of each algorithm's performance in handling diverse and unpredictable data.
+
+\subsubsection{Tests}
+\paragraph{TestNewRevision}
+This test case checks if the NewRevision function creates a new revision with the correct ID and data. It compares the ID and data of the created revision with the expected values and reports an error if they don't match.
+
+\paragraph{TestNewBlankRevision}
+This test case checks if the NewBlankRevision function creates a new revision with the correct ID and no data. It compares the ID of the created revision with the expected value and reports an error if it doesn't match. It also checks if the revision data is nil.
+
+\paragraph{TestNewRandomRevision}
+This test case checks if the NewRandomRevision function creates a new revision with the correct ID and random data of the specified size. It compares the ID and length of the data of the created revision with the expected values and reports an error if they don't match.
+
+\subsubsection{Benchmarks}
+\paragraph{BenchmarkNewRevision}
+This benchmark measures the performance of the NewRevision function. It creates a new revision with the given ID and data repeatedly in a loop, and the testing framework records the time taken.
+
+\paragraph{BenchmarkNewBlankRevision}
+This benchmark measures the performance of the NewBlankRevision function. It creates a new revision with the given ID and no data repeatedly in a loop, and the testing framework records the time taken.
+
+\paragraph{BenchmarkNewRandomRevision}
+This benchmark measures the performance of the NewRandomRevision function. It creates a new revision with the given ID and random data of the specified size repeatedly in a loop, and the testing framework records the time taken.
+
+\paragraph{BenchmarkGenerateRandomBytes}
+This benchmark measures the performance of the generateRandomBytes function. It generates a slice of random bytes of the specified length repeatedly in a loop, and the testing framework records the time taken. If there's an error generating the random bytes, the benchmark stops with a fatal error.
+
+\subsection{Doubly Linked List}
+After establishing a solid foundation with the \lstinline{Revision} interface, the next step in the implementation stage was to create a doubly linked list data structure that could store revisions. The primary reason for choosing a doubly linked list as one of the data structures for comparison was its flexibility and efficiency in insertion and deletion operations. Additionally, its dynamic nature allows for efficient memory utilisation.
+\smallskip
+
+The doubly linked list implementation consists of two primary components: the `DLLNode` struct, which represents a node in the list, and the `DoublyLinkedList` struct, which represents the list itself. The `DLLNode` struct contains a Revision object along with pointers to the next and previous nodes in the list. On the other hand, the `DoublyLinkedList` struct maintains pointers to the list's head (first) and tail (last) nodes.
+
+\begin{lstlisting}[language=Go]
+type DLLNode struct {
+	Revision types.Revision
+	Next     *DLLNode
+	Prev     *DLLNode
+}
+
+type DoublyLinkedList struct {
+	Head *DLLNode
+	Tail *DLLNode
+}
+\end{lstlisting}
+\medskip
+
+A set of methods were developed to facilitate various operations on the doubly linked list, such as adding and removing nodes, inserting nodes at specific positions, and checking for the presence of a node with a specified revision ID. These methods enable us to easily manipulate the doubly linked list and provide a way to evaluate its performance characteristics under different scenarios.
+
+\begin{lstlisting}[language=Go]
+// AssignHead sets the given node as the head of the doubly linked list.
+func (dll *DoublyLinkedList) AssignHead(node *DLLNode)
+
+// AssignTail sets the given node as the tail of the doubly linked list.
+func (dll *DoublyLinkedList) AssignTail(node *DLLNode)
+
+// InsertPrior inserts a new node before the specified node in the doubly linked list.
+func (dll *DoublyLinkedList) InsertPrior(node, nodeToInsert *DLLNode)
+
+// InsertSubsequent inserts a new node after the specified node in the doubly linked list.
+func (dll *DoublyLinkedList) InsertSubsequent(node, nodeToInsert *DLLNode)
+
+// InsertAtPosition inserts a new node at the specified position in the doubly linked list.
+func (dll *DoublyLinkedList) InsertAtPosition(position int, nodeToInsert *DLLNode)
+
+// RemoveNodesWithID removes all nodes with the specified revision ID from the doubly linked list.
+func (dll *DoublyLinkedList) RemoveNodesWithID(id int)
+
+// Remove removes the specified node from the doubly linked list.
+func (dll *DoublyLinkedList) Remove(node *DLLNode)
+
+// ContainsNodeWithID returns true if the doubly linked list contains a node with the specified revision ID.
+func (dll *DoublyLinkedList) ContainsNodeWithID(id int) bool
+\end{lstlisting}
+
+\subsubsection{Tests}
+% TestNewDoublyLinkedList: Tests the NewDoublyLinkedList function by asserting that the newly created list has a nil Head and Tail.
+\paragraph{TestNewDoublyLinkedList}
+This test case checks if the \lstinline{NewDoublyLinkedList} function creates a new doubly linked list with a nil Head and Tail. It asserts that the Head and Tail of the created list are nil and reports an error if they're not.
+% \smallskip
+
+% TestDoublyLinkedList_AssignHead: Tests the AssignHead method by assigning a node as the head and asserting that the list's Head and Tail are both equal to the node.
+\paragraph{TestDoublyLinkedList\_AssignHead}
+This test case checks if the AssignHead method assigns the given node as the head of the doubly linked list. It assigns the node as the head of the list and asserts that the list's Head and Tail are both equal to the node. It reports an error if they're not.
+% \smallskip
+
+% TestDoublyLinkedList_AssignTail: Tests the AssignTail method by assigning a node as the tail and asserting that the list's Head and Tail are both equal to the node
+\paragraph{TestDoublyLinkedList\_AssignTail}
+This test case checks if the \lstinline{AssignTail} method assigns the given node as the tail of the doubly linked list. It assigns the node as the tail of the list and asserts that the list's Head and Tail are both equal to the node. It reports an error if they're not.
+
+% TestDoublyLinkedList_InsertPrior: Tests the InsertPrior method by inserting a node before another node and asserting the list's Head, Tail, and node relationships
+\paragraph{TestDoublyLinkedList\_InsertPrior}
+This test case checks if the \lstinline{InsertPrior} method inserts a new node before the specified node in the doubly linked list. It inserts a new node before the specified node and asserts that the list's Head, Tail, and node relationships are correct. It reports an error if they're not.
+
+% TestDoublyLinkedList_InsertSubsequent: Tests the InsertSubsequent method by inserting a node after another node and asserting the list's Head, Tail, and node relationships.
+\paragraph{TestDoublyLinkedList\_InsertSubsequent}
+This test case checks if the \lstinline{InsertSubsequent} method inserts a new node after the specified node in the doubly linked list. It inserts a new node after the specified node and asserts that the list's Head, Tail, and node relationships are correct. It reports an error if they're not.
+
+% TestDoublyLinkedList_InsertAtPosition: Tests the InsertAtPosition method by inserting a node at a specific position and asserting the list's Head, Tail, and node relationships
+\paragraph{TestDoublyLinkedList\_InsertAtPosition}
+This test case checks if the \lstinline{InsertAtPosition} method inserts a new node at the specified position in the doubly linked list. It inserts a new node at the specified position and asserts that the list's Head, Tail, and node relationships are correct. It reports an error if they're not.
+
+% TestDoublyLinkedList_RemoveNodesWithID: Tests the RemoveNodesWithID method by removing all nodes with a specific revision ID and asserting the list's Head, Tail, and node relationships.
+\paragraph{TestDoublyLinkedList\_RemoveNodesWithID}
+This test case checks if the \lstinline{RemoveNodesWithID} method removes all nodes with the specified revision ID from the doubly linked list. It removes all nodes with the specified revision ID and asserts that the list's Head, Tail, and node relationships are correct. It reports an error if they're not.
+
+% TestDoublyLinkedList_ContainsNodeWithID: Tests the ContainsNodeWithID method by checking if the list contains nodes with specific revision IDs
+\paragraph{TestDoublyLinkedList\_ContainsNodeWithID}
+This test case checks if the \lstinline{ContainsNodeWithID} method returns true if the doubly linked list contains a node with the specified revision ID. It checks if the list contains nodes with specific revision IDs and asserts that the result is correct. It reports an error if the result is not as expected.
+
+% TestDoublyLinkedList_Remove: Tests the Remove method by removing a node from the list and asserting the list's Head, Tail, and node relationships
+\paragraph{TestDoublyLinkedList\_Remove}
+This test case checks if the \lstinline{Remove} method removes the specified node from the doubly linked list. It removes the specified node and asserts that the list's Head, Tail, and node relationships are correct. It reports an error if they're not.
+
+\subsubsection{Benchmarks}
+% BenchmarkDoublyLinkedList_InsertPrior
+\paragraph{BenchmarkDoublyLinkedList\_InsertPrior}
+This benchmark case checks the performance of the \lstinline{InsertPrior} method. It inserts a new node before the specified node in the doubly linked list and reports the time taken to perform the operation. The benchmark is run for a number of iterations and the average time taken is reported.
+
+% BenchmarkDoublyLinkedList_InsertSubsequent
+\paragraph{BenchmarkDoublyLinkedList\_InsertSubsequent}
+This benchmark case checks the performance of the \lstinline{InsertSubsequent} method. It inserts a new node after the specified node in the doubly linked list and reports the time taken to perform the operation. The benchmark is run for a number of iterations and the average time taken is reported.
+
+% BenchmarkDoublyLinkedList_InsertAtPosition
+\paragraph{BenchmarkDoublyLinkedList\_InsertAtPosition}
+This benchmark case checks the performance of the \lstinline{InsertAtPosition} method. It inserts a new node at the specified position in the doubly linked list and reports the time taken to perform the operation. The benchmark is run for a number of iterations and the average time taken is reported.
+
+% BenchmarkDoublyLinkedList_RemoveNodesWithID
+\paragraph{BenchmarkDoublyLinkedList\_RemoveNodesWithID}
+This benchmark case checks the performance of the \lstinline{RemoveNodesWithID} method. It removes all nodes with the specified revision ID from the doubly linked list and reports the time taken to perform the operation. The benchmark is run for a number of iterations and the average time taken is reported.
+
+% BenchmarkDoublyLinkedList_ContrainsNodeWithID
+\paragraph{BenchmarkDoublyLinkedList\_ContainsNodeWithID}
+This benchmark case checks the performance of the \lstinline{ContainsNodeWithID} method. It checks if the list contains nodes with specific revision IDs and reports the time taken to perform the operation. The benchmark is run for a number of iterations and the average time taken is reported.
+
+% BenchmarkDoublyLinkedList_RevisionConstruction
+
+% const (
+% 	smallNumRevisions  = 20
+% 	mediumNumRevisions = 200
+% 	largeNumRevisions  = 2000
+% 	largeDataSize      = 1000000 // 1 Mb
+% 	mediumDataSize     = 1000    // 1 Kb
+% 	smallDataSize      = 100     // 100 bytes
+% )
+
+% // Create a benchmarks for constructing a list of revisions with different sizes
+% func BenchmarkDoublyLinkedList_RevisionConstruction(b *testing.B) {
+% 	for _, numRevisions := range []int{smallNumRevisions, mediumNumRevisions, largeNumRevisions} {
+% 		for _, dataSize := range []int{smallDataSize, mediumDataSize, largeDataSize} {
+% 			b.Run(fmt.Sprintf("numRevisions=%d,dataSize=%d", numRevisions, dataSize), func(b *testing.B) {
+% 				for i := 0; i < b.N; i++ {
+% 					list := NewDoublyLinkedList()
+% 					for j := 0; j < numRevisions; j++ {
+% 						revision := types.NewRandomRevision(j, dataSize)
+% 						list.InsertAtPosition(j+1, &DLLNode{Revision: revision})
+% 					}
+% 				}
+% 			})
+% 		}
+% 	}
+% }
+
+\paragraph{BenchmarkDoublyLinkedList\_RevisionConstruction}
+This benchmark case measures the performance of constructing doubly linked lists with varying numbers of revisions and different data sizes for each revision. This benchmark helps to understand the efficiency of the code when dealing with different scenarios.
+
+\begin{lstlisting}[language=go]
+const (
+	smallNumRevisions  = 200
+	mediumNumRevisions = 2000
+	largeNumRevisions  = 20000
+	largeDataSize      = 10000   // 10 Kb
+	mediumDataSize     = 1000    // 1 Kb
+	smallDataSize      = 100     // 100 bytes
+)
+
+func BenchmarkDoublyLinkedList_RevisionConstruction(b *testing.B) {
+	for _, numRevisions := range []int{smallNumRevisions, mediumNumRevisions, largeNumRevisions} {
+		for _, dataSize := range []int{smallDataSize, mediumDataSize, largeDataSize} {
+			b.Run(fmt.Sprintf("numRevisions=%d,dataSize=%d", numRevisions, dataSize), func(b *testing.B) {
+				for i := 0; i < b.N; i++ {
+					list := NewDoublyLinkedList()
+					for j := 0; j < numRevisions; j++ {
+						revision := types.NewRandomRevision(j, dataSize)
+						list.InsertAtPosition(j+1, &DLLNode{Revision: revision})
+					}
+				}
+			})
+		}
+	}
+}
+\end{lstlisting}
+
+\begin{enumerate}
+    \item The benchmark iterates over two slices: one containing the number of revisions (\lstinline{smallNumRevisions}, \lstinline{mediumNumRevisions}, and \lstinline{largeNumRevisions}) and the other containing the data size for each revision (\lstinline{smallDataSize}, \lstinline{mediumDataSize}, and \lstinline{largeDataSize}).
+    \item For each combination of the number of revisions and data size, it runs a sub-benchmark using \lstinline{b.Run}. The \lstinline{fmt.Sprintf} function is used to create a descriptive name for the sub-benchmark based on the current values of \lstinline{numRevisions} and \lstinline{dataSize}.
+    \item Inside the sub-benchmark, the main loop (\lstinline{for i := 0; i < b.N; i++}) is run \lstinline{b.N} times, where \lstinline{b.N} is determined by the Go testing framework to obtain a reliable benchmark result.
+    \item In each iteration of the main loop, a new \lstinline{DoublyLinkedList} is created, and then revisions are generated and inserted into the list. The number of revisions and the data size of each revision are determined by the current values of \lstinline{numRevisions} and \lstinline{dataSize}.
+    \item The \lstinline{types.NewRandomRevision} function is called with the current index \lstinline{j} and the specified \lstinline{dataSize} to create a new revision. Then, a new \lstinline{DLLNode} is created with the generated revision.
+    \item The newly created node is inserted into the list at position \lstinline{j+1} using the \lstinline{InsertAtPosition} method. This operation is performed \lstinline{numRevisions} times, resulting in a doubly linked list with the desired number of revisions and data size.
+\end{enumerate}
+The \lstinline{Go testing} package measures the time taken for each sub-benchmark and reports the results.
+
+\subsection{Binary Search Tree}
+With the implementation of the \lstinline{Revision} interface and the \lstinline{Doubly Linked List} data structure complete, the next step was to implement a \lstinline{Binary Search Tree (BST)} data structure that could also store revisions. The decision to include a BST was primarily driven by its efficient search, insertion, and deletion operations, as well as its ability to maintain a sorted order of revisions. Furthermore, its hierarchical structure provides an interesting point of comparison against the linear nature of the doubly linked list.
+\smallskip
+
+The \lstinline{Binary Search Tree} implementation consists of a single primary component: the \lstinline{TreeNode} struct, which represents a node in the tree. In addition, the \lstinline{TreeNode} struct contains a \lstinline{Revision} object along with pointers to the left and right child nodes. This structure is designed to efficiently maintain the order of revisions based on their IDs, ensuring that the left subtree contains revisions with smaller IDs and the right subtree contains revisions with larger IDs.
+
+\begin{lstlisting}[language=go]
+type TreeNode struct {
+	Revision types.Revision
+	Left     *TreeNode
+	Right    *TreeNode
+}
+\end{lstlisting}
+\medskip
+
+Several methods were implemented to facilitate various operations on the BST, such as inserting revisions, searching for revisions with a specific ID, and removing revisions. These methods provide the necessary functionality to effectively manage the BST and allow for a comprehensive evaluation of its performance characteristics under different scenarios.
+
+\begin{lstlisting}[language=go]
+// Insert inserts a revision into the binary search tree.
+func (node *TreeNode) Insert(revision types.Revision) *TreeNode
+
+// Contains checks if a revision with the given ID exists in the binary search tree.
+func (node *TreeNode) Contains(id int) bool
+
+// Remove removes a revision with the given ID from the binary search tree.
+func (node *TreeNode) Remove(id int) (*TreeNode, error)
+\end{lstlisting}
+\medskip
+
+The BST methods were designed to handle the \lstinline{Revision} interface to maintain consistency with the previous data structures, allowing for seamless integration and comparison between the different data structures. This approach not only simplifies the evaluation process but also emphasises the modularity and adaptability of the code, as multiple data structures can be easily utilised and tested with a shared Revision interface.
+
+\subsubsection{Tests}
+% TestTreeNode_Insert - This test checks if the Insert method is working correctly by inserting two revisions into the tree and then asserting that the revisions have been added in the correct order.
+\paragraph{TestTreeNode\_Insert}
+This test checks if the \lstinline{Insert} method is working correctly by inserting two revisions into the tree and then asserting that the revisions have been added in the correct order.
+
+% TestTreeNode_Contains - This test checks if the Contains method is working correctly by inserting two revisions into the tree and then verifying if the tree contains those revisions and a non-existent revision.
+\paragraph{TestTreeNode\_Contains}
+This test checks if the \lstinline{Contains} method is working correctly by inserting two revisions into the tree and then verifying if the tree contains those revisions and a non-existent revision.
+
+% TestTreeNode_Remove - This test checks if the Remove method is working correctly by inserting two revisions into the tree, removing one, and then asserting that the removed revision is not in the tree anymore.
+\paragraph{TestTreeNode\_Remove}
+This test checks if the \lstinline{Remove} method is working correctly by inserting two revisions into the tree, removing one, and then asserting that the removed revision is not in the tree anymore.
+
+\subsubsection{Benchmarks}
+
+% generateRandomRevision - This is a helper function that generates a random revision with a random ID and data size. This function is used in the benchmark tests.
+\textbf{generateRandomRevision} - This is a helper function that generates a random revision with a random ID and data size. This function is used in the benchmark tests.
+
+% BenchmarkTreeNode_Insert - This benchmark measures the performance of the Insert method by repeatedly inserting random revisions into the tree.
+\paragraph{BenchmarkTreeNode\_Insert}
+This benchmark measures the performance of the \lstinline{Insert} method by repeatedly inserting random revisions into the tree.
+
+% BenchmarkTreeNode_Contains - This benchmark measures the performance of the Contains method by first inserting random revisions into the tree and then searching for random revision IDs.
+\paragraph{BenchmarkTreeNode\_Contains}
+This benchmark measures the performance of the \lstinline{Contains} method by first inserting random revisions into the tree and then searching for random revision IDs.
+
+% BenchmarkTreeNode_Remove - This benchmark measures the performance of the Remove method by first inserting random revisions into the tree and then attempting to remove random revision IDs.
+\paragraph{BenchmarkTreeNode\_Remove}
+This benchmark measures the performance of the \lstinline{Remove} method by first inserting random revisions into the tree and then attempting to remove random revision IDs.
+
+% const (
+% 	smallNumRevisions  = 20
+% 	mediumNumRevisions = 200
+% 	largeNumRevisions  = 2000
+% 	largeDataSize      = 1000000 // 1 Mb
+% 	mediumDataSize     = 1000    // 1 Kb
+% 	smallDataSize      = 100     // 100 bytes
+% )
+
+% // Create benchmarks for constructing a BST of revisions with different sizes
+% func BenchmarkTreeNode_RevisionConstruction(b *testing.B) {
+% 	for _, numRevisions := range []int{smallNumRevisions, mediumNumRevisions, largeNumRevisions} {
+% 		for _, dataSize := range []int{smallDataSize, mediumDataSize, largeDataSize} {
+% 			b.Run(fmt.Sprintf("numRevisions=%d,dataSize=%d", numRevisions, dataSize), func(b *testing.B) {
+% 				for i := 0; i < b.N; i++ {
+% 					// Create a root node
+% 					rootRevision := types.NewRandomRevision(0, dataSize)
+% 					root := &TreeNode{Revision: rootRevision}
+
+% 					// Insert revisions
+% 					for j := 1; j < numRevisions; j++ {
+% 						revision := types.NewRandomRevision(j, dataSize)
+% 						root.Insert(revision)
+% 					}
+% 				}
+% 			})
+% 		}
+% 	}
+% }
+
+\paragraph{BenchmarkTreeNode\_RevisionConstruction}
+This benchmark case measures the performance of constructing a binary search tree (BST) with different numbers of revisions and data sizes. The purpose of this benchmark is to evaluate how the BST implementation performs under various conditions and to identify potential bottlenecks or scalability issues.
+
+\begin{lstlisting}[language=go]
+const (
+	smallNumRevisions  = 200
+	mediumNumRevisions = 2000
+	largeNumRevisions  = 20000
+	largeDataSize      = 10000   // 10 Kb
+	mediumDataSize     = 1000    // 1 Kb
+	smallDataSize      = 100     // 100 bytes
+)
+
+func BenchmarkTreeNode_RevisionConstruction(b *testing.B) {
+	for _, numRevisions := range []int{smallNumRevisions, mediumNumRevisions, largeNumRevisions} {
+		for _, dataSize := range []int{smallDataSize, mediumDataSize, largeDataSize} {
+			b.Run(fmt.Sprintf("numRevisions=%d,dataSize=%d", numRevisions, dataSize), func(b *testing.B) {
+				for i := 0; i < b.N; i++ {
+					// Create a root node
+					rootRevision := types.NewRandomRevision(0, dataSize)
+					root := &TreeNode{Revision: rootRevision}
+
+					// Insert revisions
+					for j := 1; j < numRevisions; j++ {
+						revision := types.NewRandomRevision(j, dataSize)
+						root.Insert(revision)
+					}
+				}
+			})
+		}
+	}
+}
+\end{lstlisting}
+
+The benchmark has an outer loop that iterates over the numbers of revisions and an inner loop that iterates over the data sizes. For each combination of the number of revisions and data size, it runs a sub-benchmark with a unique name in the format "numRevisions=X,dataSize=Y". This makes it easier to analyse the benchmark results and compare the performance across different combinations.
+\\
+
+In each sub-benchmark, the following steps are performed:
+\begin{enumerate}
+    \item Create a random root revision with ID 0 and the specified data size.
+    \item Create a new TreeNode with the root revision.
+    \item Insert the remaining revisions into the tree one by one, with unique IDs and the specified data size. The number of inserted revisions is determined by the current value of the number of revisions.
+\end{enumerate}
+The \lstinline{Go testing} package measures the time taken for each sub-benchmark and reports the results.
+
+\subsection{Directed Acyclic Graph}
+The next step was to implement a more complex data structure: a \lstinline{Directed Acyclic Graph (DAG)}. This data structure was chosen for its ability to model complex relationships between revisions and represent branching and merging operations commonly found in Version Control Systems (VCS). Additionally, its unique properties and structure provide an interesting point of comparison against the previously implemented data structures.
+\smallskip
+
+The \lstinline{Directed Acyclic Graph} implementation comprises two primary components: the \lstinline{DAGNode} struct, which represents a node in the graph, and the \lstinline{DAG struct}, which represents the graph itself. The DAGNode struct contains a Revision object and two lists representing the parent and child nodes in the graph. In addition, the DAG struct maintains a map of nodes indexed by their revision IDs, allowing for efficient retrieval and manipulation of nodes in the graph.
+
+\begin{lstlisting}[language=go]
+type DAGNode struct {
+	Revision types.Revision
+	Parents  []*DAGNode
+	Children []*DAGNode
+}
+
+type DAG struct {
+	nodes map[int]*DAGNode
+}
+\end{lstlisting}
+\medskip
+
+A set of methods was developed to facilitate various operations on the DAG, such as adding and removing nodes, adding and removing directed edges between nodes, checking for the existence of nodes with a specific revision ID, and retrieving nodes from the graph. These methods allow for the efficient management of the DAG and enable the evaluation of its performance characteristics under different scenarios.
+
+\begin{lstlisting}[language=go]
+// AddNode adds a new node with the specified revision to the DAG.
+func (dag *DAG) AddNode(revision types.Revision) (*DAGNode, error)
+
+// RemoveNode removes a node with the specified revision ID from the DAG.
+func (dag *DAG) RemoveNode(revisionID int) error
+
+// AddEdge adds a directed edge between two nodes with the specified revision IDs in the DAG.
+func (dag *DAG) AddEdge(parentID, childID int) error
+
+// RemoveEdge removes a directed edge between two nodes with the specified revision IDs in the DAG.
+func (dag *DAG) RemoveEdge(parentID, childID int) error
+
+// NodeExists checks if a node with the given revision ID exists in the DAG.
+func (dag *DAG) NodeExists(revisionID int) bool
+
+// GetNode retrieves a node with the given revision ID from the DAG, returning nil if it doesn't exist.
+func (dag *DAG) GetNode(revisionID int) *DAGNode
+\end{lstlisting}
+
+\subsubsection{Tests}
+
+% TestDAG_AddNode: This test checks the AddNode function in the DAG. It creates a new DAG and a blank revision with ID 1, then adds the node containing that revision to the DAG. The test asserts that there are no errors and that the revision ID is present in the DAG
+\paragraph{TestDAG\_AddNode}
+This test checks the \lstinline{AddNode} function in the DAG. It creates a new DAG and a blank revision with ID 1, then adds the node containing that revision to the DAG. The test asserts that there are no errors and that the revision ID is present in the DAG.
+
+% TestDAG_RemoveNode: This test checks the RemoveNode function in the DAG. It creates a new DAG, adds a node with revision ID 1, and then removes that node. The test asserts that there are no errors and that the revision ID is not present in the DAG after removal.
+\paragraph{TestDAG\_RemoveNode}
+This test checks the \lstinline{RemoveNode} function in the DAG. It creates a new DAG, adds a node with revision ID 1, and then removes that node. The test asserts that there are no errors and that the revision ID is not present in the DAG after removal.
+
+% TestDAG_AddEdge: This test checks the AddEdge function in the DAG. It creates a new DAG, adds two nodes with revision IDs 1 and 2, and then adds an edge between them. The test asserts that there are no errors and that the edge has been added properly by checking the parent and child connections
+\paragraph{TestDAG\_AddEdge}
+This test checks the \lstinline{AddEdge} function in the DAG. It creates a new DAG, adds two nodes with revision IDs 1 and 2, and then adds an edge between them. The test asserts that there are no errors and that the edge has been added properly by checking the parent and child connections.
+
+% TestDAG_RemoveEdge: This test checks the RemoveEdge function in the DAG. It creates a new DAG, adds two nodes with revision IDs 1 and 2, adds an edge between them, and then removes that edge. The test asserts that there are no errors and that the edge is removed properly by checking the parent and child connections.
+\paragraph{TestDAG\_RemoveEdge}
+This test checks the \lstinline{RemoveEdge} function in the DAG. It creates a new DAG, adds two nodes with revision IDs 1 and 2, adds an edge between them, and then removes that edge. The test asserts that there are no errors and that the edge is removed properly by checking the parent and child connections.
+
+\subsubsection{Benchmarks}
+
+% BenchmarkDAG_AddNode, BenchmarkDAG_RemoveNode, BenchmarkDAG_AddEdge, and BenchmarkDAG_RemoveEdge: These are benchmark functions that measure the performance of the respective DAG operations (adding nodes, removing nodes, adding edges, and removing edges). They execute the respective functions multiple times with random revisions.
+
+\textbf{BenchmarkDAG\_AddNode}, \textbf{BenchmarkDAG\_RemoveNode},\\\textbf{BenchmarkDAG\_AddEdge}, and \textbf{BenchmarkDAG\_RemoveEdge} are benchmark functions that measure the performance of the respective DAG operations (adding nodes, removing nodes, adding edges, and removing edges). They execute the respective functions multiple times with random revisions.
+% \medskip
+
+% const (
+% 	smallNumNodes  = 20
+% 	mediumNumNodes = 200
+% 	largeNumNodes  = 2000
+% 	largeDataSize  = 1000000 // 1 Mb
+% 	mediumDataSize = 1000    // 1 Kb
+% 	smallDataSize  = 100     // 100 bytes
+% )
+
+% // Create benchmarks for constructing a DAG of revisions with different sizes
+% func BenchmarkDAG_RevisionConstruction(b *testing.B) {
+% 	for _, numNodes := range []int{smallNumNodes, mediumNumNodes, largeNumNodes} {
+% 		for _, dataSize := range []int{smallDataSize, mediumDataSize, largeDataSize} {
+% 			b.Run(fmt.Sprintf("numNodes=%d,dataSize=%d", numNodes, dataSize), func(b *testing.B) {
+% 				for i := 0; i < b.N; i++ {
+% 					// Create a DAG
+% 					dag := NewDAG()
+% 					// Add nodes with revisions
+% 					for j := 0; j < numNodes; j++ {
+% 						revision := types.NewRandomRevision(j, dataSize)
+% 						dag.AddNode(revision)
+% 					}
+
+% 					// Add edges
+% 					for j := 0; j < numNodes-1; j++ {
+% 						dag.AddEdge(j, j+1)
+% 					}
+% 				}
+% 			})
+% 		}
+% 	}
+% }
+
+\paragraph{BenchmarkDAG\_RevisionConstruction}
+This benchmark case measures the performance of constructing a Directed Acyclic Graph (DAG) with different numbers of nodes and data sizes for the revisions. The purpose of this benchmark is to evaluate the DAG implementation's performance under various conditions and identify potential bottlenecks or scalability issues.
+
+\begin{lstlisting}[language=go]
+const (
+	smallNumNodes  = 200
+	mediumNumNodes = 2000
+	largeNumNodes  = 20000
+	largeDataSize  = 10000   // 10 Kb
+	mediumDataSize = 1000    // 1 Kb
+	smallDataSize  = 100     // 100 bytes
+)
+
+func BenchmarkDAG_RevisionConstruction(b *testing.B) {
+	for _, numNodes := range []int{smallNumNodes, mediumNumNodes, largeNumNodes} {
+		for _, dataSize := range []int{smallDataSize, mediumDataSize, largeDataSize} {
+			b.Run(fmt.Sprintf("numRevisions=%d,dataSize=%d", numNodes, dataSize), func(b *testing.B) {
+				for i := 0; i < b.N; i++ {
+					// Create a DAG
+					dag := NewDAG()
+					// Add nodes with revisions
+					for j := 0; j < numNodes; j++ {
+						revision := types.NewRandomRevision(j, dataSize)
+						dag.AddNode(revision)
+					}
+
+					// Add edges
+					for j := 0; j < numNodes-1; j++ {
+						dag.AddEdge(j, j+1)
+					}
+				}
+			})
+		}
+	}
+}
+\end{lstlisting}
+\medskip
+
+For each combination, the benchmark function follows these steps:
+\begin{enumerate}
+    \item Create a new DAG using the \lstinline{NewDAG()} function.
+    \item Add nodes to the DAG with random revisions. The number of nodes added depends on the current \lstinline{numNodes} value, and the size of the data in each revision depends on the current \lstinline{dataSize} value. This is done using the \lstinline{types.NewRandomRevision()} function and the \lstinline{AddNode()} method of the DAG.
+    \item Add edges between the nodes in the DAG. This is done using the \lstinline{AddEdge()} method of the DAG. In this benchmark, the edges are added sequentially between adjacent nodes (e.g., between nodes 0 and 1, nodes 1 and 2, nodes 2 and 3, and so on).
+\end{enumerate}
+The benchmark measures the time it takes to perform these operations for each combination of node count and data size.
+
+\section{Search Algorithms}
+
+\subsection{Linear Search}
+With the implementation of various data structures complete, the next step was to implement search algorithms that could be used to find revisions within these data structures. The first algorithm implemented was \lstinline{Linear Search}, a straightforward search method that iterates through the elements of a data structure sequentially, comparing each element to the target value. This algorithm was chosen for its simplicity and as a baseline for comparison with other, more sophisticated search algorithms.
+
+\begin{lstlisting}[language=go]
+func LinearSearch(list *linkedList.DoublyLinkedList, revisionID int) *linkedList.DLLNode {
+	currentNode := list.Head
+	for currentNode != nil {
+		if currentNode.Revision.ID() == revisionID {
+			return currentNode
+		}
+		currentNode = currentNode.Next
+	}
+	return nil
+}
+\end{lstlisting}
+\medskip
+
+The \lstinline{Linear Search} algorithm was implemented as a function named \lstinline{LinearSearch}, which takes two parameters: a pointer to a \lstinline{DoublyLinkedList} object, which represents the list to be searched, and an integer, \lstinline{revisionID}, representing the revision ID to be searched for in the list. This function was specifically designed to work with the doubly linked list data structure, but it could be easily adapted to work with other data structures as well.
+\smallskip
+
+Inside the \lstinline{LinearSearch} function, a variable named \lstinline{currentNode} is initialised to the head of the input list. This variable is used to traverse the list, with the traversal continuing until either the target revision ID is found or the end of the list is reached (indicated by a \lstinline{nil} value for \lstinline{currentNode}).
+\smallskip
+
+A \lstinline{for} loop is used to traverse the list, with the loop condition checking whether \lstinline{currentNode} is not \lstinline{nil}. Inside the loop, an \lstinline{if} statement compares the revision ID of the \lstinline{currentNode} to the target \lstinline{revisionID}. If a match is found, the function returns the \lstinline{currentNode}. If the end of the list is reached without finding a match, the function returns \lstinline{nil} to indicate that the target revision ID was not found in the list.
+
+\subsubsection{Tests}
+
+% createTestList function: This helper function creates a doubly linked list with 10 nodes, where each node contains a blank revision with IDs from 0 to 9.
+\textbf{createTestList} - This is a helper function that creates a doubly linked list with 10 nodes, where each node contains a blank revision with IDs from 0 to 9.
+
+% TestLinearSearch function: This test function checks if the LinearSearch function works as expected. It searches for revisions with IDs from 0 to 9 in the test list and asserts that the nodes are found and have the correct IDs. Additionally, it searches for a revision with an ID of -1, which should not be found, and asserts that the returned node is nil.
+\paragraph{TestLinearSearch}
+This test checks if the \lstinline{LinearSearch} function works as expected. It searches for revisions with IDs from 0 to 9 in the test list and asserts that the nodes are found and have the correct IDs. Additionally, it searches for a revision with an ID of -1, which should not be found, and asserts that the returned node is nil.
+
+\subsubsection{Benchmarks}
+
+\paragraph{BenchmarkLinearSearch\_RevisionSearch}
+This benchmark case measures the performance of the \lstinline{LinearSearch} function on doubly linked lists containing different numbers of revisions and varying revision data sizes. The goal is to understand how the search function performs under various scenarios, which can help identify performance bottlenecks or areas for optimisation.
+
+\begin{lstlisting}[language=go]
+const (
+	smallNumRevisions  = 200
+	mediumNumRevisions = 2000
+	largeNumRevisions  = 20000
+	largeDataSize      = 10000 // 10 Kb
+	mediumDataSize     = 1000  // 1 Kb
+	smallDataSize      = 100   // 100 bytes
+)
+
+func BenchmarkLinearSearch_RevisionSearch(b *testing.B) {
+	for _, numRevisions := range []int{smallNumRevisions, mediumNumRevisions, largeNumRevisions} {
+		for _, dataSize := range []int{smallDataSize, mediumDataSize, largeDataSize} {
+			b.Run(fmt.Sprintf("numRevisions=%d,dataSize=%d", numRevisions, dataSize), func(b *testing.B) {
+				list := createListWithRevisions(numRevisions, dataSize)
+				b.ResetTimer()
+
+				for i := 0; i < b.N; i++ {
+					revisionID := rand.Intn(numRevisions)
+					LinearSearch(list, revisionID)
+				}
+			})
+		}
+	}
+}
+\end{lstlisting}
+\medskip
+
+\begin{enumerate}
+    \item The function iterates over different numbers of revisions (small, medium, and large) and data sizes (small, medium, and large) using nested loops. This creates 9 different combinations of revision counts and data sizes for benchmarking.
+    \item For each revision count and data size combination, the benchmark function executes a sub-benchmark using the \lstinline{b.Run} method. It constructs a unique name for the sub-benchmark by concatenating the number of revisions and data size (e.g., "numRevisions=200,dataSize=100").
+    \item Inside the sub-benchmark, the \lstinline{createListWithRevisions} function creates a doubly linked list with the specified number of revisions and data sizes. Each revision in the list has a unique ID and random data of the specified size.
+    \item The timer for the benchmark is reset using \lstinline{b.ResetTimer()}. This ensures that the time taken to create the list is not included in the benchmark results.
+    \item For each iteration of the benchmark, a random revision ID is generated within the range of the number of revisions in the list. Then, the \lstinline{LinearSearch} function is called to search for the node containing the revision with the generated ID in the list.
+    \item The benchmark measures the time taken to perform the linear search for each revision count and data size combination. By analysing the results, you can understand how the performance of the \lstinline{LinearSearch} function is affected by the number of revisions in the list and the size of the revision data.
+\end{enumerate}
+
+\subsection{Binary Search}
+The next search algorithm implemented was \lstinline{Binary Search}, an efficient search method that takes advantage of the sorted order of a data structure, dividing the search interval in half with each iteration. This algorithm was chosen for its efficiency and ability to handle larger datasets effectively, providing a performance comparison against the \lstinline{Linear Search} algorithm.
+
+\begin{lstlisting}[language=go]
+func BinarySearch(tree *binaryTree.TreeNode, id int) (types.Revision, error) {
+	currentNode := tree
+	for currentNode != nil {
+		if id < currentNode.Revision.ID() {
+			currentNode = currentNode.Left
+		} else if id > currentNode.Revision.ID() {
+			currentNode = currentNode.Right
+		} else {
+			return currentNode.Revision, nil
+		}
+	}
+	return nil, errors.New("revision not found")
+}
+\end{lstlisting}
+\medskip
+
+The Binary Search algorithm was implemented as a function named \lstinline{BinarySearch}, which takes two parameters: a pointer to a \lstinline{TreeNode} object, which represents the root of the binary search tree to be searched, and an integer, \lstinline{revisionID}, representing the revision ID to be searched for in the tree. This function was specifically designed to work with the binary search tree data structure, leveraging the sorted order of revisions based on their IDs.
+\smallskip
+
+Inside the \lstinline{BinarySearch} function, a variable named \lstinline{currentNode} is initialised to the root of the input binary tree. This variable is used to traverse the tree, with the traversal continuing until either the target revision ID is found or the end of the tree is reached (indicated by a \lstinline{nil} value for \lstinline{currentNode}).
+\smallskip
+
+A \lstinline{for} loop is used to traverse the binary tree. The loop continues until either the target revision ID is found or the end of the tree is reached. Inside the loop, there are three conditions:
+\begin{itemize}
+    \item If the target \lstinline{revisionID} is less than the revision ID of the \lstinline{currentNode}, the function sets the \lstinline{currentNode} to the left child of the current node, moving the search down the left subtree.
+    \item If the target \lstinline{revisionID} is greater than the revision ID of the \lstinline{currentNode}, the function sets the \lstinline{currentNode} to the right child of the current node, moving the search down the right subtree.
+    \item If the target \lstinline{revisionID} is equal to the revision ID of the \lstinline{currentNode}, the function returns the \lstinline{Revision} object associated with the \lstinline{currentNode}.
+\end{itemize}
+If the traversal reaches the end of the tree without finding the target revision ID, the function returns a \lstinline{nil} value to indicate that the target revision ID was not found in the tree.
+
+\subsubsection{Tests}
+\textbf{createTreeWithRevisions} - This helper function creates a binary search tree with a given number of revisions (\lstinline{numRevisions}) and a specified data size (\lstinline{dataSize}). It initialises the root node with a random revision and then inserts subsequent revisions into the tree.
+
+\paragraph{TestBinarySearch}
+This test checks if the \lstinline{BinarySearch} function works as expected. It creates a binary search tree with 100 revisions and a data size of 10 bytes. The test checks for two scenarios:
+\begin{enumerate}[label=(\alph*)]
+    \item The revision with ID 42 is found in the tree. The test asserts that there is no error, the found revision is not nil, and its ID matches the expected value (42).
+    \item The revision with ID 999 is not found in the tree. Therefore, the test asserts that there is an error, the error message matches "revision not found", and the returned revision is nil.
+\end{enumerate}
+
+\subsubsection{Benchmarks}
+
+\paragraph{BenchmarkBinarySearch\_RevisionSearch}
+This benchmark case measures the performance of the \lstinline{BinarySearch} function under various conditions. The goal is to measure how the search function performs when searching for revisions with different numbers of revisions and varying data sizes in a binary search tree.
+
+\begin{lstlisting}[language=go]
+const (
+	smallNumRevisions  = 200
+	mediumNumRevisions = 2000
+	largeNumRevisions  = 20000
+	largeDataSize      = 10000 // 10 Kb
+	mediumDataSize     = 1000  // 1 Kb
+	smallDataSize      = 100   // 100 bytes
+)
+
+func BenchmarkBinarySearch_RevisionSearch(b *testing.B) {
+	for _, numRevisions := range []int{smallNumRevisions, mediumNumRevisions, largeNumRevisions} {
+		for _, dataSize := range []int{smallDataSize, mediumDataSize, largeDataSize} {
+			b.Run(fmt.Sprintf("numRevisions=%d,dataSize=%d", numRevisions, dataSize), func(b *testing.B) {
+				tree := createTreeWithRevisions(numRevisions, dataSize)
+				b.ResetTimer()
+
+				for i := 0; i < b.N; i++ {
+					revisionID := rand.Intn(numRevisions)
+					_, _ = BinarySearch(tree, revisionID)
+				}
+			})
+		}
+	}
+}
+\end{lstlisting}
+\medskip
+
+\begin{enumerate}
+    \item The function iterates over different numbers of revisions (small, medium, and large) and data sizes (small, medium, and large) using nested loops. This creates 9 different combinations of revision counts and data sizes for benchmarking.
+    \item For each revision count and data size combination, execute a sub-benchmark with the \lstinline{b.Run} method. This allows each combination to be benchmarked independently, producing individual results. The sub-benchmark is named using a formatted string containing the number of revisions and data size, e.g., "numRevisions=200,dataSize=100".
+    \item Inside each sub-benchmark:
+          \begin{enumerate}
+              \item Create a binary search tree using the \lstinline{createTreeWithRevisions} function. The tree is populated with the specified number of revisions, each having the specified data size.
+              \item Reset the timer using \lstinline{b.ResetTimer()}. This ensures that the time spent creating the binary search tree is not included in the benchmark measurement.
+              \item Execute the binary search multiple times, as specified by the \lstinline{b.N} value, which is determined by the benchmark framework based on the performance of the tested system. In each iteration, a random revision ID within the range of the number of revisions is generated using \lstinline{rand.Intn(numRevisions)}. Then, the \lstinline{BinarySearch} function is called to search for the revision with the generated ID in the tree.
+          \end{enumerate}
+\end{enumerate}
+The benchmark measures the time taken to perform the binary search for each revision count and data size combination.
+
+\subsection{Depth-First Search}
+After implementing both the Linear and Binary search algorithms, the next algorithm to be implemented was \lstinline{Depth First Search (DFS)}. This graph traversal algorithm explores as far as possible along each branch before backtracking. The primary reason for choosing DFS was its applicability to graph-based data structures, like the \lstinline{Directed Acyclic Graph (DAG)}.
+
+\begin{lstlisting}[language=go]
+func DepthFirstSearch(dag *graph.DAG, startRevisionID int, visitFunc func(*graph.DAGNode)) {
+	startNode := dag.GetNode(startRevisionID)
+	if startNode == nil {
+		return
+	}
+
+	visitedNodes := make(map[int]bool)
+	depthFirstTraversal(startNode, visitedNodes, visitFunc)
+}
+\end{lstlisting}
+\medskip
+
+The Depth First Search algorithm was implemented as a function named \lstinline{DepthFirstSearch}, which takes three parameters: a pointer to a \lstinline{graph.DAG} object, which represents the \lstinline{Directed Acyclic Graph} to be searched; an integer, \lstinline{startRevisionID}, representing the revision ID of the starting node for the search; and a function, \lstinline{visitFunc}, which takes a pointer to a \lstinline{graph.DAGNode} object as a parameter and is applied to each visited node during the search. The \lstinline{DepthFirstSearch} function was designed to work with the DAG data structure and can easily handle complex node relationships.
+\smallskip
+
+Inside the \lstinline{DepthFirstSearch} function, the starting node is retrieved from the DAG using the \lstinline{GetNode} method and the provided \lstinline{startRevisionID}. If the starting node is \lstinline{nil}, the function returns immediately, as there is no valid starting point for the search.
+\smallskip
+
+Next, the function initialises a map called \lstinline{visitedNodes} with keys of type \lstinline{int} (representing revision IDs) and values of type \lstinline{bool} (indicating whether a node has been visited). This map is used to keep track of visited nodes during the traversal to prevent visiting the same node multiple times.
+
+\begin{lstlisting}[language=go]
+func depthFirstTraversal(node *graph.DAGNode, visitedNodes map[int]bool, visitFunc func(*graph.DAGNode)) {
+	if visitedNodes[node.Revision.ID()] {
+		return
+	}
+
+	visitedNodes[node.Revision.ID()] = true
+	visitFunc(node)
+
+	for _, childNode := range node.Children {
+		depthFirstTraversal(childNode, visitedNodes, visitFunc)
+	}
+}
+\end{lstlisting}
+\medskip
+
+The \lstinline{DepthFirstSearch} function then calls a recursive helper function named \\\lstinline{depthFirstTraversal}, which takes three parameters: a pointer to a \lstinline{graph.DAGNode} object representing the current node in the traversal, the \lstinline{visitedNodes} map, and the \lstinline{visitFunc}. The \lstinline{depthFirstTraversal} function is responsible for the actual traversal and visiting of the nodes in the graph.
+\smallskip
+
+The \lstinline{depthFirstTraversal} function starts by checking whether the current node has already been visited by looking up its revision ID in the \lstinline{visitedNodes} map. If the node has been visited, the function returns immediately to avoid redundant processing. Otherwise, it marks the node as visited by setting the value of the node's revision ID key in the \lstinline{visitedNodes} map to \lstinline{true} and applies the \lstinline{visitFunc} to the current node.
+\smallskip
+
+Finally, the \lstinline{depthFirstTraversal} function iterates over the \lstinline{Children} field of the current node, which is a slice of pointers to \lstinline{graph.DAGNode} objects representing the child nodes. For each child node, the function recursively calls the \lstinline{depthFirstTraversal} function with the child node, the \lstinline{visitedNodes} map, and the \lstinline{visitFunc}.
+
+\subsubsection{Tests}
+\textbf{createTestDAG} - This helper function creates a simple test DAG with five nodes and specific edges between them.
+
+\paragraph{TestDepthFirstSearch}
+This test validates the correctness of the \lstinline{DepthFirstSearch} function. It creates a test DAG using \lstinline{createTestDAG} and then performs a depth-first search starting from the node with ID 1. The test function checks if the order of the visited nodes matches the expected order.
+
+\subsubsection{Benchmarks}
+
+\paragraph{BenchmarkDepthFirstSearch\_RevisionSearch}
+This benchmark case measures the performance of the \lstinline{DepthFirstSearch} function. The goal is to evaluate how the function behaves under various conditions, specifically with different numbers of revisions and data sizes.
+
+\begin{lstlisting}[language=go]
+const (
+	smallNumRevisions  = 200
+	mediumNumRevisions = 2000
+	largeNumRevisions  = 20000
+	largeDataSize      = 10000 // 10 Kb
+	mediumDataSize     = 1000  // 1 Kb
+	smallDataSize      = 100   // 100 bytes
+)
+
+func BenchmarkDepthFirstSearch_RevisionSearch(b *testing.B) {
+	for _, numRevisions := range []int{smallNumRevisions, mediumNumRevisions, largeNumRevisions} {
+		for _, dataSize := range []int{smallDataSize, mediumDataSize, largeDataSize} {
+			b.Run(fmt.Sprintf("numRevisions=%d,dataSize=%d", numRevisions, dataSize), func(b *testing.B) {
+				dag := graph.NewDAG()
+
+				nodes := make([]*graph.DAGNode, numRevisions)
+				for i := 0; i < numRevisions; i++ {
+					nodes[i], _ = dag.AddNode(types.NewRandomRevision(i, dataSize))
+				}
+
+				for i := 0; i < numRevisions-1; i++ {
+					_ = dag.AddEdge(i, i+1)
+				}
+
+				visitor := func(node *graph.DAGNode) {}
+
+				b.ResetTimer()
+				for i := 0; i < b.N; i++ {
+					DepthFirstSearch(dag, rand.Intn(numRevisions), visitor)
+				}
+			})
+		}
+	}
+}
+\end{lstlisting}
+\medskip
+
+For each combination of \lstinline{numRevisions} and \lstinline{dataSize}, a sub-benchmark is created and executed using the \lstinline{b.Run} method. Within each sub-benchmark, the following steps are performed:
+\begin{enumerate}
+    \item A new DAG is created, and nodes are added with random revisions based on the specified \lstinline{numRevisions} and \lstinline{dataSize}. The random revisions are created using the \lstinline{types.NewRandomRevision} function.
+    \item An empty visitor function (\lstinline{visitor := func(node *graph.DAGNode)}) is created. This function does nothing when called, ensuring that the benchmark measures only the performance of the DFS algorithm and not any additional processing that might be done in the visit function.
+    \item The benchmark timer is reset with \lstinline{b.ResetTimer()}, and the \lstinline{DepthFirstSearch} function is called \lstinline{b.N} times using random revision IDs as the starting point.
+\end{enumerate}
+The benchmark measures the time taken to perform the DFS traversal for each combination of \lstinline{numRevisions} and \lstinline{dataSize}.
+
+\subsection{Breadth-First Search}
+The final search algorithm implemented was \lstinline{Breadth First Search (BFS)}. This graph traversal algorithm explores all the nodes at the present depth level before moving on to nodes at the next depth level. BFS was chosen for its applicability to graph-based data structures, like the \lstinline{Directed Acyclic Graph (DAG)}, and for comparing performance against the \lstinline{Depth First Search} algorithm.
+
+\begin{lstlisting}[language=go]
+func BreadthFirstSearch(dag *graph.DAG, startRevisionID int, visitFunc func(node *graph.DAGNode)) {
+	startNode := dag.GetNode(startRevisionID)
+	if startNode == nil {
+		return
+	}
+
+	visitedNodes := make(map[int]bool)
+	nodeQueue := []*graph.DAGNode{startNode}
+
+	for len(nodeQueue) > 0 {
+		currentNode := nodeQueue[0]
+		nodeQueue = nodeQueue[1:]
+
+		if visitedNodes[currentNode.Revision.ID()] {
+			continue
+		}
+
+		visitFunc(currentNode)
+		visitedNodes[currentNode.Revision.ID()] = true
+
+		for _, childNode := range currentNode.Children {
+			if !visitedNodes[childNode.Revision.ID()] {
+				nodeQueue = append(nodeQueue, childNode)
+			}
+		}
+	}
+}
+\end{lstlisting}
+\medskip
+
+The Breadth First Search algorithm was implemented as a function named \lstinline{BreadthFirstSearch}, which takes three parameters: a pointer to a \lstinline{graph.DAG} object, representing the \lstinline{Directed Acyclic Graph} to be searched; an integer, \lstinline{startRevisionID}, representing the revision ID of the starting node for the search; and a function, \lstinline{visitFunc}, which takes a pointer to a \lstinline{graph.DAGNode} object as a parameter and is applied to each visited node during the search. The \lstinline{BreadthFirstSearch} function was designed to work with the DAG data structure and can handle complex node relationships efficiently.
+\smallskip
+
+Inside the \lstinline{BreadthFirstSearch} function, the starting node is retrieved from the DAG using the \lstinline{GetNode} method and the provided \lstinline{startRevisionID}. If the starting node is \lstinline{nil}, the function returns immediately, as there is no valid starting point for the search.
+\smallskip
+
+A map named \lstinline{visitedNodes} is initialised to keep track of visited nodes during the search. This map has keys of type \lstinline{int} (representing revision IDs) and values of type \lstinline{bool} (indicating whether a node has been visited).
+\smallskip
+
+A slice named \lstinline{nodeQueue} is initialised with the \lstinline{startNode} as its first element. This queue is used to store nodes that need to be visited during the search, ensuring that nodes are processed in the order of their distance from the starting node.
+
+\subsubsection{Tests}
+
+\paragraph{TestBreadthFirstSearch}
+This test validates the correctness of the \lstinline{BreadthFirstSearch} function. The test creates a DAG with 10 nodes, each containing a blank revision with an ID from 0 to 9. Edges are added between consecutive nodes to form a linear graph. The test defines a \lstinline{visitor} function that appends the revision ID of visited nodes to a \lstinline{visitedNodes} slice. The test calls \lstinline{BreadthFirstSearch} with the starting node having an ID of 0 and the defined \lstinline{visitor} function. The test then checks if the order of visited nodes is as expected.
+
+\subsubsection{Benchmarks}
+
+\paragraph{BenchmarkBreadthFirstSearch\_RevisionSearch}
+This benchmark case measures the performance of the \lstinline{BreadthFirstSearch} function. It evaluates how the function performs with different numbers of revisions and different data sizes.
+
+\begin{lstlisting}[language=go]
+const (
+	smallNumRevisions  = 200
+	mediumNumRevisions = 2000
+	largeNumRevisions  = 20000
+	largeDataSize      = 10000 // 10 Kb
+	mediumDataSize     = 1000  // 1 Kb
+	smallDataSize      = 100   // 100 bytes
+)
+
+func BenchmarkBreadthFirstSearch_RevisionSearch(b *testing.B) {
+	for _, numRevisions := range []int{smallNumRevisions, mediumNumRevisions, largeNumRevisions} {
+		for _, dataSize := range []int{smallDataSize, mediumDataSize, largeDataSize} {
+			b.Run(fmt.Sprintf("numRevisions=%d,dataSize=%d", numRevisions, dataSize), func(b *testing.B) {
+				dag := graph.NewDAG()
+
+				nodes := make([]*graph.DAGNode, numRevisions)
+				for i := 0; i < numRevisions; i++ {
+					nodes[i], _ = dag.AddNode(types.NewRandomRevision(i, dataSize))
+				}
+
+				for i := 0; i < numRevisions-1; i++ {
+					_ = dag.AddEdge(i, i+1)
+				}
+
+				visitor := func(node *graph.DAGNode) {}
+
+				b.ResetTimer()
+				for i := 0; i < b.N; i++ {
+					BreadthFirstSearch(dag, rand.Intn(numRevisions), visitor)
+				}
+			})
+		}
+	}
+}
+\end{lstlisting}
+\medskip
+
+For each combination of \lstinline{numRevisions} and \lstinline{dataSize}, a sub-benchmark is created and executed using the \lstinline{b.Run} method. Within each sub-benchmark, the following steps are performed:
+\begin{enumerate}
+    \item A new DAG is created, and nodes are added with random revisions based on the specified \lstinline{numRevisions} and \lstinline{dataSize}. The random revisions are created using the \lstinline{types.NewRandomRevision} function.
+    \item An empty visitor function (\lstinline{visitor := func(node *graph.DAGNode)}) is created. This function does nothing when called, ensuring that the benchmark measures only the performance of the BFS algorithm and not any additional processing that might be done in the visit function.
+    \item The benchmark timer is reset with \lstinline{b.ResetTimer()}, and the \lstinline{BreadthFirstSearch} function is called \lstinline{b.N} times using random revision IDs as the starting point.
+\end{enumerate}
+The benchmark measures the time taken to perform the BFS traversal for each combination of \lstinline{numRevisions} and \lstinline{dataSize}.
+
+\section{Dynamic Programming Algorithms}
+
+\subsection{Longest Common Subsequence}
+
+\subsubsection{Inefficient Algorithm}
+
+\subsubsection{Efficient Algorithm}
+
+\subsubsection{Tests}
+
+\subsubsection{Benchmarks}
+
+\subsection{Longest Increasing Subsequence}
+
+\subsubsection{Inefficient Algorithm}
+
+\subsubsection{Efficient Algorithm}
+
+\subsubsection{Tests}
+
+\subsubsection{Benchmarks}
+
+\section{Diffing Algorithms}
+
+\subsection{Myers Diff}
+
+\subsubsection{Tests}
+
+\subsubsection{Benchmarks}
+
+\subsection{Patience Diff}
+
+\subsubsection{Tests}
+
+\subsubsection{Benchmarks}

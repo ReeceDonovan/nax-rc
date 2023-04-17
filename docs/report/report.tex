@@ -7,6 +7,7 @@
 \usepackage[a4paper, total={6in, 8in}]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage{color}
+\usepackage{enumitem}
 
 % Page setup
 % ==============================================================================
@@ -109,7 +110,8 @@
   breaklines=true,
   breakatwhitespace=true,
   tabsize=3,
-  backgroundcolor=\color{lightgray},
+  % backgroundcolor=\color{lightgray},
+  backgroundcolor=\color[gray]{0.97},
 }
 
 % File import setup
@@ -199,33 +201,32 @@
 
 % Import content
 % ==============================================================================
-% \input{0.1_abstract/abstract.tex}
 \subfile{0.1_abstract/abstract.tex}
 \newpage
-% \input{0.2_declaration/declaration.tex}
+
 \subfile{0.2_declaration/declaration.tex}
 \newpage
-% \input{0.3_acknowledge/acknowledgements.tex}
+
 \subfile{0.3_acknowledge/acknowledgements.tex}
 \tableofcontents
 \newpage
 \pagenumbering{arabic}
-% \input{1_introduction/introduction.tex}
+
 \subfile{1_introduction/introduction.tex}
 \newpage
-% \input{2_background/background.tex}
+
 \subfile{2_background/background.tex}
 \newpage
-% \input{3_design/design.tex}
+
 \subfile{3_design/design.tex}
 \newpage
-% \input{4_implementation/implementation.tex}
+
 \subfile{4_implementation/implementation.tex}
 \newpage
-% \input{5_evaluation/evaluation.tex}
+
 \subfile{5_evaluation/evaluation.tex}
 \newpage
-% \input{6_conclusion/conclusion.tex}
+
 \subfile{6_conclusion/conclusion.tex}
 \newpage
 
