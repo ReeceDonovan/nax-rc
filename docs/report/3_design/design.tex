@@ -454,7 +454,7 @@ A \lstinline{Directed Acyclic Graph (DAG)} is a data structure that consists of 
 % TODO: Explain the core functionality of the VCS that require algorithms (Traversal/Searching, Hashing, Diffing, etc.)
 
 % ------------------------------------------------------------------------------
-\subsection{Searching}
+\subsection{Searching Algorithms}
 
 \lstinline{Search algorithms} are computational methods to locate specific items, solve problems, or explore and analyse data structures. They are essential tools in computer science, artificial intelligence, and various other domains, as they facilitate efficient processing and management of large datasets. By systematically searching through data or traversing complex structures, these algorithms identify target elements, optimal solutions, or specific patterns.
 
@@ -596,7 +596,7 @@ The time and space complexity of the \lstinline{Myers Diff} algorithm is $O(ND)$
 \end{itemize}
 
 \subsubsection{Patience Diff Algorithm}
-The \lstinline{Patience Diffing algorithm}, developed by Bram Cohen, is a diffing algorithm that aims to produce more human-readable diffs by focusing on finding the \lstinline{Longest Increasing Subsequence (LIS)} in the two sequences. The algorithm first identifies unique matching lines (or elements) between the sequences and sorts them by their position in the first sequence. Then, it finds the \lstinline{LIS} in the sorted list of positions from the second sequence. The algorithm recursively applies this process to the unmatched portions of the sequences until the entire diff is produced.
+The \lstinline{Patience Diffing algorithm}, developed by Bram Cohen, is a diffing algorithm that aims to produce more human-readable diffs by focusing on finding the \lstinline{Longest Common Subsequence (LCS)} in the two sequences. The algorithm first identifies unique matching lines (or elements) between the sequences and sorts them by their position in the first sequence. Then, it finds the \lstinline{LCS} in the sorted list of positions from the second sequence. The algorithm recursively applies this process to the unmatched portions of the sequences until the entire diff is produced.
 \smallskip
 
 The time complexity of the \lstinline{Patience Diff} algorithm is $O(N\log N)$, where $N$ is the sum of the lengths of both inputs.
@@ -614,7 +614,7 @@ The time complexity of the \lstinline{Patience Diff} algorithm is $O(N\log N)$, 
 \paragraph{Disadvantages}
 \begin{itemize}
     \item May produce suboptimal diffs for specific cases, such as when comparing sequences with many non-unique elements.
-    \item The algorithm's performance depends on the choice of the underlying \lstinline{LIS} algorithm.
+    \item The algorithm's performance depends on the choice of the underlying \lstinline{LCS} algorithm.
     \item May not be the most efficient algorithm for all diffing tasks, as other algorithms may produce better results in specific cases.
     \item Not as widely used or well-established as some other diffing algorithms, such as the \lstinline{Myers algorithm}.
 \end{itemize}

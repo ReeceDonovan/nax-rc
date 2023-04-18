@@ -61,7 +61,7 @@ func NewRandomRevision(revisionID int, dataSize int) Revision {
 
 This \lstinline{Revision} abstraction can be employed to simulate different scenarios or workloads for the data structures and algorithms under evaluation. For example, the function that generates a revision with random data of a specified size could be used to create many random revisions, allowing for the evaluation of each algorithm's performance in handling diverse and unpredictable data.
 
-\subsubsection{Tests}
+\subsubsection*{Tests}
 \paragraph{TestNewRevision}
 This test case checks if the NewRevision function creates a new revision with the correct ID and data. It compares the ID and data of the created revision with the expected values and reports an error if they don't match.
 
@@ -71,7 +71,7 @@ This test case checks if the NewBlankRevision function creates a new revision wi
 \paragraph{TestNewRandomRevision}
 This test case checks if the NewRandomRevision function creates a new revision with the correct ID and random data of the specified size. It compares the ID and length of the data of the created revision with the expected values and reports an error if they don't match.
 
-\subsubsection{Benchmarks}
+\subsubsection*{Benchmarks}
 \paragraph{BenchmarkNewRevision}
 This benchmark measures the performance of the NewRevision function. It creates a new revision with the given ID and data repeatedly in a loop, and the testing framework records the time taken.
 
@@ -132,7 +132,7 @@ func (dll *DoublyLinkedList) Remove(node *DLLNode)
 func (dll *DoublyLinkedList) ContainsNodeWithID(id int) bool
 \end{lstlisting}
 
-\subsubsection{Tests}
+\subsubsection*{Tests}
 % TestNewDoublyLinkedList: Tests the NewDoublyLinkedList function by asserting that the newly created list has a nil Head and Tail.
 \paragraph{TestNewDoublyLinkedList}
 This test case checks if the \lstinline{NewDoublyLinkedList} function creates a new doubly linked list with a nil Head and Tail. It asserts that the Head and Tail of the created list are nil and reports an error if they're not.
@@ -171,7 +171,7 @@ This test case checks if the \lstinline{ContainsNodeWithID} method returns true 
 \paragraph{TestDoublyLinkedList\_Remove}
 This test case checks if the \lstinline{Remove} method removes the specified node from the doubly linked list. It removes the specified node and asserts that the list's Head, Tail, and node relationships are correct. It reports an error if they're not.
 
-\subsubsection{Benchmarks}
+\subsubsection*{Benchmarks}
 % BenchmarkDoublyLinkedList_InsertPrior
 \paragraph{BenchmarkDoublyLinkedList\_InsertPrior}
 This benchmark case checks the performance of the \lstinline{InsertPrior} method. It inserts a new node before the specified node in the doubly linked list and reports the time taken to perform the operation. The benchmark is run for a number of iterations and the average time taken is reported.
@@ -291,7 +291,7 @@ func (node *TreeNode) Remove(id int) (*TreeNode, error)
 
 The BST methods were designed to handle the \lstinline{Revision} interface to maintain consistency with the previous data structures, allowing for seamless integration and comparison between the different data structures. This approach not only simplifies the evaluation process but also emphasises the modularity and adaptability of the code, as multiple data structures can be easily utilised and tested with a shared Revision interface.
 
-\subsubsection{Tests}
+\subsubsection*{Tests}
 % TestTreeNode_Insert - This test checks if the Insert method is working correctly by inserting two revisions into the tree and then asserting that the revisions have been added in the correct order.
 \paragraph{TestTreeNode\_Insert}
 This test checks if the \lstinline{Insert} method is working correctly by inserting two revisions into the tree and then asserting that the revisions have been added in the correct order.
@@ -304,7 +304,7 @@ This test checks if the \lstinline{Contains} method is working correctly by inse
 \paragraph{TestTreeNode\_Remove}
 This test checks if the \lstinline{Remove} method is working correctly by inserting two revisions into the tree, removing one, and then asserting that the removed revision is not in the tree anymore.
 
-\subsubsection{Benchmarks}
+\subsubsection*{Benchmarks}
 
 % generateRandomRevision - This is a helper function that generates a random revision with a random ID and data size. This function is used in the benchmark tests.
 \textbf{generateRandomRevision} - This is a helper function that generates a random revision with a random ID and data size. This function is used in the benchmark tests.
@@ -437,7 +437,7 @@ func (dag *DAG) NodeExists(revisionID int) bool
 func (dag *DAG) GetNode(revisionID int) *DAGNode
 \end{lstlisting}
 
-\subsubsection{Tests}
+\subsubsection*{Tests}
 
 % TestDAG_AddNode: This test checks the AddNode function in the DAG. It creates a new DAG and a blank revision with ID 1, then adds the node containing that revision to the DAG. The test asserts that there are no errors and that the revision ID is present in the DAG
 \paragraph{TestDAG\_AddNode}
@@ -455,7 +455,7 @@ This test checks the \lstinline{AddEdge} function in the DAG. It creates a new D
 \paragraph{TestDAG\_RemoveEdge}
 This test checks the \lstinline{RemoveEdge} function in the DAG. It creates a new DAG, adds two nodes with revision IDs 1 and 2, adds an edge between them, and then removes that edge. The test asserts that there are no errors and that the edge is removed properly by checking the parent and child connections.
 
-\subsubsection{Benchmarks}
+\subsubsection*{Benchmarks}
 
 % BenchmarkDAG_AddNode, BenchmarkDAG_RemoveNode, BenchmarkDAG_AddEdge, and BenchmarkDAG_RemoveEdge: These are benchmark functions that measure the performance of the respective DAG operations (adding nodes, removing nodes, adding edges, and removing edges). They execute the respective functions multiple times with random revisions.
 
@@ -568,7 +568,7 @@ Inside the \lstinline{LinearSearch} function, a variable named \lstinline{curren
 
 A \lstinline{for} loop is used to traverse the list, with the loop condition checking whether \lstinline{currentNode} is not \lstinline{nil}. Inside the loop, an \lstinline{if} statement compares the revision ID of the \lstinline{currentNode} to the target \lstinline{revisionID}. If a match is found, the function returns the \lstinline{currentNode}. If the end of the list is reached without finding a match, the function returns \lstinline{nil} to indicate that the target revision ID was not found in the list.
 
-\subsubsection{Tests}
+\subsubsection*{Tests}
 
 % createTestList function: This helper function creates a doubly linked list with 10 nodes, where each node contains a blank revision with IDs from 0 to 9.
 \textbf{createTestList} - This is a helper function that creates a doubly linked list with 10 nodes, where each node contains a blank revision with IDs from 0 to 9.
@@ -577,7 +577,7 @@ A \lstinline{for} loop is used to traverse the list, with the loop condition che
 \paragraph{TestLinearSearch}
 This test checks if the \lstinline{LinearSearch} function works as expected. It searches for revisions with IDs from 0 to 9 in the test list and asserts that the nodes are found and have the correct IDs. Additionally, it searches for a revision with an ID of -1, which should not be found, and asserts that the returned node is nil.
 
-\subsubsection{Benchmarks}
+\subsubsection*{Benchmarks}
 
 \paragraph{BenchmarkLinearSearch\_RevisionSearch}
 This benchmark case measures the performance of the \lstinline{LinearSearch} function on doubly linked lists containing different numbers of revisions and varying revision data sizes. The goal is to understand how the search function performs under various scenarios, which can help identify performance bottlenecks or areas for optimisation.
@@ -653,7 +653,7 @@ A \lstinline{for} loop is used to traverse the binary tree. The loop continues u
 \end{itemize}
 If the traversal reaches the end of the tree without finding the target revision ID, the function returns a \lstinline{nil} value to indicate that the target revision ID was not found in the tree.
 
-\subsubsection{Tests}
+\subsubsection*{Tests}
 \textbf{createTreeWithRevisions} - This helper function creates a binary search tree with a given number of revisions (\lstinline{numRevisions}) and a specified data size (\lstinline{dataSize}). It initialises the root node with a random revision and then inserts subsequent revisions into the tree.
 
 \paragraph{TestBinarySearch}
@@ -663,7 +663,7 @@ This test checks if the \lstinline{BinarySearch} function works as expected. It 
     \item The revision with ID 999 is not found in the tree. Therefore, the test asserts that there is an error, the error message matches "revision not found", and the returned revision is nil.
 \end{enumerate}
 
-\subsubsection{Benchmarks}
+\subsubsection*{Benchmarks}
 
 \paragraph{BenchmarkBinarySearch\_RevisionSearch}
 This benchmark case measures the performance of the \lstinline{BinarySearch} function under various conditions. The goal is to measure how the search function performs when searching for revisions with different numbers of revisions and varying data sizes in a binary search tree.
@@ -756,13 +756,13 @@ The \lstinline{depthFirstTraversal} function starts by checking whether the curr
 
 Finally, the \lstinline{depthFirstTraversal} function iterates over the \lstinline{Children} field of the current node, which is a slice of pointers to \lstinline{graph.DAGNode} objects representing the child nodes. For each child node, the function recursively calls the \lstinline{depthFirstTraversal} function with the child node, the \lstinline{visitedNodes} map, and the \lstinline{visitFunc}.
 
-\subsubsection{Tests}
+\subsubsection*{Tests}
 \textbf{createTestDAG} - This helper function creates a simple test DAG with five nodes and specific edges between them.
 
 \paragraph{TestDepthFirstSearch}
 This test validates the correctness of the \lstinline{DepthFirstSearch} function. It creates a test DAG using \lstinline{createTestDAG} and then performs a depth-first search starting from the node with ID 1. The test function checks if the order of the visited nodes matches the expected order.
 
-\subsubsection{Benchmarks}
+\subsubsection*{Benchmarks}
 
 \paragraph{BenchmarkDepthFirstSearch\_RevisionSearch}
 This benchmark case measures the performance of the \lstinline{DepthFirstSearch} function. The goal is to evaluate how the function behaves under various conditions, specifically with different numbers of revisions and data sizes.
@@ -858,12 +858,12 @@ A map named \lstinline{visitedNodes} is initialised to keep track of visited nod
 
 A slice named \lstinline{nodeQueue} is initialised with the \lstinline{startNode} as its first element. This queue is used to store nodes that need to be visited during the search, ensuring that nodes are processed in the order of their distance from the starting node.
 
-\subsubsection{Tests}
+\subsubsection*{Tests}
 
 \paragraph{TestBreadthFirstSearch}
 This test validates the correctness of the \lstinline{BreadthFirstSearch} function. The test creates a DAG with 10 nodes, each containing a blank revision with an ID from 0 to 9. Edges are added between consecutive nodes to form a linear graph. The test defines a \lstinline{visitor} function that appends the revision ID of visited nodes to a \lstinline{visitedNodes} slice. The test calls \lstinline{BreadthFirstSearch} with the starting node having an ID of 0 and the defined \lstinline{visitor} function. The test then checks if the order of visited nodes is as expected.
 
-\subsubsection{Benchmarks}
+\subsubsection*{Benchmarks}
 
 \paragraph{BenchmarkBreadthFirstSearch\_RevisionSearch}
 This benchmark case measures the performance of the \lstinline{BreadthFirstSearch} function. It evaluates how the function performs with different numbers of revisions and different data sizes.
@@ -914,38 +914,340 @@ For each combination of \lstinline{numRevisions} and \lstinline{dataSize}, a sub
 \end{enumerate}
 The benchmark measures the time taken to perform the BFS traversal for each combination of \lstinline{numRevisions} and \lstinline{dataSize}.
 
-\section{Dynamic Programming Algorithms}
+% \section{Dynamic Programming Algorithms}
 
-\subsection{Longest Common Subsequence}
+% \subsection{Longest Common Subsequence}
 
-\subsubsection{Inefficient Algorithm}
+% \subsubsection{Inefficient Algorithm}
 
-\subsubsection{Efficient Algorithm}
+% \subsubsection{Efficient Algorithm}
 
-\subsubsection{Tests}
+% \subsubsection*{Tests}
 
-\subsubsection{Benchmarks}
+% \subsubsection*{Benchmarks}
 
-\subsection{Longest Increasing Subsequence}
+% \subsection{Longest Increasing Subsequence}
 
-\subsubsection{Inefficient Algorithm}
+% \subsubsection{Inefficient Algorithm}
 
-\subsubsection{Efficient Algorithm}
+% \subsubsection{Efficient Algorithm}
 
-\subsubsection{Tests}
+% \subsubsection*{Tests}
 
-\subsubsection{Benchmarks}
+% \subsubsection*{Benchmarks}
 
 \section{Diffing Algorithms}
 
 \subsection{Myers Diff}
+The Myers Diff algorithm was chosen for implementation due to its efficiency in calculating the differences between two sets of data, which is a common task in Version Control Systems (VCS). Myers Diff operates by computing the shortest edit script that transforms one set of data into another, making it particularly well-suited for comparing revisions of text files.
+\smallskip
 
-\subsubsection{Tests}
+The implementation of the Myers Diff algorithm consists of several key functions that work together to compute the differences between two slices of strings. The primary function, \lstinline{MyersDiff}, takes two slices of strings, \lstinline{source} and \lstinline{destination}, as its parameters and computes the diff between them. This function leverages two other helper functions, \lstinline{myersShortestEditSequence} and \lstinline{generateDiffOutput}, to achieve its goal.
 
-\subsubsection{Benchmarks}
+\begin{lstlisting}[language=go]
+func myersShortestEditSequence(source, destination []string) []EditOperation {
+	sourceLength := len(source)
+	destinationLength := len(destination)
+	maxLength := sourceLength + destinationLength
+	var trace []map[int]int
+	var currentX, currentY int
+
+loop:
+	for editDistance := 0; editDistance <= maxLength; editDistance++ {
+		currentVector := make(map[int]int, editDistance+2)
+		trace = append(trace, currentVector)
+
+		// Initialize with common prefix
+		if editDistance == 0 {
+			commonLength := 0
+			for len(source) > commonLength && len(destination) > commonLength && source[commonLength] == destination[commonLength] {
+				commonLength++
+			}
+			currentVector[0] = commonLength
+			if commonLength == sourceLength && commonLength == destinationLength {
+				break loop
+			}
+			continue
+		}
+
+		lastVector := trace[editDistance-1]
+
+		// Iterate through the diagonals
+		for diagonal := -editDistance; diagonal <= editDistance; diagonal += 2 {
+			// Choose the direction to move (down or right)
+			if diagonal == -editDistance || (diagonal != editDistance && lastVector[diagonal-1] < lastVector[diagonal+1]) {
+				currentX = lastVector[diagonal+1]
+			} else {
+				currentX = lastVector[diagonal-1] + 1
+			}
+
+			currentY = currentX - diagonal
+
+			// Move diagonally while elements match
+			whileMatch(source, destination, &currentX, &currentY)
+
+			currentVector[diagonal] = currentX
+
+			// If the end of both source and destination is reached, break the loop
+			if currentX == sourceLength && currentY == destinationLength {
+				break loop
+			}
+		}
+	}
+
+	// Generate the edit script by backtracking through the trace
+	return backtrack(trace, sourceLength, destinationLength)
+}
+\end{lstlisting}
+\medskip
+
+The \lstinline{myersShortestEditSequence} function is responsible for computing the shortest edit sequence between the \lstinline{source} and \lstinline{destination} slices using the Myers algorithm. It takes the two input slices and returns a slice of \lstinline{EditOperation} values, representing the operations required to transform the \lstinline{source} slice into the \lstinline{destination} slice. The \lstinline{EditOperation} type is an enumeration with three possible values: \lstinline{INSERT}, \lstinline{DELETE}, and \lstinline{MATCH}.
+
+\begin{lstlisting}[language=go]
+func generateDiffOutput(source, destination []string, editScript []EditOperation) []string {
+	var operations []string
+	sourceIndex, destinationIndex := 0, 0
+	for _, operation := range editScript {
+		switch operation {
+		case INSERT:
+			operations = append(operations, "\n+ "+destination[destinationIndex])
+			destinationIndex++
+		case MATCH:
+			operations = append(operations, "\n  "+source[sourceIndex])
+			sourceIndex++
+			destinationIndex++
+		case DELETE:
+			operations = append(operations, "\n- "+source[sourceIndex])
+			sourceIndex++
+		}
+	}
+
+	return operations
+}
+\end{lstlisting}
+\medskip
+
+The \lstinline{generateDiffOutput} function takes the \lstinline{source}, \lstinline{destination}, and the computed edit script as its input parameters and generates a slice of strings representing the diff output. This output consists of lines from the source and destination slices, each prefixed with an appropriate symbol to indicate the corresponding edit operation: "+" for insertions, "-" for deletions, and " " (space) for matches.
+
+\begin{lstlisting}[language=go]
+// whileMatch moves diagonally (increments currentX and currentY) while elements at the current positions in source and destination match
+func whileMatch(source, destination []string, currentX, currentY *int) {
+	sourceLength := len(source)
+	destinationLength := len(destination)
+
+	for *currentX < sourceLength && *currentY < destinationLength && source[*currentX] == destination[*currentY] {
+		*currentX = *currentX + 1
+		*currentY = *currentY + 1
+	}
+}
+
+// backtrack generates the edit script by backtracking through the trace
+func backtrack(trace []map[int]int, sourceLength, destinationLength int) []EditOperation {
+	var editScript []EditOperation
+
+	currentX := sourceLength
+	currentY := destinationLength
+	var diagonal, prevDiagonal, prevX, prevY int
+
+	for editDistance := len(trace) - 1; editDistance > 0; editDistance-- {
+		diagonal = currentX - currentY
+		lastVector := trace[editDistance-1]
+
+		// Choose the direction to move (down or right)
+		if diagonal == -editDistance || (diagonal != editDistance && lastVector[diagonal-1] < lastVector[diagonal+1]) {
+			prevDiagonal = diagonal + 1
+		} else {
+			prevDiagonal = diagonal - 1
+		}
+
+		prevX = lastVector[prevDiagonal]
+		prevY = prevX - prevDiagonal
+
+		// Move diagonally while elements match
+		for currentX > prevX && currentY > prevY {
+			editScript = append(editScript, MATCH)
+			currentX -= 1
+			currentY -= 1
+		}
+
+		// Add the appropriate edit operation
+		if currentX == prevX {
+			editScript = append(editScript, INSERT)
+		} else {
+			editScript = append(editScript, DELETE)
+		}
+
+		currentX, currentY = prevX, prevY
+	}
+
+	// Add remaining moves
+	if trace[0][0] != 0 {
+		for i := 0; i < trace[0][0]; i++ {
+			editScript = append(editScript, MATCH)
+		}
+	}
+
+	// Reverse the edit script to get the correct order
+	return reverseEditScript(editScript)
+}
+
+// reverseEditScript reverses the order of the edit operations in the editScript
+func reverseEditScript(editScript []EditOperation) []EditOperation {
+	reversedScript := make([]EditOperation, len(editScript))
+	for i, operation := range editScript {
+		reversedScript[len(editScript)-i-1] = operation
+	}
+
+	return reversedScript
+}
+\end{lstlisting}
+\medskip
+
+The Myers Diff algorithm implementation also includes several auxiliary functions, such as \lstinline{whileMatch}, \lstinline{backtrack}, and \lstinline{reverseEditScript}, which assist in various aspects of the algorithm, including moving diagonally while elements match, generating the edit script by backtracking through the trace, and reversing the order of the edit operations in the edit script.
+
+\subsubsection*{Benchmarks}
+
+\paragraph{BenchmarkMyersDiff\_Small}
+This benchmark case measures the performance of the \lstinline{MyersDiff} function on a small input. It uses two short strings as the source and destination inputs. The strings are split into slices based on spaces, and the \lstinline{MyersDiff} function is executed \lstinline{b.N} times.
+
+\paragraph{BenchmarkMyersDiff\_Large}
+This benchmark case measures the performance of the \lstinline{MyersDiff} function on a larger input. It creates two strings by repeating patterns of "A ", "B ", and "C " or "D " multiple times. The strings are split into slices based on spaces, and the \lstinline{MyersDiff} function is executed \lstinline{b.N} times.
+
+\paragraph{BenchmarkMyersDiff\_Extreme}
+This benchmark case measures the performance of the \lstinline{MyersDiff} function on an extreme case where the source and destination inputs have no common elements. It creates two strings by repeating "A " and "B " multiple times. The strings are split into slices based on spaces, and the \lstinline{MyersDiff} function is executed \lstinline{b.N} times.
 
 \subsection{Patience Diff}
+The Patience Diff algorithm was selected for implementation as an alternative approach to calculating the differences between two sets of data. Patience Diff is known for its ability to produce more visually appealing and human-readable diffs compared to other algorithms, such as Myers Diff. This characteristic makes it an interesting point of comparison, especially for text file revisions in a Version Control System (VCS).
+\smallskip
 
-\subsubsection{Tests}
+The implementation of the Patience Diff algorithm consists of several key functions that collaborate to compute the differences between two slices of strings. The primary function, \lstinline{PatienceDiff}, takes two slices of strings, \lstinline{source} and \lstinline{destination}, as its parameters and computes the diff between them. This function utilises three other helper functions: \lstinline{patienceLCS}, \lstinline{generateEditScript}, and \lstinline{generateDiffOutput}.
 
-\subsubsection{Benchmarks}
+\begin{lstlisting}[language=go]
+// patienceLCS computes the Longest Common Subsequence (LCS) using the patience sorting algorithm
+func patienceLCS(source, destination []string) []IndexPair {
+	var piles []IntHeap
+	sourceIndices := make(map[string][]int)
+	for i, value := range source {
+		sourceIndices[value] = append(sourceIndices[value], i)
+	}
+
+	for i, value := range destination {
+		if sourceIndexList, found := sourceIndices[value]; found && len(sourceIndexList) > 0 {
+			sourceIndex := sourceIndices[value][0]
+			sourceIndices[value] = sourceIndices[value][1:]
+
+			inserted := false
+			for _, pile := range piles {
+				if top := pile.Top(); top != nil && top.sourceIndex < sourceIndex {
+					heap.Push(&pile, IndexPair{sourceIndex, i})
+					inserted = true
+					break
+				}
+			}
+
+			if !inserted {
+				var newPile IntHeap
+				heap.Push(&newPile, IndexPair{sourceIndex, i})
+				piles = append(piles, newPile)
+			}
+		}
+	}
+
+	var lcs []IndexPair
+	for _, pile := range piles {
+		lcs = append(lcs, *pile.Top())
+	}
+
+	sort.Slice(lcs, func(i, j int) bool {
+		return lcs[i].sourceIndex < lcs[j].sourceIndex
+	})
+
+	return lcs
+}
+\end{lstlisting}
+\medskip
+
+The \lstinline{patienceLCS} function is responsible for computing the \lstinline{Longest Common Subsequence (LCS)} between the \lstinline{source} and \lstinline{destination} slices. It takes the two input slices and returns a slice of \lstinline{IndexPair} values, which represent pairs of indices in the \lstinline{source} and \lstinline{destination} slices where the LCS elements are found.
+
+\begin{lstlisting}[language=go]
+func generateEditScript(source, destination []string, lcs []IndexPair) []EditOperation {
+	var editScript []EditOperation
+
+	sourceIndex, destinationIndex := 0, 0
+	for _, pair := range lcs {
+		for sourceIndex < pair.sourceIndex {
+			editScript = append(editScript, DELETE)
+			sourceIndex++
+		}
+
+		for destinationIndex < pair.destinationIndex {
+			editScript = append(editScript, INSERT)
+			destinationIndex++
+		}
+
+		editScript = append(editScript, MATCH)
+		sourceIndex++
+		destinationIndex++
+	}
+
+	for sourceIndex < len(source) {
+		editScript = append(editScript, DELETE)
+		sourceIndex++
+	}
+
+	for destinationIndex < len(destination) {
+		editScript = append(editScript, INSERT)
+		destinationIndex++
+	}
+
+	return editScript
+}
+\end{lstlisting}
+\medskip
+
+The \lstinline{generateEditScript} function takes the \lstinline{source}, \lstinline{destination}, and the computed \lstinline{LCS} as input parameters and generates an edit script, which is a sequence of \lstinline{EditOperation} values representing the operations required to transform the \lstinline{source} slice into the \lstinline{destination} slice. The \lstinline{EditOperation} type is an enumeration with three possible values: \lstinline{INSERT}, \lstinline{DELETE}, and \lstinline{MATCH}.
+\smallskip
+
+The \lstinline{generateDiffOutput} function, shared with the Myers Diff implementation, takes the source, destination, and the computed edit script as its input parameters and generates a slice of strings representing the diff output. This output consists of lines from the source and destination slices, each prefixed with an appropriate symbol to indicate the corresponding edit operation: "+" for insertions, "-" for deletions, and " " (space) for matches.
+
+\begin{lstlisting}[language=go]
+type IntHeap []IndexPair
+
+func (h IntHeap) Len() int           { return len(h) }
+func (h IntHeap) Less(i, j int) bool { return h[i].destinationIndex < h[j].destinationIndex }
+func (h IntHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
+
+func (h *IntHeap) Push(x interface{}) {
+	*h = append(*h, x.(IndexPair))
+}
+
+func (h *IntHeap) Pop() interface{} {
+	old := *h
+	n := len(old)
+	x := old[n-1]
+	*h = old[0 : n-1]
+	return x
+}
+
+// Top returns the top element of the IntHeap
+func (h *IntHeap) Top() *IndexPair {
+	if len(*h) == 0 {
+		return nil
+	}
+	return &((*h)[0])
+}
+\end{lstlisting}
+\medskip
+
+In addition to these primary functions, the Patience Diff implementation also includes a custom data structure, \lstinline{IntHeap}, which is a min-heap of \lstinline{IndexPair} elements. The \lstinline{IntHeap} data structure is utilised within the \lstinline{patienceLCS} function to maintain the piles used in the patience sorting algorithm efficiently.
+
+\subsubsection*{Benchmarks}
+
+\paragraph{BenchmarkPatienceDiff\_Small}
+This benchmark case measures the performance of the \lstinline{PatienceDiff} function on a small input. It uses two short strings as the source and destination inputs. The strings are split into slices based on spaces, and the \lstinline{PatienceDiff} function is executed \lstinline{b.N} times.
+
+\paragraph{BenchmarkPatienceDiff\_Large}
+This benchmark case measures the performance of the \lstinline{PatienceDiff} function on a larger input. It creates two strings by repeating patterns of "A ", "B ", and "C " or "D " multiple times. The strings are split into slices based on spaces, and the \lstinline{PatienceDiff} function is executed \lstinline{b.N} times.
+
+\paragraph{BenchmarkPatienceDiff\_Extreme}
+This benchmark case measures the performance of the \lstinline{PatienceDiff} function on an extreme case where the source and destination inputs have no common elements. It creates two strings by repeating "A " and "B " multiple times. The strings are split into slices based on spaces, and the \lstinline{PatienceDiff} function is executed \lstinline{b.N} times.
