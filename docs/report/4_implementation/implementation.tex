@@ -1,6 +1,20 @@
 \chapter{Implementation} % (30-40 pages)
 \label{chap:implementation}
 % TODO: Add short introduction to the chapter
+
+\section{Preparation}
+Before beginning the implementation, it was crucial to understand the testing and benchmarking tools provided by the Go programming language. The "testing" package is a standard package in Go, designed to support various forms of testing, such as unit tests, integration tests, and benchmarks. This package provides a simple and consistent way to write and run tests, measure performance, and obtain reliable results for the implemented data structures and algorithms.
+The "testing" package includes several key components:
+
+\paragraph{Test Functions}
+These are functions with a signature of \lstinline{func TestXxx(t *testing.T)} where \lstinline{Xxx} is the name of the test case. Test functions are used to write unit tests and integration tests, allowing developers to verify the correctness of their code. Within a test function, the \lstinline{*testing.T} parameter provides methods to signal errors, log messages, and control the test execution.
+
+\paragraph{Benchmark Functions}
+These are functions with a signature of \lstinline{func BenchmarkXxx(b *testing.B)} where \lstinline{Xxx} is the name of the benchmark case. Benchmark functions are used to measure code performance under various conditions, providing developers with valuable insights into the efficiency of their implementations. Within a benchmark function, the \lstinline{*testing.B} parameter provides methods to control the benchmark execution, such as setting the number of iterations and measuring the time taken to execute code.
+
+\paragraph{Subtests and Sub-benchmarks}
+Test and benchmark functions can be further divided into subtests and sub-benchmarks using the \lstinline{Run} method provided by the \lstinline{*testing.T} and \lstinline{*testing.B} parameters, respectively. This feature enables developers to create a hierarchical structure of tests and benchmarks, making it easier to manage and organise the testing process.
+
 \section{Data Structures}
 % TODO: Add short introduction to the section
 \subsection{Revision Type}
