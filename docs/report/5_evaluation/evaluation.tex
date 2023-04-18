@@ -1,7 +1,102 @@
 \chapter{Evaluation} % (10-15 pages)
 \label{chap:eval}
 
-% Display the results of the benchmarks - (10 page)
-% Evaluate the strengths and limitations
-%  - Data Structures - (4 x 0.5 page)
-%  - Algorithms - ((3 x 2) x 1 = 6 page)
+\section{Data Gathering}
+Before evaluating the performance benchmarks, we need to understand the format of the benchmark output and how to parse the output into usable data.
+
+\subsection*{Benchmark Output}
+
+\begin{lstlisting}[language=prolog]
+Example Benchmark Output
+------------------------------
+goos: linux
+goarch: amd64
+pkg: search
+BenchmarkDepthFirstSearch/numRevisions=200,dataSize=100-16         	  393714	      8504 ns/op	    4249 B/op	      15 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=200,dataSize=100-16         	  419677	      8546 ns/op	    4264 B/op	      15 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=200,dataSize=100-16         	  420799	      8551 ns/op	    4261 B/op	      15 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=200,dataSize=1000-16        	  419702	      8537 ns/op	    4256 B/op	      15 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=200,dataSize=1000-16        	  430153	      8548 ns/op	    4267 B/op	      15 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=200,dataSize=1000-16        	  412516	      8536 ns/op	    4258 B/op	      15 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=200,dataSize=10000-16       	  410246	      8758 ns/op	    4270 B/op	      15 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=200,dataSize=10000-16       	  413239	      8730 ns/op	    4264 B/op	      15 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=200,dataSize=10000-16       	  417362	      8717 ns/op	    4264 B/op	      15 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=2000,dataSize=100-16        	   39650	     90070 ns/op	   47976 B/op	      68 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=2000,dataSize=100-16        	   39957	     90112 ns/op	   48109 B/op	      68 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=2000,dataSize=100-16        	   39963	     90497 ns/op	   48145 B/op	      68 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=2000,dataSize=1000-16       	   39520	     92031 ns/op	   48012 B/op	      68 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=2000,dataSize=1000-16       	   39249	     92207 ns/op	   47674 B/op	      68 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=2000,dataSize=1000-16       	   39244	     93255 ns/op	   47894 B/op	      68 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=2000,dataSize=10000-16      	   41174	     83079 ns/op	   47819 B/op	      68 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=2000,dataSize=10000-16      	   41455	     83561 ns/op	   47678 B/op	      68 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=2000,dataSize=10000-16      	   43261	     83705 ns/op	   48038 B/op	      68 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=20000,dataSize=100-16       	    3747	   1041382 ns/op	  479952 B/op	     364 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=20000,dataSize=100-16       	    3386	   1035490 ns/op	  477039 B/op	     362 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=20000,dataSize=100-16       	    3760	   1023241 ns/op	  472936 B/op	     360 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=20000,dataSize=1000-16      	    3687	    881654 ns/op	  471495 B/op	     358 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=20000,dataSize=1000-16      	    4036	    883816 ns/op	  479999 B/op	     364 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=20000,dataSize=1000-16      	    4092	    876104 ns/op	  476561 B/op	     363 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=20000,dataSize=10000-16     	    4383	    820963 ns/op	  472796 B/op	     360 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=20000,dataSize=10000-16     	    4129	    829324 ns/op	  480041 B/op	     366 allocs/op
+BenchmarkDepthFirstSearch/numRevisions=20000,dataSize=10000-16     	    3768	    825202 ns/op	  474170 B/op	     361 allocs/op
+\end{lstlisting}
+\medskip
+
+The first items printed in the benchmark output are the two core \lstinline{Go} environment variables, \lstinline{GOOS} (Operating System, e.g., \lstinline{linux}) and \lstinline{GOARCH} (CPU Architecture, e.g., \lstinline{amd64}), followed by the \lstinline{pkg} (package name) which contains the benchmark functions being executed. Finally, the remaining lines contain the individual benchmark results, containing the following columns\cite{andile_2023}:
+
+\begin{enumerate}
+    \item \textless\lstinline{Name of benchmark} -- \lstinline{Number of cpu cores}\textgreater\\The name of the benchmark function being executed, followed by the number of CPU cores used to execute the benchmark. This is useful for identifying the number of CPU cores used to execute the benchmark, as the number of CPU cores used is not explicitly stated in the benchmark output.
+    \item \textless\lstinline{Number of iterations}\textgreater\\The number of iterations executed by the benchmark function to produce the average performance metrics.
+    \item \textless\lstinline{Average number of nanoseconds per operation}\textgreater\\The average number of nanoseconds taken to execute a single operation of the benchmark function.
+    \item \textless\lstinline{Average number of Bytes allocated per operation}\textgreater\\The average number of Bytes allocated to execute a single operation of the benchmark function.
+    \item \textless\lstinline{Average number of memory allocations per operation}\textgreater\\The average number of memory allocations to execute a single operation of the benchmark function.
+\end{enumerate}
+
+\subsection*{Data Parsing}
+A \lstinline{Python} script was employed to parse usable data from the \lstinline{Go} benchmark logs. The script leveraged regular expressions to identify and extract key performance metrics such as the number of iterations, time taken per operation (in nanoseconds), memory allocated per operation (in bytes), and the number of memory allocations per operation. This information was then stored in a CSV file format, facilitating easy data analysis and visualisation.
+
+\begin{lstlisting}[language=python]
+import csv
+import re
+
+benchmark_pattern = re.compile(
+    r"Benchmark([\w_]+)/numRevisions=(\d+),dataSize=(\d+)-(\d+)
+        \s+(\d+)\s+(\d+) ns/op\s+(\d+) B/op\s+(\d+) allocs/op"
+)
+
+csv_headers = [
+    "benchmark_name",
+    "num_revisions",
+    "data_size",
+    "num_cpus",
+    "iterations",
+    "ns_per_op",
+    "bytes_per_op",
+    "allocs_per_op",
+]
+
+for log_file, csv_file in log_files.items():
+    with open(log_file, "r") as f:
+        content = f.read()
+
+    benchmarks = benchmark_pattern.findall(content)
+    
+    with open(csv_file, "w", newline="") as f:
+        writer = csv.writer(f)
+        writer.writerow(csv_headers)
+        for benchmark in benchmarks:
+            writer.writerow(benchmark)
+
+\end{lstlisting}
+
+\subsection*{Performance Metrics}
+In order to compare the performance of the implemented algorithms and data structures, we considered the following key performance metrics:
+
+\paragraph{Execution time \(ns\_per\_op\)}
+The time taken per operation (in nanoseconds) was a primary factor in determining the efficiency of the algorithms. Lower execution times indicate better performance.
+
+\paragraph{Memory usage \(bytes\_per\_op\)}
+Memory allocated per operation (in bytes) was another crucial aspect to evaluate, as efficient algorithms should minimise memory consumption.
+
+\paragraph{Memory allocations \(allocs\_per\_op\)}
+The number of memory allocations per operation was also taken into account, as fewer allocations generally indicate a more optimised algorithm.
