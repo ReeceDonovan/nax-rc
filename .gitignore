@@ -23,3 +23,6 @@
 .idea/
 .vscode/
 *.iml
+
+# Exclude the `test_data` directory and its contents
+test_data/
