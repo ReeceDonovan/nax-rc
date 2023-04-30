@@ -17,19 +17,21 @@ This chapter examines various data structures and algorithms with key aspects th
 % 
 % TODO: Change title
 \section{Data Structures}
+\noindent
 % Data Structures
 % ---------------
 % TODO: Add references
 Data structures are objects that can be used to store, organize, and manipulate large amounts of data. They play a crucial role in computer science and are fundamental building blocks of many software systems, including \lstinline{Version Control Systems}. The choice of data structure is critical to the overall performance and scalability of a \lstinline{Version Control System}.
-\smallskip
+% TODO: 2023-04-18
+% \smallskip
 
-In order to evaluate the suitability of a data structure for implementation in a \lstinline{Version Control System}, it is necessary to consider several core aspects. Firstly, \lstinline{operational efficiency}, which refers to the time and space complexity of the basic operations performed by the data structure, is a crucial consideration. The efficiency of these operations can have a significant impact on the overall performance of the \lstinline{Version Control System}.
-\smallskip
+% In order to evaluate the suitability of a data structure for implementation in a \lstinline{Version Control System}, it is necessary to consider several core aspects. Firstly, \lstinline{operational efficiency}, which refers to the time and space complexity of the basic operations performed by the data structure, is a crucial consideration. The efficiency of these operations can have a significant impact on the overall performance of the \lstinline{Version Control System}.
+% \smallskip
 
-Another important aspect is the data structure's \lstinline{structural specificity}, which encompasses how data is stored and organized within the structure. This is critical because the structural specifics can affect the ease of implementation and the ability to efficiently perform operations such as \lstinline{insertions}, \lstinline{deletions}, and \lstinline{updates}.
-\smallskip
+% Another important aspect is the data structure's \lstinline{structural specificity}, which encompasses how data is stored and organized within the structure. This is critical because the structural specifics can affect the ease of implementation and the ability to efficiently perform operations such as \lstinline{insertions}, \lstinline{deletions}, and \lstinline{updates}.
+% \smallskip
 
-Lastly, the \lstinline{implementation details} must be considered, including the ease of implementation and compatibility with the programming language. A data structure that is straightforward to implement and easy to maintain/iterate upon will result in a more streamlined and efficient \lstinline{Version Control System}.
+% Lastly, the \lstinline{implementation details} must be considered, including the ease of implementation and compatibility with the programming language. A data structure that is straightforward to implement and easy to maintain/iterate upon will result in a more streamlined and efficient \lstinline{Version Control System}.
 % 
 % What are the potential data structures that could be used?
 %  - Explain the data structures in detail - (4 x 2 page)
@@ -181,7 +183,7 @@ A \lstinline{Doubly Linked List} could be used as the core data structure, but i
 % ------------------------------------------------------------------------------
 % A \lstinline{Binary Tree} is a hierarchical data structure that consists of a set of nodes, where each node can have at most two children. The topmost node in the tree is called the root node, and the nodes that do not have any children are called leaf nodes. The nodes that have children are called internal nodes. The \lstinline{Binary Tree} structure is a special case of the \lstinline{Tree} data structure, where each node can have at most two children.
 
-A \lstinline{Binary Tree} is a hierarchical data structure in which each node has at most two child nodes, arranged in a way that the value of the node to the left is less than or equal to the parent node and the value of the node to the right is greater than or equal to the parent node. This ordering property ensures efficient search, insertion, and deletion operations. There are several types of binary trees, such as \lstinline{binary search trees}, \lstinline{AVL trees}, and \lstinline{red-black trees}, each with different balancing mechanisms to maintain tree height and performance.
+A \lstinline{Binary Tree} is a hierarchical data structure in which each node has at most two child nodes, arranged in a way that the value of the node to the left is less than or equal to the parent node and the value of the node to the right is greater than or equal to the parent node. This ordering property ensures efficient search, insertion, and deletion operations. There are several types of binary trees, such as \lstinline{binary search trees}, \lstinline{AVL trees}, and \lstinline{red-black trees}, each with different balancing mechanisms to maintain tree height and performance\cite{mcmahon_2020}.
 
 Each node in a \lstinline{Binary Tree} contains the following elements:
 \begin{enumerate}
@@ -357,7 +359,7 @@ In summary, although \lstinline{Hash Tables} can provide fast key-based lookups 
 % TODO: Add explanation of why a DAG is suitable for a Version Control System
 % ------------------------------------------------------------------------------
 
-A \lstinline{Directed Acyclic Graph (DAG)} is a data structure that consists of nodes connected by directed edges, forming a graph with no cycles. This means that it is impossible to start at a node and follow a sequence of directed edges that leads back to the same node. DAGs are particularly useful for representing dependencies, partial orders, or processes that have a specific sequence of events. For example, in the context of a version control system, a DAG can be used to represent the history of changes made to a project, with nodes representing commits and edges representing parent-child relationships between commits.
+A \lstinline{Directed Acyclic Graph (DAG)} is a data structure that consists of nodes connected by directed edges, forming a graph with no cycles. This means that it is impossible to start at a node and follow a sequence of directed edges that leads back to the same node. DAGs are particularly useful for representing dependencies, partial orders, or processes that have a specific sequence of events. For example, in the context of a version control system, a DAG can be used to represent the history of changes made to a project, with nodes representing commits and edges representing parent-child relationships between commits\cite{surti_2016}.
 
 % A \lstinline{Directed Acyclic Graph (DAG)} is a type of graph that consists of a set of nodes and directed edges between pairs of nodes. The edges have direction and they connect one node to another.
 % Unlike in a \lstinline{Tree} structure, in a \lstinline{DAG}, a node can have multiple parents and multiple children, but there cannot be any cycles in the graph.
@@ -386,7 +388,7 @@ A \lstinline{Directed Acyclic Graph (DAG)} is a data structure that consists of 
 % Image of DAG data structure
 \begin{figure}[!htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{dag.png}
+    \includegraphics[width=0.5\textwidth]{dag.png}
     \caption{Directed Acyclic Graph (DAG) \cite{surti_2016}}
     \label{fig:dag}
 \end{figure}
@@ -447,7 +449,7 @@ A \lstinline{Directed Acyclic Graph (DAG)} is a data structure that consists of 
 % ------------------------------------------------------------------------------
 
 \section{Algorithms}
-
+% \noindent
 % TODO: Add intro paragraph
 
 
@@ -461,7 +463,8 @@ A \lstinline{Directed Acyclic Graph (DAG)} is a data structure that consists of 
 \subsubsection{Linear Search}
 \lstinline{Linear Search} is a simple and straightforward search algorithm that works on unsorted and sorted lists. It sequentially checks each element in the list until the desired element is found or the end of the list is reached \cite{shaalaa_linear_search}. The algorithm compares each element in the list with the target value, starting from the first element and moving through the list one element at a time. Linear Search has an average case time complexity of $O(n)$ and a worst case time complexity of $O(n)$, where $n$ is the number of elements in the list.
 
-\begin{figure}[htbp]
+% \begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{linear-search-algorithm}
     \caption{Linear Search Algorithm \cite{ravikiran_linear_search}}
@@ -487,7 +490,8 @@ A \lstinline{Directed Acyclic Graph (DAG)} is a data structure that consists of 
 \subsubsection{Binary Search}
 \lstinline{Binary Search} is an efficient search algorithm that works on sorted lists \cite{popovi_binary_search}. It repeatedly divides the list in half, comparing the middle element with the target value. If the middle element is equal to the target, the search is successful. If the target value is less than the middle element, the search continues in the left half of the list, otherwise in the right half. This process is repeated until the target value is found or the remaining list becomes empty. Binary Search has an average case time complexity of $O(\log n)$ and a worst case time complexity of $O(\log n)$, where $n$ is the number of elements in the list.
 
-\begin{figure}[htbp]
+% \begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth]{binary-search-algorithm}
     \caption{Binary Search Algorithm \cite{jamie_binary_search}}
@@ -513,7 +517,8 @@ A \lstinline{Directed Acyclic Graph (DAG)} is a data structure that consists of 
 \subsubsection{Depth First Search (DFS)}
 \lstinline{Depth First Search} is a graph traversal algorithm that explores as far as possible along a branch before backtracking. It can be implemented using recursion or an explicit stack data structure. Starting from a source node, DFS visits a node and marks it as visited. Then, it recursively explores each unvisited neighbour of the current node, treating the neighbor as the new current node. The algorithm continues this process until all reachable nodes have been visited. DFS has an average case time complexity of $O(V + E)$ and a worst case time complexity of $O(V + E)$, where $V$ is the number of vertices and $E$ is the number of edges in the graph.
 
-\begin{figure}[!htbp]
+% \begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.5\textwidth]{depth-first-search-algorithm}
     \caption{Depth First Search Algorithm \cite{zaltsman_dfs_bfs}}
@@ -541,7 +546,7 @@ A \lstinline{Directed Acyclic Graph (DAG)} is a data structure that consists of 
 
 % TODO: Check placement of figure
 % \newpage
-\begin{figure}[!htbp]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=0.5\textwidth]{breadth-first-search-algorithm}
     \caption{Breadth First Search Algorithm \cite{zaltsman_dfs_bfs}}
@@ -573,7 +578,7 @@ A \lstinline{Directed Acyclic Graph (DAG)} is a data structure that consists of 
 \lstinline{Diffing algorithms}, also known as difference algorithms or delta algorithms, are specialised computational methods designed to identify and highlight the differences between two sets of data. These algorithms compare input sequences, such as text, code, or binary data, to efficiently determine the changes needed to transform one sequence into the other. By detecting additions, deletions, and modifications, diffing algorithms enable the tracking and management of revisions in a concise and comprehensible manner.
 
 \subsubsection{Myers Diff Algorithm}
-The \lstinline{Myers diffing algorithm}, developed by Eugene W. Myers, is an efficient algorithm for comparing two sequences (such as lines in text files) and finding the shortest edit script that transforms one sequence into the other. The algorithm is based on the concept of an edit graph, where each node represents an element in the sequences, and the edges represent insertions, deletions, or matches. The algorithm finds the shortest path through this graph, also known as the \lstinline{Longest Common Subsequence (LCS)} path, which represents the minimal set of edits required to transform one sequence into the other.
+The \lstinline{Myers diffing algorithm}, developed by Eugene W. Myers, is an efficient algorithm for comparing two sequences (such as lines in text files) and finding the shortest edit script that transforms one sequence into the other. The algorithm is based on the concept of an edit graph, where each node represents an element in the sequences, and the edges represent insertions, deletions, or matches. The algorithm finds the shortest path through this graph, also known as the \lstinline{Longest Common Subsequence (LCS)} path, which represents the minimal set of edits required to transform one sequence into the other\cite{coglan_myers_2017}.
 \smallskip
 
 The time and space complexity of the \lstinline{Myers Diff} algorithm is $O(ND)$, where $N$ is the sum of the lengths of both inputs, and $D$ is the size of the minimum edit script that converts one input to the other. When the number of differences is small, various optimisations can be applied to improve complexity up to $O(N\log N + D^2)$ time and $O(N)$ space.
@@ -584,7 +589,7 @@ The time and space complexity of the \lstinline{Myers Diff} algorithm is $O(ND)$
 \begin{itemize}
     \item Efficiently finds the shortest edit script, reducing the number of changes needed to transform one sequence into the other.
     \item Can handle large input sequences, as it has a linear space complexity.
-    \item Can be adapted for various applications, such as comparing text files, source code, or DNA sequences.
+    \item Can be adapted for various applications, such as comparing text files, source code, or DNA sequences\cite{coglan_myers_2017}.
     \item The algorithm is well-established and widely used, making it a reliable choice for many diffing tasks.
 \end{itemize}
 \paragraph{Disadvantages}
@@ -596,7 +601,7 @@ The time and space complexity of the \lstinline{Myers Diff} algorithm is $O(ND)$
 \end{itemize}
 
 \subsubsection{Patience Diff Algorithm}
-The \lstinline{Patience Diffing algorithm}, developed by Bram Cohen, is a diffing algorithm that aims to produce more human-readable diffs by focusing on finding the \lstinline{Longest Common Subsequence (LCS)} in the two sequences. The algorithm first identifies unique matching lines (or elements) between the sequences and sorts them by their position in the first sequence. Then, it finds the \lstinline{LCS} in the sorted list of positions from the second sequence. The algorithm recursively applies this process to the unmatched portions of the sequences until the entire diff is produced.
+The \lstinline{Patience Diffing algorithm}, developed by Bram Cohen, is a diffing algorithm that aims to produce more human-readable diffs by focusing on finding the \lstinline{Longest Common Subsequence (LCS)} in the two sequences. The algorithm first identifies unique matching lines (or elements) between the sequences and sorts them by their position in the first sequence. Then, it finds the \lstinline{LCS} in the sorted list of positions from the second sequence. The algorithm recursively applies this process to the unmatched portions of the sequences until the entire diff is produced\cite{coglan_patience_2017}.
 \smallskip
 
 The time complexity of the \lstinline{Patience Diff} algorithm is $O(N\log N)$, where $N$ is the sum of the lengths of both inputs.
@@ -606,7 +611,7 @@ The time complexity of the \lstinline{Patience Diff} algorithm is $O(N\log N)$, 
 \paragraph{Advantages}
 \begin{itemize}
     \item Produces more human-readable diffs, as it focuses on preserving the order of common elements.
-    \item Can handle large input sequences, as it has a linearithmic time complexity.
+    \item Can handle large input sequences, as it has a linearithmic time complexity\cite{coglan_patience_2017}.
     \item Can be used as a standalone algorithm or in combination with other diffing algorithms, such as the Myers algorithm, to improve the quality of the output.
     \item The algorithm is relatively simple and straightforward to implement compared to some other diffing algorithms.
     \item Works well for cases where the sequences have many common elements but in a different order.
