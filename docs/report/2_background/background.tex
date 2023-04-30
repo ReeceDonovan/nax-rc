@@ -4,6 +4,7 @@
 \label{chap:background}
 % ==============================================================================
 \section{What is a Version Control System}
+\noindent
 A \acrfull{vcs} saves modifications made by individual software developers, allowing them to track their work over time and making the process more accessible. Furthermore, it facilitates sharing data between nodes, where each node can be kept up to date with the latest versions, minimising the need to handle merge conflicts.
 \smallskip
 
@@ -23,6 +24,7 @@ Version control safeguards this precious resource by preventing catastrophes, ca
 Version control assists teams in addressing these challenges by tracking each change made by contributors, helping to prevent concurrent work from conflicting with one another. Consequently, any incompatibility can be detected and resolved without impeding team members' progress further down the line, ensuring that changes do not introduce bugs.
 
 \section{Evolution of Version Control Systems}
+\noindent
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.95\textwidth]{vcs-timeline.png}
@@ -69,18 +71,20 @@ Since the original file's content is now stored in the history file, it can be r
 \smallskip
 
 Subsequent SCCS check-ins only store only deltas or changes to a file instead of storing entire contents each time; when a check-in is made, subsequent revisions are added onto existing delta tables inside an amended history file (history files do not use compression). This decreases the size of these large histories since they are not using compression on their files, so they take up more space than just having one complete copy that you are tracking with no differences like Word docs etc.
-\smallskip
 
-As previously mentioned, SCCS uses the Delta method known as Interleaved Deltas, which allows constant-time checkout regardless of how old your checked-out revision is - i.e., older revisions do not take longer than newer ones.
-\smallskip
+% TODO: 2023-04-18
+% \smallskip
 
-It is important to note that all files are tracked and checked in separately; there is no way to check in changes on multiple files as a part of one atomic unit - like a commit in \nameref{sec:git}. Each tracked file has its corresponding history file, which stores revisions. Generally, this means that the version numbers of different files cannot match each other. However, matching revision numbers can be achieved by editing every file at once (even if not all of the changed areas have fundamental changes) and checking them all together. This will increment revision numbers for any modified content, so they will be consistent with their revisions—but it's not comparable to including lots of different pieces within a single commit like you would in \nameref{sec:git}. In SCCS, these make individual check-ins across separate history folders rather than one extensive report containing everything at once.
-\smallskip
+% As previously mentioned, SCCS uses the Delta method known as Interleaved Deltas, which allows constant-time checkout regardless of how old your checked-out revision is - i.e., older revisions do not take longer than newer ones.
+% \smallskip
 
-When a file is checked out for editing in SCCS, it is locked so that anyone else cannot edit it. This prevents changes from being overwritten by other users and limits development since only one user can edit the file simultaneously.
-\smallskip
+% It is important to note that all files are tracked and checked in separately; there is no way to check in changes on multiple files as a part of one atomic unit - like a commit in \nameref{sec:git}. Each tracked file has its corresponding history file, which stores revisions. Generally, this means that the version numbers of different files cannot match each other. However, matching revision numbers can be achieved by editing every file at once (even if not all of the changed areas have fundamental changes) and checking them all together. This will increment revision numbers for any modified content, so they will be consistent with their revisions—but it's not comparable to including lots of different pieces within a single commit like you would in \nameref{sec:git}. In SCCS, these make individual check-ins across separate history folders rather than one extensive report containing everything at once.
+% \smallskip
 
-The software supports branches that store sequences of changes to specific files - these can then be merged back into the original versions or with copies of other branched versions of the same parent branch.
+% When a file is checked out for editing in SCCS, it is locked so that anyone else cannot edit it. This prevents changes from being overwritten by other users and limits development since only one user can edit the file simultaneously.
+% \smallskip
+
+% The software supports branches that store sequences of changes to specific files - these can then be merged back into the original versions or with copies of other branched versions of the same parent branch.
 
 % TODO: Consider adding command examples
 % \paragraph{Basic Commands}
@@ -118,15 +122,17 @@ Upon checking a file into RCS for the first time, a corresponding history file i
 \smallskip
 
 \acrshort{rcs} employs a reverse-delta scheme for storing file changes. When a file is checked in, the history file contains a complete snapshot of its contents. Subsequent modifications and check-ins result in RCS calculating a single delta—the difference between the new version of that specific revision and the previously recorded version - and saving it along with an older snapshot if necessary.
-\smallskip
 
-The reverse-delta scheme functions by checking out an earlier revision from the newest version and applying consecutive deltas until reaching the desired revision. Starting from the newest version allows quick checkout times, as the current revisions' snapshots are readily accessible.
-\smallskip
+% TODO: 2023-04-18
+% \smallskip
 
-However, when attempting to access older versions beyond just one recent update (e.g., 1 or 2 old versions), the process becomes considerably more complex. This is because these older versions' snapshots must be calculated against each other before they can be applied to the newest version.
-\smallskip
+% The reverse-delta scheme functions by checking out an earlier revision from the newest version and applying consecutive deltas until reaching the desired revision. Starting from the newest version allows quick checkout times, as the current revisions' snapshots are readily accessible.
+% \smallskip
 
-Unlike RCS, SCCS maintains a consistent checkout time for any revision. Additionally, RCS history files do not store checksums, meaning file integrity cannot be guaranteed.
+% However, when attempting to access older versions beyond just one recent update (e.g., 1 or 2 old versions), the process becomes considerably more complex. This is because these older versions' snapshots must be calculated against each other before they can be applied to the newest version.
+% \smallskip
+
+% Unlike RCS, SCCS maintains a consistent checkout time for any revision. Additionally, RCS history files do not store checksums, meaning file integrity cannot be guaranteed.
 
 % TODO: Consider adding command examples
 % \paragraph{Basic Commands}
@@ -157,7 +163,8 @@ CVCS has some challenges, such as if the central server is inaccessible, users c
 
 So, the main drawbacks of using CVCS are that it requires a network connection to work on the source code, developers must order to contribute to a project, and a single point of failure is an issue when using one server.
 
-\begin{figure}[htbp]
+% \begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.85\textwidth]{centralized-vcs-structure}
     \caption{Centralized Version Control System (CVCS)}
@@ -214,9 +221,6 @@ When a file is added for tracking, Helix Core classifies it using a \lstinline{f
 
 Only the deltas (changes between revisions) are stored for text files. Text file history and deltas are stored using the \nameref{sec:rcs} format, which tracks each file in a corresponding \lstinline{,v} file in the server depot. This is similar to \nameref{sec:cvs}, which also leverages RCS file formats for preserving revision history. Files are often compressed using gzip when added to the depot and decompressed when synced back to the workspace.
 
-% TODO: Add annotated comment
-% It is suprising that such a longstanding proprietary software like Perforce would base itself on a seemingly antiquated and open-source root like RCS, especially for such an essential component (its delta and history file backend)...
-
 % TODO: Consider adding command examples
 % \paragraph{Basic Commands}
 
@@ -232,13 +236,15 @@ Subversion was created in 2000 by CollabNet Inc. and is now maintained by the Ap
 Similar to \nameref{sec:cvs}, Subversion employs a centralised repository model, requiring remote users to have a working network connection to commit their changes to the central repository. However, in contrast to CVS, where a commit operation could fail midway due to a network outage and leave the repository in a corrupted and inconsistent state, Subversion ensures the repository remains consistent. Additionally, a Subversion commit or revision can include multiple files and directories, enabling users to track sets of related changes together as a grouped unit, as opposed to previous storage models that tracked changes separately for each file.
 \smallskip
 
-Subversion utilises a storage model called \lstinline{FSFS (File System atop the File System)} for tracked files. The model's name originates from its database structure, which mirrors the operating system's file and directory structure. However, subversion's unique feature is its filesystem design, which tracks not only files and directories but also different versions of these files and directories as they change over time. This creates a filesystem with an added time dimension. Moreover, Subversion treats folders as first-class citizens, allowing empty folders to be committed, unlike other systems such as Git, where empty folders go unnoticed.
+Subversion utilises a storage model called \lstinline{FSFS (File System atop the File System)} for tracked files. The model's name originates from its database structure, which mirrors the operating system's file and directory structure. However, subversion's unique feature is its filesystem design, which tracks not only files and directories but also different versions of these files and directories as they change over time. This creates a filesystem with an added time dimension. Moreover, Subversion treats folders as first-class citizens, allowing empty folders to be committed, unlike other systems such as Git, where empty folders go unnoticed \cite{stopak_2019}.
 \smallskip
 
 When a Subversion repository is created, a (nearly) empty database of files and folders is established \cite{stopak_2019}. Next, a directory called \lstinline{db/revs} is created to store all revision tracking information for the committed files. Each commit, which may include changes to multiple files, is stored in a new file in the \lstinline{revs} directory, named with a sequential numeric identifier starting with \lstinline{1}. When a file is committed for the first time, its entire content is stored. Subsequent commits of the same file store only the changes, also known as \lstinline{diffs} or \lstinline{deltas}, to save space. Additionally, \lstinline{deltas} are compressed using \lstinline{lz4} or \lstinline{zlib} compression algorithms to reduce their size further.
-\smallskip
 
-By default, this approach is only employed to a certain extent. Although storing file deltas instead of the entire file each time saves storage space, it adds time to checkout and commit operations, as all the deltas must be combined to recreate the file's current state. For this reason, Subversion stores up to 1023 deltas per file before saving a new complete copy of the file, striking a balance between storage and speed.
+% TODO: 2023-04-18
+% \smallskip
+
+% By default, this approach is only employed to a certain extent. Although storing file deltas instead of the entire file each time saves storage space, it adds time to checkout and commit operations, as all the deltas must be combined to recreate the file's current state. For this reason, Subversion stores up to 1023 deltas per file before saving a new complete copy of the file, striking a balance between storage and speed.
 
 % ==============================================================================
 % TODO: Consider including this section
@@ -277,20 +283,23 @@ By default, this approach is only employed to a certain extent. Although storing
 \smallskip
 
 DVCS is designed to function in two ways: it maintains file histories locally on each device and can synchronise local user modifications with servers when necessary, enabling the sharing of these modifications with others. In DVCS, developers can work independently or collaboratively on the same project, as they have access to all necessary repositories. In addition, any repository can be cloned from another, meaning no repository holds greater importance than others.
-\smallskip
 
-In response to the need for more advanced versioning of software artefacts, several Distributed Version Control Systems, such as \nameref{sec:mercurial}, and \nameref{sec:git}, emerged in the software field. Many OSS projects have widely adopted these tools. DVCS operations are significantly faster than those in CVCS, as they are performed locally, while CVCS operations require remote connections. Some experts believe that distributed systems will eventually replace centralised ones due to their suitability for more extensive projects involving independent developers seeking full functionality, even without a network connection. In addition, distributed systems offer advantages such as saving earlier drafts of work without publicly releasing or sharing them with others.
-\smallskip
+% TODO: 2023-04-18
+% \smallskip
 
-Collaboration between team members and the ability for individual developers to serve as servers or clients are essential features of version control systems, allowing developers to work on source code without being connected to a central or remote repository.
-\smallskip
+% In response to the need for more advanced versioning of software artefacts, several Distributed Version Control Systems, such as \nameref{sec:mercurial}, and \nameref{sec:git}, emerged in the software field. Many OSS projects have widely adopted these tools. DVCS operations are significantly faster than those in CVCS, as they are performed locally, while CVCS operations require remote connections. Some experts believe that distributed systems will eventually replace centralised ones due to their suitability for more extensive projects involving independent developers seeking full functionality, even without a network connection. In addition, distributed systems offer advantages such as saving earlier drafts of work without publicly releasing or sharing them with others.
+% \smallskip
 
-However, DVCS introduces some challenges, including the lack of a coherent version numbering system due to the absence of a centralised versioning server. Instead, DVCS relies on hash modifications or a unique GUID. This lack of a central server also complicates system backup.
-\smallskip
+% Collaboration between team members and the ability for individual developers to serve as servers or clients are essential features of version control systems, allowing developers to work on source code without being connected to a central or remote repository.
+% \smallskip
 
-The two most common criticisms of DVCS are the unavailability of pessimistic locks and weak support for binary files. Despite these disadvantages, the transition from centralised to decentralised version control systems continues, as developers can work offline and efficiently work incrementally. This flexibility enables developers to assume multiple roles, such as developing new tasks or fixing errors, leading to exploratory coding and greater freedom in their workflow while maintaining control over their code's release schedule.
+% However, DVCS introduces some challenges, including the lack of a coherent version numbering system due to the absence of a centralised versioning server. Instead, DVCS relies on hash modifications or a unique GUID. This lack of a central server also complicates system backup.
+% \smallskip
 
-\begin{figure}[htbp]
+% The two most common criticisms of DVCS are the unavailability of pessimistic locks and weak support for binary files. Despite these disadvantages, the transition from centralised to decentralised version control systems continues, as developers can work offline and efficiently work incrementally. This flexibility enables developers to assume multiple roles, such as developing new tasks or fixing errors, leading to exploratory coding and greater freedom in their workflow while maintaining control over their code's release schedule.
+
+% \begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.85\textwidth]{distributed-vcs-structure}
     \caption{Distributed Version Control System (DVCS)}
@@ -329,9 +338,11 @@ A commit denotes the primary tree for a specific revision, and the commit author
 \smallskip
 
 Git objects, including blobs, trees, and commits, are all compressed, hashed, and saved in the object database based on their respective hash values. These standalone objects avoid using diffs for space conservation, making Git highly efficient since the complete content of every file revision is readily available as an individual object.
-\smallskip
 
-Nonetheless, particular operations, such as pushing commits to a remote repository, storing an excessive number of objects, or manually executing Git's garbage collection command, may prompt Git to reorganise objects into pack files. This packing procedure compresses inverse diffs to remove duplicate content and minimise size. This leads to the creation of \lstinline{.pack} files containing the object data, each paired with a corresponding \lstinline{.idx} (index) file that references the packed objects and their positions within the pack file. These pack files are transmitted across the network when branches are pushed to or fetched from remote repositories. When pulling or retrieving branches, the pack files are decompressed to generate loose objects in the object repository.
+% TODO: 2023-04-18
+% \smallskip
+
+% Nonetheless, particular operations, such as pushing commits to a remote repository, storing an excessive number of objects, or manually executing Git's garbage collection command, may prompt Git to reorganise objects into pack files. This packing procedure compresses inverse diffs to remove duplicate content and minimise size. This leads to the creation of \lstinline{.pack} files containing the object data, each paired with a corresponding \lstinline{.idx} (index) file that references the packed objects and their positions within the pack file. These pack files are transmitted across the network when branches are pushed to or fetched from remote repositories. When pulling or retrieving branches, the pack files are decompressed to generate loose objects in the object repository.
 
 % ==============================================================================
 
@@ -366,9 +377,11 @@ When a new file is tracked in Mercurial, a corresponding \lstinline{revlog} (rev
 \smallskip
 
 Unlike \nameref{sec:git}, which generates a new blob for each version of every staged file, Mercurial merely creates a new entry in the revlog for that file. To conserve space, each new entry contains only the delta (modifications) from the preceding version. Once a certain number of deltas is achieved, a complete snapshot of the file is stored again, minimising lookup time when applying numerous deltas to reconstruct a specific file revision.
-\smallskip
 
-These file revlogs are named to correspond with the files they monitor but are postfixed with \lstinline{.i} and \lstinline{.d} extensions. The \lstinline{.d} files hold the compressed \lstinline{delta} content, while the \lstinline{.i} files function as \lstinline{indexes} to locate distinct revisions within the \lstinline{.d} files swiftly. For small files with few revisions, both the \lstinline{indexes} and \lstinline{content} are stored in \lstinline{.i} files. Revlog file entries are compressed for efficiency and hashed for identification, with the hash values referred to as \lstinline{nodeids}.
+% TODO: 2023-04-18
+% \smallskip
+
+% These file revlogs are named to correspond with the files they monitor but are postfixed with \lstinline{.i} and \lstinline{.d} extensions. The \lstinline{.d} files hold the compressed \lstinline{delta} content, while the \lstinline{.i} files function as \lstinline{indexes} to locate distinct revisions within the \lstinline{.d} files swiftly. For small files with few revisions, both the \lstinline{indexes} and \lstinline{content} are stored in \lstinline{.i} files. Revlog file entries are compressed for efficiency and hashed for identification, with the hash values referred to as \lstinline{nodeids}.
 % \smallskip
 
 % When a new commit is made, Mercurial tracks all file revisions in that commit using a manifest, which is also a revlog file. Rather than storing individual file content like the file revlogs, the manifest stores a list of filenames and \lstinline{nodeids} that specify which file revision entries exist in each project revision. These manifest entries are also compressed and hashed, with the hash values once more referred to as \lstinline{nodeids}.
@@ -423,6 +436,7 @@ These file revlogs are named to correspond with the files they monitor but are p
 % ==============================================================================
 % TODO: Discuss key features for a VCS
 % \section{Summary of Key Features}
+% \noindent
 % \subsection{Repositories}
 % % TODO: Explain repositories
 % \subsection{Commits}
