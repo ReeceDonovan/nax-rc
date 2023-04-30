@@ -3,6 +3,7 @@
 % TODO: Add short introduction to the chapter
 
 \section{Preparation}
+\noindent
 Before beginning the implementation, it was crucial to understand the testing and benchmarking tools provided by the Go programming language. The "testing" package is a standard package in Go, designed to support various forms of testing, such as unit tests, integration tests, and benchmarks. This package provides a simple and consistent way to write and run tests, measure performance, and obtain reliable results for the implemented data structures and algorithms.
 The "testing" package includes several key components:
 
@@ -16,6 +17,7 @@ These are functions with a signature of \lstinline{func BenchmarkXxx(b *testing.
 Test and benchmark functions can be further divided into subtests and sub-benchmarks using the \lstinline{Run} method provided by the \lstinline{*testing.T} and \lstinline{*testing.B} parameters, respectively. This feature enables developers to create a hierarchical structure of tests and benchmarks, making it easier to manage and organise the testing process.
 
 \section{Data Structures}
+% \noindent
 % TODO: Add short introduction to the section
 \subsection{Revision Type}
 Before implementing any data structures, I decided to create a foundational component that would serve as a building block for the subsequent data structures and algorithms. This foundational component is the \lstinline{Revision} interface and its implementation, which is designed to represent a single revision of a file in a Version Control System (VCS). The primary goal of this approach was to abstract the representation of a file revision, allowing for a consistent and modular way to manage revisions across the different data structures and algorithms being implemented and compared.
@@ -146,53 +148,56 @@ func (dll *DoublyLinkedList) Remove(node *DLLNode)
 func (dll *DoublyLinkedList) ContainsNodeWithID(id int) bool
 \end{lstlisting}
 
+% TODO: 2023-04-18
+
 \subsubsection*{Tests}
-% TestNewDoublyLinkedList: Tests the NewDoublyLinkedList function by asserting that the newly created list has a nil Head and Tail.
-\paragraph{TestNewDoublyLinkedList}
-This test case checks if the \lstinline{NewDoublyLinkedList} function creates a new doubly linked list with a nil Head and Tail. It asserts that the Head and Tail of the created list are nil and reports an error if they're not.
-% \smallskip
+% % TestNewDoublyLinkedList: Tests the NewDoublyLinkedList function by asserting that the newly created list has a nil Head and Tail.
+% \paragraph{TestNewDoublyLinkedList}
+% This test case checks if the \lstinline{NewDoublyLinkedList} function creates a new doubly linked list with a nil Head and Tail. It asserts that the Head and Tail of the created list are nil and reports an error if they're not.
+% % \smallskip
 
-% TestDoublyLinkedList_AssignHead: Tests the AssignHead method by assigning a node as the head and asserting that the list's Head and Tail are both equal to the node.
-\paragraph{TestDoublyLinkedList\_AssignHead}
-This test case checks if the AssignHead method assigns the given node as the head of the doubly linked list. It assigns the node as the head of the list and asserts that the list's Head and Tail are both equal to the node. It reports an error if they're not.
-% \smallskip
+% % TestDoublyLinkedList_AssignHead: Tests the AssignHead method by assigning a node as the head and asserting that the list's Head and Tail are both equal to the node.
+% \paragraph{TestDoublyLinkedList\_AssignHead}
+% This test case checks if the AssignHead method assigns the given node as the head of the doubly linked list. It assigns the node as the head of the list and asserts that the list's Head and Tail are both equal to the node. It reports an error if they're not.
+% % \smallskip
 
-% TestDoublyLinkedList_AssignTail: Tests the AssignTail method by assigning a node as the tail and asserting that the list's Head and Tail are both equal to the node
-\paragraph{TestDoublyLinkedList\_AssignTail}
-This test case checks if the \lstinline{AssignTail} method assigns the given node as the tail of the doubly linked list. It assigns the node as the tail of the list and asserts that the list's Head and Tail are both equal to the node. It reports an error if they're not.
+% % TestDoublyLinkedList_AssignTail: Tests the AssignTail method by assigning a node as the tail and asserting that the list's Head and Tail are both equal to the node
+% \paragraph{TestDoublyLinkedList\_AssignTail}
+% This test case checks if the \lstinline{AssignTail} method assigns the given node as the tail of the doubly linked list. It assigns the node as the tail of the list and asserts that the list's Head and Tail are both equal to the node. It reports an error if they're not.
 
-% TestDoublyLinkedList_InsertPrior: Tests the InsertPrior method by inserting a node before another node and asserting the list's Head, Tail, and node relationships
-\paragraph{TestDoublyLinkedList\_InsertPrior}
-This test case checks if the \lstinline{InsertPrior} method inserts a new node before the specified node in the doubly linked list. It inserts a new node before the specified node and asserts that the list's Head, Tail, and node relationships are correct. It reports an error if they're not.
+% % TestDoublyLinkedList_InsertPrior: Tests the InsertPrior method by inserting a node before another node and asserting the list's Head, Tail, and node relationships
+% \paragraph{TestDoublyLinkedList\_InsertPrior}
+% This test case checks if the \lstinline{InsertPrior} method inserts a new node before the specified node in the doubly linked list. It inserts a new node before the specified node and asserts that the list's Head, Tail, and node relationships are correct. It reports an error if they're not.
 
-% TestDoublyLinkedList_InsertSubsequent: Tests the InsertSubsequent method by inserting a node after another node and asserting the list's Head, Tail, and node relationships.
-\paragraph{TestDoublyLinkedList\_InsertSubsequent}
-This test case checks if the \lstinline{InsertSubsequent} method inserts a new node after the specified node in the doubly linked list. It inserts a new node after the specified node and asserts that the list's Head, Tail, and node relationships are correct. It reports an error if they're not.
+% % TestDoublyLinkedList_InsertSubsequent: Tests the InsertSubsequent method by inserting a node after another node and asserting the list's Head, Tail, and node relationships.
+% \paragraph{TestDoublyLinkedList\_InsertSubsequent}
+% This test case checks if the \lstinline{InsertSubsequent} method inserts a new node after the specified node in the doubly linked list. It inserts a new node after the specified node and asserts that the list's Head, Tail, and node relationships are correct. It reports an error if they're not.
 
-% TestDoublyLinkedList_InsertAtPosition: Tests the InsertAtPosition method by inserting a node at a specific position and asserting the list's Head, Tail, and node relationships
+% % TestDoublyLinkedList_InsertAtPosition: Tests the InsertAtPosition method by inserting a node at a specific position and asserting the list's Head, Tail, and node relationships
 \paragraph{TestDoublyLinkedList\_InsertAtPosition}
 This test case checks if the \lstinline{InsertAtPosition} method inserts a new node at the specified position in the doubly linked list. It inserts a new node at the specified position and asserts that the list's Head, Tail, and node relationships are correct. It reports an error if they're not.
 
-% TestDoublyLinkedList_RemoveNodesWithID: Tests the RemoveNodesWithID method by removing all nodes with a specific revision ID and asserting the list's Head, Tail, and node relationships.
-\paragraph{TestDoublyLinkedList\_RemoveNodesWithID}
-This test case checks if the \lstinline{RemoveNodesWithID} method removes all nodes with the specified revision ID from the doubly linked list. It removes all nodes with the specified revision ID and asserts that the list's Head, Tail, and node relationships are correct. It reports an error if they're not.
+% % TestDoublyLinkedList_RemoveNodesWithID: Tests the RemoveNodesWithID method by removing all nodes with a specific revision ID and asserting the list's Head, Tail, and node relationships.
+% \paragraph{TestDoublyLinkedList\_RemoveNodesWithID}
+% This test case checks if the \lstinline{RemoveNodesWithID} method removes all nodes with the specified revision ID from the doubly linked list. It removes all nodes with the specified revision ID and asserts that the list's Head, Tail, and node relationships are correct. It reports an error if they're not.
 
-% TestDoublyLinkedList_ContainsNodeWithID: Tests the ContainsNodeWithID method by checking if the list contains nodes with specific revision IDs
-\paragraph{TestDoublyLinkedList\_ContainsNodeWithID}
-This test case checks if the \lstinline{ContainsNodeWithID} method returns true if the doubly linked list contains a node with the specified revision ID. It checks if the list contains nodes with specific revision IDs and asserts that the result is correct. It reports an error if the result is not as expected.
+% % TestDoublyLinkedList_ContainsNodeWithID: Tests the ContainsNodeWithID method by checking if the list contains nodes with specific revision IDs
+% \paragraph{TestDoublyLinkedList\_ContainsNodeWithID}
+% This test case checks if the \lstinline{ContainsNodeWithID} method returns true if the doubly linked list contains a node with the specified revision ID. It checks if the list contains nodes with specific revision IDs and asserts that the result is correct. It reports an error if the result is not as expected.
 
-% TestDoublyLinkedList_Remove: Tests the Remove method by removing a node from the list and asserting the list's Head, Tail, and node relationships
+% % TestDoublyLinkedList_Remove: Tests the Remove method by removing a node from the list and asserting the list's Head, Tail, and node relationships
 \paragraph{TestDoublyLinkedList\_Remove}
 This test case checks if the \lstinline{Remove} method removes the specified node from the doubly linked list. It removes the specified node and asserts that the list's Head, Tail, and node relationships are correct. It reports an error if they're not.
 
 \subsubsection*{Benchmarks}
-% BenchmarkDoublyLinkedList_InsertPrior
-\paragraph{BenchmarkDoublyLinkedList\_InsertPrior}
-This benchmark case checks the performance of the \lstinline{InsertPrior} method. It inserts a new node before the specified node in the doubly linked list and reports the time taken to perform the operation. The benchmark is run for a number of iterations and the average time taken is reported.
+% TODO: 2023-04-18
+% % BenchmarkDoublyLinkedList_InsertPrior
+% \paragraph{BenchmarkDoublyLinkedList\_InsertPrior}
+% This benchmark case checks the performance of the \lstinline{InsertPrior} method. It inserts a new node before the specified node in the doubly linked list and reports the time taken to perform the operation. The benchmark is run for a number of iterations and the average time taken is reported.
 
-% BenchmarkDoublyLinkedList_InsertSubsequent
-\paragraph{BenchmarkDoublyLinkedList\_InsertSubsequent}
-This benchmark case checks the performance of the \lstinline{InsertSubsequent} method. It inserts a new node after the specified node in the doubly linked list and reports the time taken to perform the operation. The benchmark is run for a number of iterations and the average time taken is reported.
+% % BenchmarkDoublyLinkedList_InsertSubsequent
+% \paragraph{BenchmarkDoublyLinkedList\_InsertSubsequent}
+% This benchmark case checks the performance of the \lstinline{InsertSubsequent} method. It inserts a new node after the specified node in the doubly linked list and reports the time taken to perform the operation. The benchmark is run for a number of iterations and the average time taken is reported.
 
 % BenchmarkDoublyLinkedList_InsertAtPosition
 \paragraph{BenchmarkDoublyLinkedList\_InsertAtPosition}
@@ -265,12 +270,12 @@ func BenchmarkDoublyLinkedList_RevisionConstruction(b *testing.B) {
 \end{lstlisting}
 
 \begin{enumerate}
-    \item The benchmark iterates over two slices: one containing the number of revisions (\lstinline{smallNumRevisions}, \lstinline{mediumNumRevisions}, and \lstinline{largeNumRevisions}) and the other containing the data size for each revision (\lstinline{smallDataSize}, \lstinline{mediumDataSize}, and \lstinline{largeDataSize}).
-    \item For each combination of the number of revisions and data size, it runs a sub-benchmark using \lstinline{b.Run}. The \lstinline{fmt.Sprintf} function is used to create a descriptive name for the sub-benchmark based on the current values of \lstinline{numRevisions} and \lstinline{dataSize}.
-    \item Inside the sub-benchmark, the main loop (\lstinline{for i := 0; i < b.N; i++}) is run \lstinline{b.N} times, where \lstinline{b.N} is determined by the Go testing framework to obtain a reliable benchmark result.
-    \item In each iteration of the main loop, a new \lstinline{DoublyLinkedList} is created, and then revisions are generated and inserted into the list. The number of revisions and the data size of each revision are determined by the current values of \lstinline{numRevisions} and \lstinline{dataSize}.
-    \item The \lstinline{types.NewRandomRevision} function is called with the current index \lstinline{j} and the specified \lstinline{dataSize} to create a new revision. Then, a new \lstinline{DLLNode} is created with the generated revision.
-    \item The newly created node is inserted into the list at position \lstinline{j+1} using the \lstinline{InsertAtPosition} method. This operation is performed \lstinline{numRevisions} times, resulting in a doubly linked list with the desired number of revisions and data size.
+	\item The benchmark iterates over two slices: one containing the number of revisions (\lstinline{smallNumRevisions}, \lstinline{mediumNumRevisions}, and \lstinline{largeNumRevisions}) and the other containing the data size for each revision (\lstinline{smallDataSize}, \lstinline{mediumDataSize}, and \lstinline{largeDataSize}).
+	\item For each combination of the number of revisions and data size, it runs a sub-benchmark using \lstinline{b.Run}. The \lstinline{fmt.Sprintf} function is used to create a descriptive name for the sub-benchmark based on the current values of \lstinline{numRevisions} and \lstinline{dataSize}.
+	\item Inside the sub-benchmark, the main loop (\lstinline{for i := 0; i < b.N; i++}) is run \lstinline{b.N} times, where \lstinline{b.N} is determined by the Go testing framework to obtain a reliable benchmark result.
+	\item In each iteration of the main loop, a new \lstinline{DoublyLinkedList} is created, and then revisions are generated and inserted into the list. The number of revisions and the data size of each revision are determined by the current values of \lstinline{numRevisions} and \lstinline{dataSize}.
+	\item The \lstinline{types.NewRandomRevision} function is called with the current index \lstinline{j} and the specified \lstinline{dataSize} to create a new revision. Then, a new \lstinline{DLLNode} is created with the generated revision.
+	\item The newly created node is inserted into the list at position \lstinline{j+1} using the \lstinline{InsertAtPosition} method. This operation is performed \lstinline{numRevisions} times, resulting in a doubly linked list with the desired number of revisions and data size.
 \end{enumerate}
 The \lstinline{Go testing} package measures the time taken for each sub-benchmark and reports the results.
 
@@ -404,9 +409,9 @@ The benchmark has an outer loop that iterates over the numbers of revisions and 
 
 In each sub-benchmark, the following steps are performed:
 \begin{enumerate}
-    \item Create a random root revision with ID 0 and the specified data size.
-    \item Create a new TreeNode with the root revision.
-    \item Insert the remaining revisions into the tree one by one, with unique IDs and the specified data size. The number of inserted revisions is determined by the current value of the number of revisions.
+	\item Create a random root revision with ID 0 and the specified data size.
+	\item Create a new TreeNode with the root revision.
+	\item Insert the remaining revisions into the tree one by one, with unique IDs and the specified data size. The number of inserted revisions is determined by the current value of the number of revisions.
 \end{enumerate}
 The \lstinline{Go testing} package measures the time taken for each sub-benchmark and reports the results.
 
@@ -549,13 +554,14 @@ func BenchmarkDAG_RevisionConstruction(b *testing.B) {
 
 For each combination, the benchmark function follows these steps:
 \begin{enumerate}
-    \item Create a new DAG using the \lstinline{NewDAG()} function.
-    \item Add nodes to the DAG with random revisions. The number of nodes added depends on the current \lstinline{numNodes} value, and the size of the data in each revision depends on the current \lstinline{dataSize} value. This is done using the \lstinline{types.NewRandomRevision()} function and the \lstinline{AddNode()} method of the DAG.
-    \item Add edges between the nodes in the DAG. This is done using the \lstinline{AddEdge()} method of the DAG. In this benchmark, the edges are added sequentially between adjacent nodes (e.g., between nodes 0 and 1, nodes 1 and 2, nodes 2 and 3, and so on).
+	\item Create a new DAG using the \lstinline{NewDAG()} function.
+	\item Add nodes to the DAG with random revisions. The number of nodes added depends on the current \lstinline{numNodes} value, and the size of the data in each revision depends on the current \lstinline{dataSize} value. This is done using the \lstinline{types.NewRandomRevision()} function and the \lstinline{AddNode()} method of the DAG.
+	\item Add edges between the nodes in the DAG. This is done using the \lstinline{AddEdge()} method of the DAG. In this benchmark, the edges are added sequentially between adjacent nodes (e.g., between nodes 0 and 1, nodes 1 and 2, nodes 2 and 3, and so on).
 \end{enumerate}
 The benchmark measures the time it takes to perform these operations for each combination of node count and data size.
 
 \section{Search Algorithms}
+% \noindent
 
 \subsection{Linear Search}
 With the implementation of various data structures complete, the next step was to implement search algorithms that could be used to find revisions within these data structures. The first algorithm implemented was \lstinline{Linear Search}, a straightforward search method that iterates through the elements of a data structure sequentially, comparing each element to the target value. This algorithm was chosen for its simplicity and as a baseline for comparison with other, more sophisticated search algorithms.
@@ -625,12 +631,12 @@ func BenchmarkLinearSearch_RevisionSearch(b *testing.B) {
 \medskip
 
 \begin{enumerate}
-    \item The function iterates over different numbers of revisions (small, medium, and large) and data sizes (small, medium, and large) using nested loops. This creates 9 different combinations of revision counts and data sizes for benchmarking.
-    \item For each revision count and data size combination, the benchmark function executes a sub-benchmark using the \lstinline{b.Run} method. It constructs a unique name for the sub-benchmark by concatenating the number of revisions and data size (e.g., "numRevisions=200,dataSize=100").
-    \item Inside the sub-benchmark, the \lstinline{createListWithRevisions} function creates a doubly linked list with the specified number of revisions and data sizes. Each revision in the list has a unique ID and random data of the specified size.
-    \item The timer for the benchmark is reset using \lstinline{b.ResetTimer()}. This ensures that the time taken to create the list is not included in the benchmark results.
-    \item For each iteration of the benchmark, a random revision ID is generated within the range of the number of revisions in the list. Then, the \lstinline{LinearSearch} function is called to search for the node containing the revision with the generated ID in the list.
-    \item The benchmark measures the time taken to perform the linear search for each revision count and data size combination. By analysing the results, you can understand how the performance of the \lstinline{LinearSearch} function is affected by the number of revisions in the list and the size of the revision data.
+	\item The function iterates over different numbers of revisions (small, medium, and large) and data sizes (small, medium, and large) using nested loops. This creates 9 different combinations of revision counts and data sizes for benchmarking.
+	\item For each revision count and data size combination, the benchmark function executes a sub-benchmark using the \lstinline{b.Run} method. It constructs a unique name for the sub-benchmark by concatenating the number of revisions and data size (e.g., "numRevisions=200,dataSize=100").
+	\item Inside the sub-benchmark, the \lstinline{createListWithRevisions} function creates a doubly linked list with the specified number of revisions and data sizes. Each revision in the list has a unique ID and random data of the specified size.
+	\item The timer for the benchmark is reset using \lstinline{b.ResetTimer()}. This ensures that the time taken to create the list is not included in the benchmark results.
+	\item For each iteration of the benchmark, a random revision ID is generated within the range of the number of revisions in the list. Then, the \lstinline{LinearSearch} function is called to search for the node containing the revision with the generated ID in the list.
+	\item The benchmark measures the time taken to perform the linear search for each revision count and data size combination. By analysing the results, you can understand how the performance of the \lstinline{LinearSearch} function is affected by the number of revisions in the list and the size of the revision data.
 \end{enumerate}
 
 \subsection{Binary Search}
@@ -661,9 +667,9 @@ Inside the \lstinline{BinarySearch} function, a variable named \lstinline{curren
 
 A \lstinline{for} loop is used to traverse the binary tree. The loop continues until either the target revision ID is found or the end of the tree is reached. Inside the loop, there are three conditions:
 \begin{itemize}
-    \item If the target \lstinline{revisionID} is less than the revision ID of the \lstinline{currentNode}, the function sets the \lstinline{currentNode} to the left child of the current node, moving the search down the left subtree.
-    \item If the target \lstinline{revisionID} is greater than the revision ID of the \lstinline{currentNode}, the function sets the \lstinline{currentNode} to the right child of the current node, moving the search down the right subtree.
-    \item If the target \lstinline{revisionID} is equal to the revision ID of the \lstinline{currentNode}, the function returns the \lstinline{Revision} object associated with the \lstinline{currentNode}.
+	\item If the target \lstinline{revisionID} is less than the revision ID of the \lstinline{currentNode}, the function sets the \lstinline{currentNode} to the left child of the current node, moving the search down the left subtree.
+	\item If the target \lstinline{revisionID} is greater than the revision ID of the \lstinline{currentNode}, the function sets the \lstinline{currentNode} to the right child of the current node, moving the search down the right subtree.
+	\item If the target \lstinline{revisionID} is equal to the revision ID of the \lstinline{currentNode}, the function returns the \lstinline{Revision} object associated with the \lstinline{currentNode}.
 \end{itemize}
 If the traversal reaches the end of the tree without finding the target revision ID, the function returns a \lstinline{nil} value to indicate that the target revision ID was not found in the tree.
 
@@ -673,8 +679,8 @@ If the traversal reaches the end of the tree without finding the target revision
 \paragraph{TestBinarySearch}
 This test checks if the \lstinline{BinarySearch} function works as expected. It creates a binary search tree with 100 revisions and a data size of 10 bytes. The test checks for two scenarios:
 \begin{enumerate}[label=(\alph*)]
-    \item The revision with ID 42 is found in the tree. The test asserts that there is no error, the found revision is not nil, and its ID matches the expected value (42).
-    \item The revision with ID 999 is not found in the tree. Therefore, the test asserts that there is an error, the error message matches "revision not found", and the returned revision is nil.
+	\item The revision with ID 42 is found in the tree. The test asserts that there is no error, the found revision is not nil, and its ID matches the expected value (42).
+	\item The revision with ID 999 is not found in the tree. Therefore, the test asserts that there is an error, the error message matches "revision not found", and the returned revision is nil.
 \end{enumerate}
 
 \subsubsection*{Benchmarks}
@@ -711,14 +717,14 @@ func BenchmarkBinarySearch_RevisionSearch(b *testing.B) {
 \medskip
 
 \begin{enumerate}
-    \item The function iterates over different numbers of revisions (small, medium, and large) and data sizes (small, medium, and large) using nested loops. This creates 9 different combinations of revision counts and data sizes for benchmarking.
-    \item For each revision count and data size combination, execute a sub-benchmark with the \lstinline{b.Run} method. This allows each combination to be benchmarked independently, producing individual results. The sub-benchmark is named using a formatted string containing the number of revisions and data size, e.g., "numRevisions=200,dataSize=100".
-    \item Inside each sub-benchmark:
-          \begin{enumerate}
-              \item Create a binary search tree using the \lstinline{createTreeWithRevisions} function. The tree is populated with the specified number of revisions, each having the specified data size.
-              \item Reset the timer using \lstinline{b.ResetTimer()}. This ensures that the time spent creating the binary search tree is not included in the benchmark measurement.
-              \item Execute the binary search multiple times, as specified by the \lstinline{b.N} value, which is determined by the benchmark framework based on the performance of the tested system. In each iteration, a random revision ID within the range of the number of revisions is generated using \lstinline{rand.Intn(numRevisions)}. Then, the \lstinline{BinarySearch} function is called to search for the revision with the generated ID in the tree.
-          \end{enumerate}
+	\item The function iterates over different numbers of revisions (small, medium, and large) and data sizes (small, medium, and large) using nested loops. This creates 9 different combinations of revision counts and data sizes for benchmarking.
+	\item For each revision count and data size combination, execute a sub-benchmark with the \lstinline{b.Run} method. This allows each combination to be benchmarked independently, producing individual results. The sub-benchmark is named using a formatted string containing the number of revisions and data size, e.g., "numRevisions=200,dataSize=100".
+	\item Inside each sub-benchmark:
+	      \begin{enumerate}
+		      \item Create a binary search tree using the \lstinline{createTreeWithRevisions} function. The tree is populated with the specified number of revisions, each having the specified data size.
+		      \item Reset the timer using \lstinline{b.ResetTimer()}. This ensures that the time spent creating the binary search tree is not included in the benchmark measurement.
+		      \item Execute the binary search multiple times, as specified by the \lstinline{b.N} value, which is determined by the benchmark framework based on the performance of the tested system. In each iteration, a random revision ID within the range of the number of revisions is generated using \lstinline{rand.Intn(numRevisions)}. Then, the \lstinline{BinarySearch} function is called to search for the revision with the generated ID in the tree.
+	      \end{enumerate}
 \end{enumerate}
 The benchmark measures the time taken to perform the binary search for each revision count and data size combination.
 
@@ -821,9 +827,9 @@ func BenchmarkDepthFirstSearch_RevisionSearch(b *testing.B) {
 
 For each combination of \lstinline{numRevisions} and \lstinline{dataSize}, a sub-benchmark is created and executed using the \lstinline{b.Run} method. Within each sub-benchmark, the following steps are performed:
 \begin{enumerate}
-    \item A new DAG is created, and nodes are added with random revisions based on the specified \lstinline{numRevisions} and \lstinline{dataSize}. The random revisions are created using the \lstinline{types.NewRandomRevision} function.
-    \item An empty visitor function (\lstinline{visitor := func(node *graph.DAGNode)}) is created. This function does nothing when called, ensuring that the benchmark measures only the performance of the DFS algorithm and not any additional processing that might be done in the visit function.
-    \item The benchmark timer is reset with \lstinline{b.ResetTimer()}, and the \lstinline{DepthFirstSearch} function is called \lstinline{b.N} times using random revision IDs as the starting point.
+	\item A new DAG is created, and nodes are added with random revisions based on the specified \lstinline{numRevisions} and \lstinline{dataSize}. The random revisions are created using the \lstinline{types.NewRandomRevision} function.
+	\item An empty visitor function (\lstinline{visitor := func(node *graph.DAGNode)}) is created. This function does nothing when called, ensuring that the benchmark measures only the performance of the DFS algorithm and not any additional processing that might be done in the visit function.
+	\item The benchmark timer is reset with \lstinline{b.ResetTimer()}, and the \lstinline{DepthFirstSearch} function is called \lstinline{b.N} times using random revision IDs as the starting point.
 \end{enumerate}
 The benchmark measures the time taken to perform the DFS traversal for each combination of \lstinline{numRevisions} and \lstinline{dataSize}.
 
@@ -922,13 +928,14 @@ func BenchmarkBreadthFirstSearch_RevisionSearch(b *testing.B) {
 
 For each combination of \lstinline{numRevisions} and \lstinline{dataSize}, a sub-benchmark is created and executed using the \lstinline{b.Run} method. Within each sub-benchmark, the following steps are performed:
 \begin{enumerate}
-    \item A new DAG is created, and nodes are added with random revisions based on the specified \lstinline{numRevisions} and \lstinline{dataSize}. The random revisions are created using the \lstinline{types.NewRandomRevision} function.
-    \item An empty visitor function (\lstinline{visitor := func(node *graph.DAGNode)}) is created. This function does nothing when called, ensuring that the benchmark measures only the performance of the BFS algorithm and not any additional processing that might be done in the visit function.
-    \item The benchmark timer is reset with \lstinline{b.ResetTimer()}, and the \lstinline{BreadthFirstSearch} function is called \lstinline{b.N} times using random revision IDs as the starting point.
+	\item A new DAG is created, and nodes are added with random revisions based on the specified \lstinline{numRevisions} and \lstinline{dataSize}. The random revisions are created using the \lstinline{types.NewRandomRevision} function.
+	\item An empty visitor function (\lstinline{visitor := func(node *graph.DAGNode)}) is created. This function does nothing when called, ensuring that the benchmark measures only the performance of the BFS algorithm and not any additional processing that might be done in the visit function.
+	\item The benchmark timer is reset with \lstinline{b.ResetTimer()}, and the \lstinline{BreadthFirstSearch} function is called \lstinline{b.N} times using random revision IDs as the starting point.
 \end{enumerate}
 The benchmark measures the time taken to perform the BFS traversal for each combination of \lstinline{numRevisions} and \lstinline{dataSize}.
 
 % \section{Dynamic Programming Algorithms}
+% \noindent
 
 % \subsection{Longest Common Subsequence}
 
@@ -951,6 +958,7 @@ The benchmark measures the time taken to perform the BFS traversal for each comb
 % \subsubsection*{Benchmarks}
 
 \section{Diffing Algorithms}
+% \noindent
 
 \subsection{Myers Diff}
 The Myers Diff algorithm was chosen for implementation due to its efficiency in calculating the differences between two sets of data, which is a common task in Version Control Systems (VCS). Myers Diff operates by computing the shortest edit script that transforms one set of data into another, making it particularly well-suited for comparing revisions of text files.
