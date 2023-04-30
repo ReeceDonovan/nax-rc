@@ -55,4 +55,3 @@ func generateRandomBytes(length int) ([]byte, error) {
 	}
 	return buf, nil
 }
-
