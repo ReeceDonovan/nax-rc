@@ -2,29 +2,35 @@ package search
 
 import (
 	"github.com/ReeceDonovan/nax-rc/internal/dataStructures/graph"
-	"github.com/ReeceDonovan/nax-rc/internal/types"
 )
 
-func BreadthFirstSearch(g graph.Graph, startVertex graph.Vertex, id int) types.Revision {
-	visited := make(map[graph.Vertex]bool)
-	queue := []graph.Vertex{startVertex}
+// BreadthFirstSearch performs a breadth-first search on the given Directed Acyclic Graph (DAG),
+// starting from the node with the specified revision ID. The visitFunc function is called
+// for each visited node during the search.
+func BreadthFirstSearch(dag *graph.DAG, startRevisionID int, visitFunc func(node *graph.DAGNode)) {
+	startNode := dag.GetNode(startRevisionID)
+	if startNode == nil {
+		return
+	}
 
-	for len(queue) > 0 {
-		currentVertex := queue[0]
-		queue = queue[1:]
+	visitedNodes := make(map[int]bool)
+	nodeQueue := []*graph.DAGNode{startNode}
 
-		currentVertexHashcode := graph.GetElementHashcode(currentVertex)
-		if !visited[currentVertexHashcode] {
-			visited[currentVertexHashcode] = true
-			currentVertexData := currentVertex.(types.Revision)
-			if currentVertexData.ID() == id {
-				return currentVertexData
-			}
-			outgoingEdges := g.OutgoingEdges(currentVertex)
-			for _, edge := range outgoingEdges {
-				queue = append(queue, edge.TargetVertex())
+	for len(nodeQueue) > 0 {
+		currentNode := nodeQueue[0]
+		nodeQueue = nodeQueue[1:]
+
+		if visitedNodes[currentNode.Revision.ID()] {
+			continue
+		}
+
+		visitFunc(currentNode)
+		visitedNodes[currentNode.Revision.ID()] = true
+
+		for _, childNode := range currentNode.Children {
+			if !visitedNodes[childNode.Revision.ID()] {
+				nodeQueue = append(nodeQueue, childNode)
 			}
 		}
 	}
-	return nil
 }
