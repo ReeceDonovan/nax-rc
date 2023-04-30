@@ -8,18 +8,27 @@
 \usepackage[utf8]{inputenc}
 \usepackage{color}
 \usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{float}
 
 % Page setup
 % ==============================================================================
-% \usepackage{needspace}
-% \makeatletter
-% \renewcommand{\section}{\needspace{.25\textheight} \@startsection{section}{1}{0mm}
-%   {\baselineskip}
-%   {\baselineskip}{\Large\bfseries\scshape}}
+\usepackage{needspace}
+\makeatletter
+% Make space for `section` titles
+\renewcommand{\section}{\needspace{.25\textheight} \@startsection{section}{1}{0mm}
+  {\baselineskip}
+  {\baselineskip}{\Large\bfseries\scshape}}
+% % Make space for `subsection` titles
 % \renewcommand{\subsection}{\needspace{.15\textheight} \@startsection{subsection}{1}{0mm}
 %   {\baselineskip}
 %   {\baselineskip}{\large\bfseries\scshape}}
-% \makeatother
+% % Make space for `subsubsection` titles
+% \renewcommand{\subsubsection}{\needspace{.15\textheight} \@startsection{subsubsection}{1}{0mm}
+%   {\baselineskip}
+%   {\baselineskip}{\large\bfseries\scshape}}
+\makeatother
+
 
 % Images and figures setup
 % ==============================================================================
@@ -207,7 +216,6 @@
 \subfile{0.2_declaration/declaration.tex}
 \newpage
 
-\subfile{0.3_acknowledge/acknowledgements.tex}
 \tableofcontents
 \newpage
 \pagenumbering{arabic}
@@ -238,7 +246,7 @@
 % \printglossary[title=List of Terms,toctitle=Terms and abbreviations]
 % \clearpage
 % \printglossary[type=\acronymtype]
-% \printglossary
+\printglossary
 % \newpage
 % ==============================================================================
 
