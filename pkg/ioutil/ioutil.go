@@ -5,6 +5,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func CheckPathExists(path string) (bool, error) {
@@ -103,4 +104,12 @@ func GetFileContent(file string) (string, error) {
 		return "", fmt.Errorf("error getting file content: %w", err)
 	}
 	return string(content), nil
+}
+
+func GetFileContentLines(file string) ([]string, error) {
+	content, err := GetFileContent(file)
+	if err != nil {
+		return nil, fmt.Errorf("error getting file content: %w", err)
+	}
+	return strings.Split(strings.ReplaceAll(content, "\r\n", "\n"), "\n"), nil
 }
