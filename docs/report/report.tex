@@ -1,0 +1,275 @@
+% Initial setup
+% ==============================================================================
+\documentclass[12pt]{report}
+
+% Basic packages
+% ==============================================================================
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{float}
+
+% Page setup
+% ==============================================================================
+\usepackage{needspace}
+\makeatletter
+% Make space for `section` titles
+\renewcommand{\section}{\needspace{.25\textheight} \@startsection{section}{1}{0mm}
+  {\baselineskip}
+  {\baselineskip}{\Large\bfseries\scshape}}
+% % Make space for `subsection` titles
+% \renewcommand{\subsection}{\needspace{.15\textheight} \@startsection{subsection}{1}{0mm}
+%   {\baselineskip}
+%   {\baselineskip}{\large\bfseries\scshape}}
+% % Make space for `subsubsection` titles
+% \renewcommand{\subsubsection}{\needspace{.15\textheight} \@startsection{subsubsection}{1}{0mm}
+%   {\baselineskip}
+%   {\baselineskip}{\large\bfseries\scshape}}
+\makeatother
+
+
+% Images and figures setup
+% ==============================================================================
+\usepackage{array}
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+
+% Quotation setup
+% ==============================================================================
+\usepackage{setspace}
+\usepackage{etoolbox}
+\AtBeginEnvironment{quote}{\par\singlespacing\small}
+
+\setcounter{secnumdepth}{2}     % Level of section numbering
+\setcounter{tocdepth}{3}        % Level of table of contents
+
+% Bookmarks setup
+% ==============================================================================
+\usepackage[
+  pdfproducer={Texmaker},
+  pdfcreator={pdfLaTeX},
+  hidelinks,
+  bookmarksnumbered,
+]{hyperref}
+
+% Bibliography setup
+% ==============================================================================
+\usepackage[
+  backend=biber,
+  style=ieee,
+  citestyle=ieee,
+  sorting=nty,
+  maxbibnames=99,
+  minbibnames=2,
+  maxcitenames=2,
+  mincitenames=1,
+  doi=true,
+  isbn=true,
+  eprint=true,
+  maxnames=99,
+  minnames=2,
+  maxalphanames=99,
+  minalphanames=2,
+  giveninits=true,
+  url=true,
+  hyperref=true,
+]{biblatex}
+\addbibresource{../bibliography/vcs_info.bib}
+
+% Code highlighting setup
+% ==============================================================================
+\usepackage{listings}
+\usepackage{mdframed}
+\usepackage{atbegshi}
+\usepackage{ifthen}
+\usepackage{tikz}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% change this to customize the appearance of the highlight
+\tikzstyle{highlighter} = [
+  lightgray,
+  line width = \baselineskip,
+]
+
+% implementation of the core highlighting logic; do not change!
+\newcounter{highlight}[page]
+\newcommand{\tikzhighlightanchor}[1]{\ensuremath{\vcenter{\hbox{\tikz[remember picture, overlay]{\coordinate (#1 highlight \arabic{highlight});}}}}}
+\newcommand{\bh}[0]{\stepcounter{highlight}\tikzhighlightanchor{begin}}
+\newcommand{\eh}[0]{\tikzhighlightanchor{end}}
+\AtBeginShipout{\AtBeginShipoutUpperLeft{\ifthenelse{\value{highlight} > 0}{\tikz[remember picture, overlay]{\foreach \stroke in {1,...,\arabic{highlight}} \draw[highlighter] (begin highlight \stroke) -- (end highlight \stroke);}}{}}}
+
+% set global options for listings
+\lstset{frame=tb,
+  language=Go,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+  % backgroundcolor=\color{lightgray},
+  backgroundcolor=\color[gray]{0.97},
+}
+
+% File import setup
+% ==============================================================================
+\usepackage{blindtext}
+\usepackage{subfiles}
+
+% Glossary setup
+% ==============================================================================
+\usepackage[toc,acronym]{glossaries}
+
+\makeglossaries
+
+% Types of version control systems
+\newacronym[shortplural=VCSs,plural=Version Control Systems]{vcs}{VCS}{Version Control System}
+\newacronym[shortplural=LVCSs,plural=Local Version Control Systems]{lvcs}{LVCS}{Local Version Control System}
+\newacronym[shortplural=CVCSs,plural=Centralized Version Control Systems]{cvcs}{CVCS}{Centralized Version Control System}
+\newacronym[shortplural=DVCSs,plural=Distributed Version Control Systems]{dvcs}{DVCS}{Distributed Version Control System}
+
+% Exisiting version control systems
+% First generation
+\newacronym{sccs}{SCCS}{Source Code Control System}
+\newacronym{rcs}{RCS}{Revision Control System}
+% Second generation
+\newacronym{cvs}{CVS}{Concurrent Versions System}
+\newacronym{svn}{SVN}{Apache Subversion}
+\newacronym{perforce}{Perforce}{Perforce Helix Core}
+% Third generation
+\newacronym{git}{Git}{Git}
+\newacronym{mercurial}{Mercurial}{Mercurial}
+\newacronym{bitkeeper}{BitKeeper}{BitKeeper}
+\newacronym{darcs}{Darcs}{Darc's Advanced Revision Control System}
+\newacronym{monotone}{Monotone}{Monotone}
+\newacronym{bazaar}{Bazaar}{Bazaar}
+\newacronym{fossil}{Fossil}{Fossil SCM}
+% ==============================================================================
+
+% Begin document
+% ==============================================================================
+\begin{document}
+\pagenumbering{roman}
+
+% Title page
+% ==============================================================================
+\begin{titlepage}
+  \begin{center}
+    \vspace*{\fill}
+
+    % Title
+    \textbf{\LARGE{Exploring the Data Structures and Algorithms behind Version Control Systems}}
+
+    % Subtitle
+    \medskip
+    \large{(Student Proposed)}
+
+    % Author
+    \vspace{1.3cm}
+    \textbf{\Large{Reece Donovan}}
+
+    % Deliverable
+    \vspace{1.3cm}
+    \large{Final Year Project}
+
+    % Course
+    \large{B.Sc. Computer Science}
+
+    % Supervisor
+    \vspace{1.4cm}
+    \large{Supervisor: Prof.\ Ken Brown}
+
+    % Second Reader
+    \large{Second Reader: Dr.\ Klaas-Jan Stol}
+
+    % Department and University
+    \vspace{1.45cm}
+
+    \normalsize{Department of Computer Science}\\
+    \normalsize{University College Cork}
+
+    % Date (Month Year)
+    \vspace{1.5cm}
+    \large{April 2023}
+
+    \vspace*{\fill}
+  \end{center}
+\end{titlepage}
+
+% Import content
+% ==============================================================================
+\subfile{0.1_abstract/abstract.tex}
+\newpage
+
+\subfile{0.2_declaration/declaration.tex}
+\newpage
+
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\subfile{1_introduction/introduction.tex}
+\newpage
+
+\subfile{2_background/background.tex}
+\newpage
+
+\subfile{3_design/design.tex}
+\newpage
+
+\subfile{4_implementation/implementation.tex}
+\newpage
+
+\subfile{5_evaluation/evaluation.tex}
+\newpage
+
+\subfile{6_conclusion/conclusion.tex}
+\newpage
+
+% Glossary section
+% ==============================================================================
+% \glsaddall
+% \printglossary[type=\acronymtype]
+% \addcontentsline{toc}{chapter}{Glossary}
+% \printglossary[title=List of Terms,toctitle=Terms and abbreviations]
+% \clearpage
+% \printglossary[type=\acronymtype]
+\printglossary
+% \newpage
+% ==============================================================================
+
+% Figures section
+% ==============================================================================
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+\newpage
+% ==============================================================================
+
+% Tables section
+% ==============================================================================
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+\newpage
+% ==============================================================================
+
+% Bibliography section
+% ==============================================================================
+\printbibliography
+\addcontentsline{toc}{chapter}{Bibliography}
+% \bibliographystyle{ieeetr}
+% \bibliography{../bibliography/vcs_info}
+% ==============================================================================
+
+\end{document}
