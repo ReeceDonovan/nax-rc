@@ -4,17 +4,17 @@ import (
 	"github.com/ReeceDonovan/nax-rc/internal/types"
 )
 
-// Node represents a doubly linked list node containing a revision.
-type Node struct {
+// DLLNode represents a doubly linked list node containing a revision.
+type DLLNode struct {
 	Revision types.Revision
-	Next     *Node
-	Prev     *Node
+	Next     *DLLNode
+	Prev     *DLLNode
 }
 
 // DoublyLinkedList represents a doubly linked list data structure.
 type DoublyLinkedList struct {
-	Head *Node
-	Tail *Node
+	Head *DLLNode
+	Tail *DLLNode
 }
 
 // NewDoublyLinkedList initializes and returns an empty doubly linked list.
@@ -22,51 +22,51 @@ func NewDoublyLinkedList() *DoublyLinkedList {
 	return &DoublyLinkedList{}
 }
 
-// SetHead sets the given node as the head of the doubly linked list.
-func (list *DoublyLinkedList) SetHead(node *Node) {
-	if list.Head == nil {
-		list.Head = node
-		list.Tail = node
+// AssignHead sets the given node as the head of the doubly linked list.
+func (dll *DoublyLinkedList) AssignHead(node *DLLNode) {
+	if dll.Head == nil {
+		dll.Head = node
+		dll.Tail = node
 		return
 	}
-	list.InsertBefore(list.Head, node)
+	dll.InsertPrior(dll.Head, node)
 }
 
-// SetTail sets the given node as the tail of the doubly linked list.
-func (list *DoublyLinkedList) SetTail(node *Node) {
-	if list.Tail == nil {
-		list.SetHead(node)
+// AssignTail sets the given node as the tail of the doubly linked list.
+func (dll *DoublyLinkedList) AssignTail(node *DLLNode) {
+	if dll.Tail == nil {
+		dll.AssignHead(node)
 		return
 	}
-	list.InsertAfter(list.Tail, node)
+	dll.InsertSubsequent(dll.Tail, node)
 }
 
-// InsertBefore inserts a new node before the specified node in the doubly linked list.
-func (list *DoublyLinkedList) InsertBefore(node, nodeToInsert *Node) {
-	if nodeToInsert == list.Head && nodeToInsert == list.Tail {
+// InsertPrior inserts a new node before the specified node in the doubly linked list.
+func (dll *DoublyLinkedList) InsertPrior(node, nodeToInsert *DLLNode) {
+	if nodeToInsert == dll.Head && nodeToInsert == dll.Tail {
 		return
 	}
-	list.Remove(nodeToInsert)
+	dll.Remove(nodeToInsert)
 	nodeToInsert.Prev = node.Prev
 	nodeToInsert.Next = node
 	if node.Prev == nil {
-		list.Head = nodeToInsert
+		dll.Head = nodeToInsert
 	} else {
 		node.Prev.Next = nodeToInsert
 	}
 	node.Prev = nodeToInsert
 }
 
-// InsertAfter inserts a new node after the specified node in the doubly linked list.
-func (list *DoublyLinkedList) InsertAfter(node, nodeToInsert *Node) {
-	if nodeToInsert == list.Head && nodeToInsert == list.Tail {
+// InsertSubsequent inserts a new node after the specified node in the doubly linked list.
+func (dll *DoublyLinkedList) InsertSubsequent(node, nodeToInsert *DLLNode) {
+	if nodeToInsert == dll.Head && nodeToInsert == dll.Tail {
 		return
 	}
-	list.Remove(nodeToInsert)
+	dll.Remove(nodeToInsert)
 	nodeToInsert.Prev = node
 	nodeToInsert.Next = node.Next
 	if node.Next == nil {
-		list.Tail = nodeToInsert
+		dll.Tail = nodeToInsert
 	} else {
 		node.Next.Prev = nodeToInsert
 	}
@@ -74,50 +74,50 @@ func (list *DoublyLinkedList) InsertAfter(node, nodeToInsert *Node) {
 }
 
 // InsertAtPosition inserts a new node at the specified position in the doubly linked list.
-func (list *DoublyLinkedList) InsertAtPosition(position int, nodeToInsert *Node) {
+func (dll *DoublyLinkedList) InsertAtPosition(position int, nodeToInsert *DLLNode) {
 	if position == 1 {
-		list.SetHead(nodeToInsert)
+		dll.AssignHead(nodeToInsert)
 		return
 	}
-	currentNode := list.Head
+	currentNode := dll.Head
 	currentPosition := 1
 	for currentNode != nil && currentPosition != position {
 		currentNode = currentNode.Next
 		currentPosition++
 	}
 	if currentNode != nil {
-		list.InsertBefore(currentNode, nodeToInsert)
+		dll.InsertPrior(currentNode, nodeToInsert)
 	} else {
-		list.SetTail(nodeToInsert)
+		dll.AssignTail(nodeToInsert)
 	}
 }
 
 // RemoveNodesWithID removes all nodes with the specified revision ID from the doubly linked list.
-func (list *DoublyLinkedList) RemoveNodesWithID(id int) {
-	currentNode := list.Head
+func (dll *DoublyLinkedList) RemoveNodesWithID(id int) {
+	currentNode := dll.Head
 	for currentNode != nil {
 		nodeToRemove := currentNode
 		currentNode = currentNode.Next
 		if nodeToRemove.Revision.ID() == id {
-			list.Remove(nodeToRemove)
+			dll.Remove(nodeToRemove)
 		}
 	}
 }
 
 // Remove removes the specified node from the doubly linked list.
-func (list *DoublyLinkedList) Remove(node *Node) {
-	if node == list.Head {
-		list.Head = list.Head.Next
+func (dll *DoublyLinkedList) Remove(node *DLLNode) {
+	if node == dll.Head {
+		dll.Head = dll.Head.Next
 	}
-	if node == list.Tail {
-		list.Tail = list.Tail.Prev
+	if node == dll.Tail {
+		dll.Tail = dll.Tail.Prev
 	}
-	list.removeNodeBindings(node)
+	dll.removeNodeBindings(node)
 }
 
 // ContainsNodeWithID returns true if the doubly linked list contains a node with the specified revision ID.
-func (list *DoublyLinkedList) ContainsNodeWithID(id int) bool {
-	currentNode := list.Head
+func (dll *DoublyLinkedList) ContainsNodeWithID(id int) bool {
+	currentNode := dll.Head
 	for currentNode != nil && currentNode.Revision.ID() != id {
 		currentNode = currentNode.Next
 	}
@@ -125,7 +125,7 @@ func (list *DoublyLinkedList) ContainsNodeWithID(id int) bool {
 }
 
 // removeNodeBindings removes the bindings of the specified node from the doubly linked list.
-func (list *DoublyLinkedList) removeNodeBindings(node *Node) {
+func (dll *DoublyLinkedList) removeNodeBindings(node *DLLNode) {
 	if node.Prev != nil {
 		node.Prev.Next = node.Next
 	}
