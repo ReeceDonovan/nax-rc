@@ -34,3 +34,5 @@ func (edge *standardEdge) SourceVertex() Vertex {
 func (edge *standardEdge) TargetVertex() Vertex {
 	return edge.Target
 }
+
+type Vertex interface{}

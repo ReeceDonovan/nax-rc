@@ -1,202 +1,120 @@
 package graph
 
 import (
-	"bytes"
-	"fmt"
-	"sort"
+	"errors"
+
+	"github.com/ReeceDonovan/nax-rc/internal/types"
 )
 
-// Vertex is a simple interface that represents a vertex in a graph.
-type Vertex interface{}
-
-// LabelledVertex is an interface that represents a vertex with a label.
-type LabelledVertex interface {
-	Vertex
-	VertexLabel() string
+// DAGNode represents a node in the directed acyclic graph (DAG), containing a revision.
+type DAGNode struct {
+	Revision types.Revision
+	Parents  []*DAGNode
+	Children []*DAGNode
 }
 
-type Graph struct {
-	// The set of vertices in the graph
-	vertices GenericSet
-	// The set of edges in the graph
-	edges GenericSet
-	// For each vertex, the set of edges that have it as their destination
-	incomingEdges map[interface{}]GenericSet
-	// For each vertex, the set of edges that have it as their source
-	outgoingEdges map[interface{}]GenericSet
+// DAG represents a directed acyclic graph (DAG) data structure.
+type DAG struct {
+	nodes map[int]*DAGNode
 }
 
-func (graph *Graph) Vertices() []Vertex {
-	vertices := make([]Vertex, 0, len(graph.vertices))
-	for _, elem := range graph.vertices {
-		vertices = append(vertices, elem.(Vertex))
+// NewDAG initializes and returns an empty directed acyclic graph.
+func NewDAG() *DAG {
+	return &DAG{nodes: make(map[int]*DAGNode)}
+}
+
+// AddNode adds a new node with the specified revision to the DAG.
+func (dag *DAG) AddNode(revision types.Revision) (*DAGNode, error) {
+	if _, exists := dag.nodes[revision.ID()]; exists {
+		return nil, errors.New("node with the given revision ID already exists in the DAG")
 	}
-	return vertices
+	node := &DAGNode{Revision: revision}
+	dag.nodes[revision.ID()] = node
+	return node, nil
 }
 
-func (graph *Graph) Edges() []Edge {
-	edges := make([]Edge, 0, len(graph.edges))
-	edgeList := graph.edges.List()
-	for _, elem := range edgeList {
-		edges = append(edges, elem.(Edge))
+// RemoveNode removes a node with the specified revision ID from the DAG.
+func (dag *DAG) RemoveNode(revisionID int) error {
+	node, exists := dag.nodes[revisionID]
+	if !exists {
+		return errors.New("node with the given revision ID does not exist in the DAG")
 	}
-	return edges
-}
 
-func (graph *Graph) OutgoingEdges(vertex Vertex) []Edge {
-	var outEdges []Edge
-	sourceVertexHashcode := GetElementHashcode(vertex)
-	for _, elem := range graph.Edges() {
-		if GetElementHashcode(elem.SourceVertex()) == sourceVertexHashcode {
-			outEdges = append(outEdges, elem)
+	for _, parent := range node.Parents {
+		for i, child := range parent.Children {
+			if child == node {
+				parent.Children = append(parent.Children[:i], parent.Children[i+1:]...)
+				break
+			}
 		}
 	}
-	return outEdges
-}
 
-func (graph *Graph) IncomingEdges(vertex Vertex) []Edge {
-	var inEdges []Edge
-	targetVertexHashcode := GetElementHashcode(vertex)
-	for _, elem := range graph.Edges() {
-		if GetElementHashcode(elem.TargetVertex()) == targetVertexHashcode {
-			inEdges = append(inEdges, elem)
+	for _, child := range node.Children {
+		for i, parent := range child.Parents {
+			if parent == node {
+				child.Parents = append(child.Parents[:i], child.Parents[i+1:]...)
+				break
+			}
 		}
 	}
-	return inEdges
-}
 
-func (graph *Graph) AddVertex(vertex Vertex) Vertex {
-	graph.init()
-	graph.vertices.Add(vertex)
-	return vertex
-}
-
-func (graph *Graph) RemoveVertex(vertex Vertex) Vertex {
-	graph.vertices.Delete(vertex)
-	for _, targetVertex := range graph.outgoingEdgesRaw(vertex) {
-		edge := StandardEdge(vertex, targetVertex)
-		graph.RemoveEdge(edge)
-	}
-	for _, sourceVertex := range graph.incomingEdgesRaw(vertex) {
-		edge := StandardEdge(sourceVertex, vertex)
-		graph.RemoveEdge(edge)
-	}
+	delete(dag.nodes, revisionID)
 	return nil
 }
 
-func (graph *Graph) AddEdge(edge Edge) {
-	graph.init()
-
-	sourceVertex := edge.SourceVertex()
-	sourceVertexHashcode := GetElementHashcode(sourceVertex)
-	targetVertex := edge.TargetVertex()
-	targetVertexHashcode := GetElementHashcode(targetVertex)
-
-	// Ensure that the edge is not already in the graph
-	if set, ok := graph.outgoingEdges[sourceVertexHashcode]; ok && set.Contains(targetVertex) {
-		return
+// AddEdge adds a directed edge between two nodes with the specified revision IDs in the DAG.
+func (dag *DAG) AddEdge(parentID, childID int) error {
+	parent, exists := dag.nodes[parentID]
+	if !exists {
+		return errors.New("parent node with the given revision ID does not exist in the DAG")
 	}
 
-	// Add the edge to the graph
-	graph.edges.Add(edge)
-
-	// Add the edge to the outgoing edges of the source vertex
-	set, ok := graph.outgoingEdges[sourceVertexHashcode]
-	if !ok {
-		set = make(GenericSet)
-		graph.outgoingEdges[sourceVertexHashcode] = set
+	child, exists := dag.nodes[childID]
+	if !exists {
+		return errors.New("child node with the given revision ID does not exist in the DAG")
 	}
-	set.Add(targetVertex)
 
-	// Add the edge to the incoming edges of the target vertex
-	set, ok = graph.incomingEdges[targetVertexHashcode]
-	if !ok {
-		set = make(GenericSet)
-		graph.incomingEdges[targetVertexHashcode] = set
-	}
-	set.Add(sourceVertex)
+	parent.Children = append(parent.Children, child)
+	child.Parents = append(child.Parents, parent)
+	return nil
 }
 
-func (graph *Graph) RemoveEdge(edge Edge) {
-	graph.init()
-	graph.edges.Delete(edge)
-	if set, ok := graph.outgoingEdges[GetElementHashcode(edge.SourceVertex())]; ok {
-		set.Delete(edge.TargetVertex())
+// RemoveEdge removes a directed edge between two nodes with the specified revision IDs in the DAG.
+func (dag *DAG) RemoveEdge(parentID, childID int) error {
+	parent, exists := dag.nodes[parentID]
+	if !exists {
+		return errors.New("parent node with the given revision ID does not exist in the DAG")
 	}
-	if set, ok := graph.incomingEdges[GetElementHashcode(edge.TargetVertex())]; ok {
-		set.Delete(edge.SourceVertex())
+
+	child, exists := dag.nodes[childID]
+	if !exists {
+		return errors.New("child node with the given revision ID does not exist in the DAG")
 	}
-}
 
-// =========================================
-// Helper functions
-// =========================================
-
-func (graph *Graph) init() {
-	if graph.vertices == nil {
-		graph.vertices = make(GenericSet)
-	}
-	if graph.edges == nil {
-		graph.edges = make(GenericSet)
-	}
-	if graph.incomingEdges == nil {
-		graph.incomingEdges = make(map[interface{}]GenericSet)
-	}
-	if graph.outgoingEdges == nil {
-		graph.outgoingEdges = make(map[interface{}]GenericSet)
-	}
-}
-
-func (graph *Graph) incomingEdgesRaw(vertex Vertex) GenericSet {
-	graph.init()
-	return graph.incomingEdges[GetElementHashcode(vertex)]
-}
-
-func (graph *Graph) outgoingEdgesRaw(vertex Vertex) GenericSet {
-	graph.init()
-	return graph.outgoingEdges[GetElementHashcode(vertex)]
-}
-
-func (graph *Graph) String() string {
-	var buffer bytes.Buffer
-
-	vertices := graph.Vertices()
-	labels := make([]string, len(vertices))
-	labelMap := make(map[string]Vertex, len(vertices))
-	for _, vertex := range vertices {
-		label := VertexLabel(vertex)
-		labels = append(labels, label)
-		labelMap[label] = vertex
-	}
-	sort.Strings(labels)
-
-	for _, label := range labels {
-		vertex := labelMap[label]
-		targetVertices := graph.outgoingEdges[GetElementHashcode(vertex)]
-
-		buffer.WriteString(fmt.Sprintf("%s\n", label))
-
-		dependantLabels := make([]string, targetVertices.Length())
-		for _, targetVertex := range targetVertices {
-			dependantLabels = append(dependantLabels, VertexLabel(targetVertex))
-		}
-		sort.Strings(dependantLabels)
-
-		for _, dependantLabel := range dependantLabels {
-			buffer.WriteString(fmt.Sprintf("\t%s\n", dependantLabel))
+	for i, childNode := range parent.Children {
+		if childNode == child {
+			parent.Children = append(parent.Children[:i], parent.Children[i+1:]...)
+			break
 		}
 	}
 
-	return buffer.String()
+	for i, parentNode := range child.Parents {
+		if parentNode == parent {
+			child.Parents = append(child.Parents[:i], child.Parents[i+1:]...)
+			break
+		}
+	}
+
+	return nil
 }
 
-func VertexLabel(rawVertex Vertex) string {
-	switch vertex := rawVertex.(type) {
-	case LabelledVertex:
-		return vertex.VertexLabel()
-	case fmt.Stringer:
-		return vertex.String()
-	default:
-		return fmt.Sprintf("%v", vertex)
-	}
+// NodeExists checks if a node with the given revision ID exists in the DAG.
+func (dag *DAG) NodeExists(revisionID int) bool {
+	_, exists := dag.nodes[revisionID]
+	return exists
+}
+
+// GetNode retrieves a node with the given revision ID from the DAG, returning nil if it doesn't exist.
+func (dag *DAG) GetNode(revisionID int) *DAGNode {
+	return dag.nodes[revisionID]
 }
