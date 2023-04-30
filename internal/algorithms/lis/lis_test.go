@@ -14,38 +14,6 @@ type TestFunc struct {
 	f    func([]int) []int
 }
 
-/*
-Test Case 1:
-"array": [5, 7, -24, 12, 10, 2, 3, 12, 5, 6, 35]
-
-Test Case 2:
-"array": [-1]
-
-Test Case 3:
-"array": [-1, 2]
-
-Test Case 4:
-"array": [-1, 2, 1, 2]
-
-Test Case 5:
-"array": [1, 5, -1, 10]
-
-Test Case 6:
-"array": [1, 5, -1, 0, 6, 2, 4]
-
-Test Case 7:
-"array": [3, 4, -1]
-
-Test Case 8:
-"array": [29, 2, 32, 12, 30, 31]
-
-Test Case 9:
-"array": [10, 22, 9, 33, 21, 61, 41, 60, 80]
-
-Test Case 10:
-"array": [100, 1, 2, 3, 4, 101]
-*/
-
 var testCases = []TestCase{
 	{[]int{5, 7, -24, 12, 10, 2, 3, 12, 5, 6, 35}},
 	{[]int{-1}},
