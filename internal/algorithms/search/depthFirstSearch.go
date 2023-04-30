@@ -2,29 +2,30 @@ package search
 
 import (
 	"github.com/ReeceDonovan/nax-rc/internal/dataStructures/graph"
-	"github.com/ReeceDonovan/nax-rc/internal/types"
 )
 
-func DepthFirstSearch(g graph.Graph, startVertex graph.Vertex, id int) types.Revision {
-	visited := make(map[graph.Vertex]bool)
-	stack := []graph.Vertex{startVertex}
-
-	for len(stack) > 0 {
-		currentVertex := stack[len(stack)-1]
-		stack = stack[:len(stack)-1]
-
-		currentVertexHashcode := graph.GetElementHashcode(currentVertex)
-		if !visited[currentVertexHashcode] {
-			visited[currentVertexHashcode] = true
-			currentVertexData := currentVertex.(types.Revision)
-			if currentVertexData.ID() == id {
-				return currentVertexData
-			}
-			outgoingEdges := g.OutgoingEdges(currentVertex)
-			for _, edge := range outgoingEdges {
-				stack = append(stack, edge.TargetVertex())
-			}
-		}
+// DepthFirstSearch performs a depth-first search on the given Directed Acyclic Graph (DAG),
+// starting at the node with the given revision ID, and applies the provided visit function
+// to each visited node.
+func DepthFirstSearch(dag *graph.DAG, startRevisionID int, visitFunc func(*graph.DAGNode)) {
+	startNode := dag.GetNode(startRevisionID)
+	if startNode == nil {
+		return
 	}
-	return nil
+
+	visitedNodes := make(map[int]bool)
+	depthFirstTraversal(startNode, visitedNodes, visitFunc)
+}
+
+func depthFirstTraversal(node *graph.DAGNode, visitedNodes map[int]bool, visitFunc func(*graph.DAGNode)) {
+	if visitedNodes[node.Revision.ID()] {
+		return
+	}
+
+	visitedNodes[node.Revision.ID()] = true
+	visitFunc(node)
+
+	for _, childNode := range node.Children {
+		depthFirstTraversal(childNode, visitedNodes, visitFunc)
+	}
 }
