@@ -1,9 +1,8 @@
 package diff
 
 import (
+	"strings"
 	"testing"
-
-	"github.com/ReeceDonovan/nax-rc/pkg/ioutil"
 )
 
 func TestPatienceDiff(t *testing.T) {
@@ -101,46 +100,44 @@ func BenchmarkPatienceDiff(b *testing.B) {
 	}
 }
 
-func BenchmarkPatienceDiffFromFile(b *testing.B) {
-	dirPath := "../../../test_data"
-	files, err := getFilesFromDirectory(dirPath)
-	if err != nil {
-		b.Errorf("error getting files from directory: %v", err)
-	}
+func BenchmarkPatienceDiffSmall(b *testing.B) {
+	sourceText := "The quick brown fox jumps over the lazy dog"
+	destinationText := "The quick red fox jumped over the lazy dog"
 
-	if len(files) < 2 {
-		b.Errorf("expected at least 2 files in directory")
-	}
+	source := strings.Split(sourceText, " ")
+	destination := strings.Split(destinationText, " ")
 
-	source, err := ioutil.GetFileContentLines(files[0])
-	if err != nil {
-		b.Errorf("error getting file content: %v", err)
-	}
-
-	destination, err := ioutil.GetFileContentLines(files[1])
-	if err != nil {
-		b.Errorf("error getting file content: %v", err)
-	}
-
-	// Remove the last line if it is empty
-	if len(source) > 0 && source[len(source)-1] == "" {
-		source = source[:len(source)-1]
-	}
-
-	if len(destination) > 0 && destination[len(destination)-1] == "" {
-		destination = destination[:len(destination)-1]
-	}
-
-	// Log number of lines in each file
-	b.Logf("source file has %d lines", len(source))
-	b.Logf("destination file has %d lines", len(destination))
-
-	// Run the benchmark
 	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		operations := PatienceDiff(source, destination)
 
-		// Log the number of edits
-		b.Logf("number of edits: %d", len(operations))
+	for i := 0; i < b.N; i++ {
+		PatienceDiff(source, destination)
+	}
+}
+
+func BenchmarkPatienceDiffLarge(b *testing.B) {
+	sourceText := strings.Repeat("A ", 500) + strings.Repeat("B ", 500) + strings.Repeat("C ", 500)
+	destinationText := strings.Repeat("B ", 500) + strings.Repeat("A ", 500) + strings.Repeat("D ", 500)
+
+	source := strings.Split(sourceText, " ")
+	destination := strings.Split(destinationText, " ")
+
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		PatienceDiff(source, destination)
+	}
+}
+
+func BenchmarkPatienceDiffExtreme(b *testing.B) {
+	sourceText := strings.Repeat("A ", 1000)
+	destinationText := strings.Repeat("B ", 1000)
+
+	source := strings.Split(sourceText, " ")
+	destination := strings.Split(destinationText, " ")
+
+	b.ResetTimer()
+
+	for i := 0; i < b.N; i++ {
+		PatienceDiff(source, destination)
 	}
 }
